@@ -3,10 +3,6 @@
  */
 package ahoCorasick4cj
 
-/*
- * The class is PayloadEmit
- * @since 0.38.2
- */
 public class PayloadState<T> {
 
     /**
@@ -18,26 +14,37 @@ public class PayloadState<T> {
      * only used for the root state to refer to itself in case no matches have been
      * found
      */
-    private let rootState: PayloadState<T> = PayloadState<T>()
+    private var rootState: ?PayloadState<T> = None
 
     /**
      * referred to in the white paper as the 'goto' structure. From a state it is
      * possible to go to other states, depending on the character passed.
      */
-    private let success: Map<Char, PayloadState<T>> = HashMap<Char, PayloadState<T>>()
+    private var success: Map<Char, PayloadState<T>> = HashMap<Char, PayloadState<T>>()
 
     /**
      * if no matching states are found, the failure state will be returned
      */
-    private let failure: PayloadState<T> = PayloadState<T>()
+    private var failure: ?PayloadState<T> = None
 
     /**
      * whenever this state is reached, it will emit the matches keywords for future
      * reference
      */
-    private let emits: Set<Payload<T>> = HashSet<Payload<T>>()
+    private var emits: ?Set<Payload<T>> = HashSet<Payload<T>>()
 
-    public init() {}
+    protected init() {
+        this(0)
+    }
+
+    public init(depth: Int32) {
+        this.depth = depth
+        if (depth == 0) {
+            this.rootState = this
+        } else {
+            this.rootState = None
+        }
+    }
 
     /**
      * Adds a payload to be emitted for this state.
@@ -45,23 +52,39 @@ public class PayloadState<T> {
      * @param payload to be emitted.
      */
     public func addEmit(payload: Payload<T>): Unit {
-
+        if (let None = this.emits) {
+            this.emits = HashSet<Payload<T>>()
+        }
+        this.emits.getOrThrow().put(payload)
     }
 
     public func addState(character: Char): PayloadState<T> {
-        return PayloadState<T>()
+        var nextState: ?PayloadState<T> = nextStateIgnoreRootState(character)
+        if (let None = nextState) {
+            nextState = PayloadState<T>(this.depth + 1)
+            this.success.put(character, nextState.getOrThrow())
+        }
+        return nextState.getOrThrow()
     }
 
-    public func nextStateIgnoreRootState(character: Char): PayloadState<T> {
-        return PayloadState<T>()
+    public func nextStateIgnoreRootState(character: Char): ?PayloadState<T> {
+        return nextState(character, true)
     }
 
     public func nextState(character: Char): ?PayloadState<T> {
         return nextState(character, false)
     }
 
-    private func nextState(character: Char, ignoreRootState: Bool): PayloadState<T> {
-        return PayloadState<T>()
+    private func nextState(character: Char, ignoreRootState: Bool): ?PayloadState<T> {
+        var nextState: ?PayloadState<T> = this.success.get(character)
+        if (!ignoreRootState) {
+            if (let None = nextState) {
+                if (let Some(v) = rootState) {
+                    nextState = this.rootState
+                }
+            }
+        }
+        return nextState
     }
 
     public func getStates(): Collection<PayloadState<T>> {
@@ -69,7 +92,7 @@ public class PayloadState<T> {
     }
 
     public func setFailure(failState: PayloadState<T>): Unit {
-
+        return this.failure = failState
     }
 
     public func getTransitions(): Collection<Char> {
@@ -77,11 +100,13 @@ public class PayloadState<T> {
     }
 
     public func failures(): PayloadState<T> {
-        return this.failure
+        return this.failure.getOrThrow()
     }
 
     public func addEmit(emits: Collection<Payload<T>>): Unit {
-
+        for (emit in emits) {
+            addEmit(emit)
+        }
     }
 
     /**
@@ -90,6 +115,9 @@ public class PayloadState<T> {
      * @return Collection of emitted payloads.
      */
     public func emit(): Collection<Payload<T>> {
-        return ArrayList<Payload<T>>()
+        if (let None = this.emits) {
+            return ArrayList<Payload<T>>()
+        }
+        return this.emits.getOrThrow()
     }
 }

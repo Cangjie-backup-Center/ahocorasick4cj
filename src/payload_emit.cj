@@ -7,13 +7,21 @@ package ahoCorasick4cj
  * The class is PayloadEmit
  * @since 0.38.2
  */
-public class PayloadEmit<T> <: Interval {
+public class PayloadEmit<T> <: Interval & Intervalable {
 
     private let keyword: String
 
-    private let payload: T
+    private let payload: ?T
 
-    public init(start: Int32, end: Int32, keyword: String, payload: T) {
+    /**
+     * Created a PayloadEmit
+     * 
+     * @param start   Start of the matched search term.
+     * @param end     End of the matched search term.
+     * @param keyword Keyword that matched.
+     * @param payload Emitted payload data.
+     */
+    public init(start: Int32, end: Int32, keyword: String, payload: ?T) {
         super(start,end)
         this.keyword = keyword
         this.payload = payload
@@ -23,11 +31,37 @@ public class PayloadEmit<T> <: Interval {
         return this.keyword
     }
 
-    public func getPayload(): T {
+    /**
+     * Returns the payload associated to this emit.
+     * 
+     * @return the associated payload
+     */
+    public func getPayload(): ?T {
         return this.payload
     }
 
     public func toString(): String {
         return super.toString() + "=" + this.keyword + "->"
     }
+
+    public operator func ==(rhs: Intervalable): Bool {
+        if (this == rhs) {
+            return true
+        }
+        return false
+    }
+
+    public operator func !=(rhs: Intervalable): Bool {
+        if (this != rhs) {
+            return true
+        }
+        return false
+    }
+
+    public func hashCode(): Int64 {
+        var hash: Int64 = 0
+        hash = 31 * hash + keyword.hashCode()
+        return hash
+    }
+
 }

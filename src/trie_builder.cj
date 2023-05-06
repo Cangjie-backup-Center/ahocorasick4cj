@@ -24,7 +24,8 @@ public class TrieBuilder {
      * @throws NullPointerException if the keyword is null.
      */
     public func addKeyword(keyword: String): TrieBuilder {
-        return TrieBuilder()
+        delegate.addKeyword(keyword, None)
+        return this
     }
 
     /**

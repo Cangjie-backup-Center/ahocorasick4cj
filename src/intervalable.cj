@@ -7,7 +7,7 @@ package ahoCorasick4cj
  * The interface is Intervalable
  * @since 0.38.2
  */
-public interface Intervalable {
+public interface Intervalable <: Hashable & Equatable<Intervalable> {
 
     func getStart(): Int32
     
