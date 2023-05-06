@@ -1,0 +1,16 @@
+{
+	"cjc_version": "0.38.2",
+	"organization": "cangjie",
+	"name": "ahoCorasick4cj",
+	"description": "",
+	"version": "0.0.1",
+	"requires": {},
+	"package_requires": {},
+	"foreign_requires": {},
+	"output_type": "dynamic",
+	"command_option": "",
+	"condition_option": {},
+	"link_option": "",
+	"cross_compile_configuration": {},
+	"package_configuration": {}
+}

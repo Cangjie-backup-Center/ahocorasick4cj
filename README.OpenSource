@@ -1,11 +1,11 @@
 [
     {
-        "Name": " xxx",
+        "Name": " aho-corasick",
         "License": " Apache License ",
         "License File": " LICENSE ",
         "Version Number": " v2.0 ",
-        "Owner": "xxx"
-        "Upstream URL": "https://github.com/xxx",
-        "Description": " xxx."
+        "Owner": " robert-bor"
+        "Upstream URL": " https://github.com/robert-bor/aho-corasick ",
+        "Description": " Most free-text searching is based on Lucene-like approaches, where the search text is parsed into its various components. For every keyword a lookup is done to see where it occurs."
     }
 ]

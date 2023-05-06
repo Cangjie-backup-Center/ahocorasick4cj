@@ -1,3 +1,11 @@
 .git/
 .gitee/
 .vscode/
+build/
+ci_test/
+ci_lib/
+module-resolve.json
+*.gcda
+*.gcno
+output/
+*.bc
