@@ -1,0 +1,17 @@
+/*
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2023. All rights reserved.
+ */
+package ahoCorasick4cj
+
+/*
+ * The interface is Intervalable
+ * @since 0.38.2
+ */
+public interface Intervalable {
+
+    func getStart(): Int32
+    
+    func getEnd(): Int32
+
+    func size(): Int32
+}
