@@ -57,6 +57,27 @@ public open class Interval <: Intervalable {
      * @return A non-null String, never empty.
      */
     public open func toString(): String {
-        return this.start.toString() + ":" + this.end.toString();
+        return this.start.toString() + ":" + this.end.toString()
+    }
+
+    public open operator func ==(rhs: Intervalable): Bool {
+        if (this == rhs) {
+            return true
+        }
+        return false
+    }
+
+    public open operator func !=(rhs: Intervalable): Bool {
+        if (this != rhs) {
+            return true
+        }
+        return false
+    }
+
+    public open func hashCode(): Int64 {
+        var hash: Int64 = 0
+        hash = 31 * hash + Int64(start)
+        hash = 31 * hash + Int64(end)
+        return hash
     }
 }

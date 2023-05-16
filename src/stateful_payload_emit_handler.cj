@@ -7,6 +7,6 @@ package ahoCorasick4cj
  * The interface is StatefulPayloadEmitHandler
  * @since 0.38.2
  */
-public interface StatefulPayloadEmitHandler<T> {
+public interface StatefulPayloadEmitHandler<T> <: PayloadEmitHandler<T> {
     func getEmits(): ArrayList<PayloadEmit<T>>
 }

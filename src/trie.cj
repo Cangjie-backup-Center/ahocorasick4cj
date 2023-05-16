@@ -27,14 +27,19 @@ public class Trie {
     }
 
     public func parseText(text: String): Collection<Emit> {
-        return ArrayList<Emit>()
+        let parsedText: Collection<PayloadEmit<String>> = this.payloadTrie.parseText(text)
+        return asEmits(parsedText)
     }
 
     private static func asEmits(emits: Collection<PayloadEmit<String>>): Collection<Emit> {
-        return ArrayList<Emit>()
+        var result: ArrayList<Emit> = ArrayList<Emit>()
+        for (emit in emits) {
+            result.append(asEmit(emit))
+        }
+        return result
     }
 
     private static func asEmit(payloadEmit: PayloadEmit<String>): Emit {
-        return Emit()
+        return Emit(payloadEmit.getStart(), payloadEmit.getEnd(), payloadEmit.getKeyword())
     }
 }

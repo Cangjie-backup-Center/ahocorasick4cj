@@ -16,4 +16,31 @@ public class PayloadTrieBuilder<T> {
         this.trie.constructFailureStates()
         return this.trie
     }
+
+    /**
+     * Adds a keyword to the {@link Trie}'s list of text search keywords.
+     * No {@link Payload} is supplied.
+     *
+     * @param keyword The keyword to add to the list.
+     * @return This builder.
+     * @throws NullPointerException if the keyword is null.
+     */
+    public func addKeyword(keyword: String): PayloadTrieBuilder<T> {
+        this.trie.addKeyword(keyword)
+        return this
+    }
+
+    /**
+     * Adds a keyword and a payload to the {@link Trie}'s list of text
+     * search keywords.
+     *
+     * @param keyword The keyword to add to the list.
+     * @param payload the payload to add
+     * @return This builder.
+     * @throws NullPointerException if the keyword is null.
+     */
+    public func addKeyword(keyword: String, payload: ?T): PayloadTrieBuilder<T> {
+        this.trie.addKeyword(keyword, payload)
+        return this
+    }
 }

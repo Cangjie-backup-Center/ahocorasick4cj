@@ -60,4 +60,68 @@ public class IntervalNode {
         return (start + end) / 2
     }
 
+    public func findOverlaps(interval: Intervalable): ArrayList<Intervalable> {
+        var overlaps: ArrayList<Intervalable> = ArrayList<Intervalable>()
+        if (this.point < interval.getStart()) {
+            // Tends to the right
+            addToOverlaps(interval, overlaps, findOverlappingRanges(this.right, interval))
+            addToOverlaps(interval, overlaps, checkForOverlapsToTheRight(interval))
+        } else if (this.point > interval.getEnd()) {
+            // Tends to the left
+            addToOverlaps(interval, overlaps, findOverlappingRanges(this.left, interval))
+            addToOverlaps(interval, overlaps, checkForOverlapsToTheLeft(interval))
+        } else {
+            // Somewhere in the middle
+            addToOverlaps(interval, overlaps, this.intervals);
+            addToOverlaps(interval, overlaps, findOverlappingRanges(this.left, interval))
+            addToOverlaps(interval, overlaps, findOverlappingRanges(this.right, interval))
+        }
+        return overlaps
+    }
+
+    protected func addToOverlaps(interval: Intervalable, overlaps: ArrayList<Intervalable>, newOverlaps: ArrayList<Intervalable>): Unit {
+        for (currentInterval in newOverlaps) {
+            overlaps.append(currentInterval)
+        }
+    }
+
+    protected func checkForOverlapsToTheLeft(interval: Intervalable): ArrayList<Intervalable> {
+        return checkForOverlaps(interval, Direction.LEFT)
+    }
+
+    protected func checkForOverlapsToTheRight(interval: Intervalable): ArrayList<Intervalable> {
+        return checkForOverlaps(interval, Direction.RIGHT)
+    }
+
+    private func checkForOverlaps(interval: Intervalable, direction: Direction): ArrayList<Intervalable> {
+        var overlaps: ArrayList<Intervalable> = ArrayList<Intervalable>()
+        for (currentInterval in this.intervals) {
+            match (direction) {
+                case LEFT =>
+                    if (currentInterval.getStart() <= interval.getEnd()) {
+                        overlaps.append(currentInterval)
+                    }
+                    break
+                case RIGHT =>
+                    if (currentInterval.getEnd() >= interval.getStart()) {
+                        overlaps.append(currentInterval)
+                    }
+                    break
+            }
+        }
+        return overlaps
+    }
+
+    protected func findOverlappingRanges(node: ?IntervalNode, interval: Intervalable): ArrayList<Intervalable> {
+        if (let None = node) {
+            return ArrayList<Intervalable>()
+        }
+        return node.getOrThrow().findOverlaps(interval)
+    }
+
+}
+
+enum Direction {
+    LEFT |
+    RIGHT
 }
