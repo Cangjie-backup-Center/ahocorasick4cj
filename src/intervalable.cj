@@ -14,4 +14,6 @@ public interface Intervalable <: Hashable & Equatable<Intervalable> {
     func getEnd(): Int32
 
     func size(): Int32
+
+    func toString(): String
 }

@@ -45,14 +45,14 @@ public class PayloadEmit<T> <: Interval & Intervalable {
     }
 
     public operator func ==(rhs: Intervalable): Bool {
-        if (this == rhs) {
+        if (this.toString().equals(rhs.toString())) {
             return true
         }
         return false
     }
 
     public operator func !=(rhs: Intervalable): Bool {
-        if (this != rhs) {
+        if (!this.toString().equals(rhs.toString())) {
             return true
         }
         return false
