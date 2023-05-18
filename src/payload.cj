@@ -27,11 +27,11 @@ public class Payload<T> <: Hashable & Equatable<Payload<T>> {
     }
 
     public operator func ==(rhs: Payload<T>): Bool {
-        return this.keyword == rhs.keyword
+        return this.keyword.equals(rhs.keyword)
     }
 
     public operator func !=(rhs: Payload<T>): Bool {
-        return this.keyword != rhs.keyword
+        return !this.keyword.equals(rhs.keyword)
     }
 
     public func hashCode(): Int64 {

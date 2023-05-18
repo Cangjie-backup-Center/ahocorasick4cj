@@ -6,7 +6,7 @@
 <img alt="" src="https://img.shields.io/badge/release-v0.0.1-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjc-v0.38.2-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjcov-0%25-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjcov-95%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
 
@@ -40,6 +40,22 @@
 │   ├── assets
 │   ├── feature_api.md
 ├── src
+│   ├── default_payload_emit_handler.cj
+│   ├── emit.cj
+│   ├── interval_node.cj
+│   ├── interval_tree.cj
+│   ├── interval.cj
+│   ├── intervalable.cj
+│   ├── payload_emit_handler.cj
+│   ├── payload_emit.cj
+│   ├── payload_state.cj
+│   ├── payload_trie_builder.cj
+│   ├── payload_trie.cj
+│   ├── payload.cj
+│   ├── stateful_payload_emit_handler.cj
+│   ├── trie_builder.cj
+│   ├── trie_config.cj
+│   ├── trie.cj
 └── test   
     ├── HLT
     ├── LLT
