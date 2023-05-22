@@ -86,22 +86,17 @@ public class PayloadTrie<T> {
         }
         // Second, determine the fail state for all depth > 1 state
         while (!arrayList.isEmpty()) {
-            arrayList.remove(0)
-            var i = 0
-            while (i < arrayList.size) {
-                var currentState: PayloadState<T> = arrayList.get(i).getOrThrow()
-                for (transition in currentState.getTransitions()) {
-                    var targetState: PayloadState<T> = currentState.nextState(transition).getOrThrow()
-                    arrayList.append(targetState)
-                    var traceFailureState: PayloadState<T> = currentState.failures()
-                    while (let None = traceFailureState.nextState(transition)) {
-                        traceFailureState = traceFailureState.failures()
-                    }
-                    var newFailureState: PayloadState<T> = traceFailureState.nextState(transition).getOrThrow()
-                    targetState.setFailure(newFailureState)
-                    targetState.addEmit(newFailureState.emit())
+            var currentState: PayloadState<T> = arrayList.remove(0)
+            for (transition in currentState.getTransitions()) {
+                var targetState: PayloadState<T> = currentState.nextState(transition).getOrThrow()
+                arrayList.append(targetState)
+                var traceFailureState: ?PayloadState<T> = currentState.failures()
+                while (let None = traceFailureState.getOrThrow().nextState(transition)) {
+                    traceFailureState = traceFailureState.getOrThrow().failures()
                 }
-                i++
+                var newFailureState: PayloadState<T> = traceFailureState.getOrThrow().nextState(transition).getOrThrow()
+                targetState.setFailure(newFailureState)
+                targetState.addEmit(newFailureState.emit())
             }
         }
     }
@@ -141,13 +136,11 @@ public class PayloadTrie<T> {
         }
     }
 
-    private func processEmits(text: String, position: Int32, payloads: Collection<Payload<T>>, emitHandler: PayloadEmitHandler<T>): Bool {
+    private func processEmits(text: String, pos: Int32, payloads: Collection<Payload<T>>, emitHandler: PayloadEmitHandler<T>): Bool {
         var emitted: Bool = false
         for (payload in payloads) {
-            let payloadEmit: PayloadEmit<T> = PayloadEmit<T>(position - Int32(payload.getKeyword().size) + 1,
-                    position, payload.getKeyword(), payload.getData())
-            if (!(trieConfig.isOnlyWholeWords() && isPartialMatch(text, payloadEmit)) &&
-                    !(trieConfig.isOnlyWholeWordsWhiteSpaceSeparated() && isPartialMatchWhiteSpaceSeparated(text, payloadEmit))) {
+            let payloadEmit: PayloadEmit<T> = PayloadEmit<T>(pos - Int32(payload.getKeyword().size) + 1, pos, payload.getKeyword(), payload.getData())
+            if (!(trieConfig.isOnlyWholeWords() && isPartialMatch(text, payloadEmit)) && !(trieConfig.isOnlyWholeWordsWhiteSpaceSeparated() && isPartialMatchWhiteSpaceSeparated(text, payloadEmit))) {
                 emitted = emitHandler.emit(payloadEmit) || emitted
                 if (emitted && trieConfig.isStopOnHit()) {
                     break
@@ -169,10 +162,10 @@ public class PayloadTrie<T> {
     }
 
     private func getState(currentState: PayloadState<T>, character: Char): PayloadState<T> {
-        var current: PayloadState<T> = currentState
         var newCurrentState: ?PayloadState<T> = currentState.nextState(character)
         while (let None = newCurrentState) {
-            current = currentState.failures()
+            var current: PayloadState<T> = currentState
+            current = current.failures().getOrThrow()
             newCurrentState = current.nextState(character)
         }
         return newCurrentState.getOrThrow()

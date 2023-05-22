@@ -14,6 +14,52 @@
 
 #### 1.1 主要接口
 
+多字符搜索树类
+class Trie
+
+```cangjie
+
+    /**
+    * 构造方法，构造出一个 TrieBuilder 类对象
+    * 
+    * @return 返回一个 TrieBuilder 类对象
+    */
+    public static func builder(): TrieBuilder
+
+    /**
+    * 解析给定的文本，并返回匹配的负载
+    *
+    * @param text - 传入的文本信息
+    *
+    * @return 返回一个 Collection 集合
+    */
+    public func parseText(text: String): Collection<Emit>
+
+```
+
+多字符搜索树构建类
+class TrieBuilder
+
+```cangjie
+
+    /**
+    * 在文本搜索关键字列表中添加一个关键字
+    *
+    * @param keyword - 要添加到列表中的关键字
+    *
+    * @return 返回这个构建器
+    */
+    public func addKeyword(keyword: String): TrieBuilder
+
+    /**
+    * 构造方法，构造出一个 Trie 类对象
+    *
+    * @return 返回一个 Trie 类对象
+    */
+    public func build(): Trie
+
+```
+
 #### 1.2 其它接口
 
 处理发出的负载
@@ -452,4 +498,141 @@ class TrieConfig
     * @param caseInsensitive - Bool 类型
     */
     public func setCaseInsensitive(caseInsensitive: Bool): Unit
+```
+
+表示一个区间树的节点类
+class IntervalNode
+
+```cangjie
+
+    /**
+    * 构造方法，构造出一个 IntervalNode 类对象
+    *
+    * @param intervals - 传入一个 ArrayList 集合
+    *
+    * @return 返回一个 IntervalNode 类对象
+    */
+    public static func newInstance(intervals: ArrayList<Intervalable>): IntervalNode
+
+    /**
+    * 根据该节点包含的所有区间的起点和终点，计算出一个合适的中点值，使得左子树和右子树的区间数量尽量平衡
+    *
+    * @param intervals - 传入一个 ArrayList 集合
+    *
+    * @return 返回一个 Int32 类型
+    */
+    public static func determineMedian(intervals: ArrayList<Intervalable>): Int32
+
+    /**
+    * 查找该节点包含或重叠的所有区间
+    *
+    * @param intervals - 传入一个 Intervalable 类对象
+    *
+    * @return 返回一个 ArrayList 集合
+    */
+    public func findOverlaps(interval: Intervalable): ArrayList<Intervalable>
+```
+
+表示一个区间树类
+class IntervalTree
+
+```cangjie
+
+    /**
+    * IntervalTree 的有参构造
+    *
+    * @param intervals - 传入一个 ArrayList 集合
+    */
+    public init(intervals: ArrayList<Intervalable>)
+
+    /**
+    * 移除该节点包含或重叠的所有区间
+    *
+    * @param intervals - 传入一个 ArrayList 集合
+    *
+    * @return 返回移除后的 ArrayList 集合
+    */
+    public func removeOverlaps(intervals: ArrayList<Intervalable>): ArrayList<Intervalable>
+
+    /**
+    * 查找该节点包含或重叠的所有区间
+    *
+    * @param intervals - 传入一个 Intervalable 类对象
+    *
+    * @return 返回一个 ArrayList 集合
+    */
+    public func findOverlaps(interval: Intervalable): ArrayList<Intervalable>
+```
+
+负载状态实现构建类
+class PayloadTrieBuilder
+
+```cangjie
+
+    /**
+    * 构造方法，构造出一个 PayloadTrie 类对象
+    *
+    * @return 返回一个 PayloadTrie 类对象
+    */
+    public func build(): PayloadTrie<T>
+
+    /**
+    * 在文本搜索关键字列表中添加一个关键字
+    *
+    * @param keyword - 要添加到列表中的关键字
+    *
+    * @return 返回这个构建器
+    */
+    public func addKeyword(keyword: String): PayloadTrieBuilder<T>
+
+    /**
+    * 在文本搜索关键字列表中添加一个关键字
+    *
+    * @param keyword - 要添加到列表中的关键字
+    * @param keyword - 要添加的有效载荷
+    *
+    * @return 返回这个构建器
+    */
+    public func addKeyword(keyword: String, payload: ?T): PayloadTrieBuilder<T>
+
+```
+
+负载状态实现类
+class PayloadTrie
+
+```cangjie
+
+    /**
+    * 构造方法，构造出一个 PayloadTrieBuilder 类对象
+    *
+    * @return 返回一个 PayloadTrieBuilder 类对象
+    */
+    public static func builder(): PayloadTrieBuilder<T>
+
+    /**
+    * 解析给定的文本，并返回匹配的负载
+    *
+    * @param text - 传入的文本信息
+    *
+    * @return 返回一个 Collection 集合
+    */
+    public func parseText(text: String): Collection<PayloadEmit<T>>
+
+    /**
+    * 解析给定的文本，并返回匹配的负载
+    *
+    * @param text - 传入的文本信息
+    * @param emitHandler - 用于处理发出的负载的事件处理器
+    *
+    * @return 返回一个 Collection 集合
+    */
+    public func parseText(text: String, emitHandler: StatefulPayloadEmitHandler<T>): Collection<PayloadEmit<T>>
+
+    /**
+    * 解析给定的文本，并返回匹配的负载
+    *
+    * @param text - 传入的文本信息
+    * @param emitHandler - 用于处理发出的负载的事件处理器
+    */
+    public func parseText(text: String, emitHandler: PayloadEmitHandler<T>): Unit
 ```
