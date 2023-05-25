@@ -6,7 +6,7 @@
 <img alt="" src="https://img.shields.io/badge/release-v0.0.1-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjc-v0.38.2-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjcov-95%25-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjcov-92.9%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
 
@@ -100,7 +100,41 @@
 
 - 重复 [本项目编译运行方式的第二步](#jump)
 
-### 功能示例
+### 多字符搜索功能示例
+
+```cangjie
+from ahoCorasick4cj import ahoCorasick4cj.*
+from std import unittest.*
+from std import unittest.testmacro.*
+
+main(): Int64 {
+    let charSearchTest03 = CharSearchTest01()
+    charSearchTest01.testCharSearch01()
+}
+
+@Test
+public class CharSearchTest01 {
+
+    @TestCase
+    public func testCharSearch01(): Unit {
+        var builder = Trie.builder()
+        var trie = builder.addKeyword("hers").addKeyword("his").addKeyword("she").addKeyword("he").build()
+        var emits = trie.parseText("ushers")
+        var iter = emits.iterator()
+        for (i in iter) {
+            println(i.toString())
+        }
+    }
+}
+```
+
+执行结果如下：
+
+```shell
+1:3=she
+2:3=he
+2:5=hers
+```
 
 注意：用例需放入 `test/LLT` 下，执行步骤是 [本项目编译运行方式](#jump1)
 

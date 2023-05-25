@@ -14,7 +14,7 @@ public class PayloadState<T> {
      * only used for the root state to refer to itself in case no matches have been
      * found
      */
-    private var rootState: ?PayloadState<T> = None
+    public var rootState: ?PayloadState<T> = None
 
     /**
      * referred to in the white paper as the 'goto' structure. From a state it is
@@ -99,8 +99,8 @@ public class PayloadState<T> {
         return this.success.keys()
     }
 
-    public func failures(): PayloadState<T> {
-        return this.failure.getOrThrow()
+    public func failures(): ?PayloadState<T> {
+        return this.failure
     }
 
     public func addEmit(emits: Collection<Payload<T>>): Unit {
