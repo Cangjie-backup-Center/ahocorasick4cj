@@ -24,7 +24,6 @@ main(): Int64 {
     charSearchTest03.testCharSearch14()
     charSearchTest03.testCharSearch15()
     charSearchTest03.testCharSearch16()
-    charSearchTest03.testCharSearch17()
 
     return 0
 }
@@ -35,8 +34,8 @@ public class CharSearchTest03 {
     @TestCase
     public func testCharSearch01(): Unit {
         var builder = Trie.builder()
-        var trie = builder.addKeyword("hers").addKeyword("his").addKeyword("she").addKeyword("he").build()
-        var emits = trie.parseText("ushers")
+        var trie = builder.addKeyword("你").addKeyword("好").addKeyword("she").addKeyword("he").build()
+        var emits = trie.parseText("大三阶段了侃大山")
         var iter = emits.iterator()
         for (i in iter) {
             println(i.toString())
@@ -206,12 +205,6 @@ public class CharSearchTest03 {
         for (i in iter) {
             println(i.toString())
         }
-    }
-
-    @TestCase
-    public func testCharSearch17(): Unit {
-        var builder = PayloadTrie<String>.builder()
-        var payloadtrie = builder.addKeyword("你")
     }
 
 }

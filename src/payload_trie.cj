@@ -59,7 +59,7 @@ public class PayloadTrie<T> {
         var state: PayloadState<T> = getRootState()
         var adjustedChar: Char
         for (character in keyword.toCharArray()) {
-            if (isCaseInsensitive()) {
+            if (isCaseInsensitive()) { 
                 adjustedChar = character.toLowerCase()
             }
             adjustedChar = character
@@ -123,7 +123,7 @@ public class PayloadTrie<T> {
         var currentState: PayloadState<T> = getRootState()
         var position = 0
         while (position < text.size) {
-            var character: Char = text.charAt(position)
+            var character: Char = text[position]
             if (trieConfig.isCaseInsensitive()) {
                 character = character.toLowerCase()
             }
@@ -151,14 +151,14 @@ public class PayloadTrie<T> {
     }
 
     private func isPartialMatch(searchText: String, emit: PayloadEmit<T>): Bool {
-        return (emit.getStart() != 0 && (searchText.charAt(Int64(emit.getStart()) - 1)).isLetter()) ||
-                (Int64(emit.getEnd()) + 1 != searchText.size && (searchText.charAt(Int64(emit.getEnd()) + 1)).isLetter())
+        return (emit.getStart() != 0 && (searchText[Int64(emit.getStart()) - 1]).isLetter()) ||
+                (Int64(emit.getEnd()) + 1 != searchText.size && (searchText[Int64(emit.getEnd()) + 1]).isLetter())
     }
 
     private func isPartialMatchWhiteSpaceSeparated(searchText: String, emit: PayloadEmit<T>): Bool {
         let size: Int64 = searchText.size
-        return (emit.getStart() != 0 && !(searchText.charAt(Int64(emit.getStart()) - 1)).isWhiteSpace()) ||
-                (Int64(emit.getEnd()) + 1 != size && !(searchText.charAt(Int64(emit.getEnd()) + 1)).isWhiteSpace())
+        return (emit.getStart() != 0 && !(searchText[Int64(emit.getStart()) - 1]).isWhiteSpace()) ||
+                (Int64(emit.getEnd()) + 1 != size && !(searchText[Int64(emit.getEnd()) + 1]).isWhiteSpace())
     }
 
     private func getState(currentState: PayloadState<T>, character: Char): PayloadState<T> {

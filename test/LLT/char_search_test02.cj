@@ -25,8 +25,8 @@ public class CharSearchTest02 {
     @TestCase
     public func testDefaultPayloadEmitHandler(): Unit {
         var d: DefaultPayloadEmitHandler<String> = DefaultPayloadEmitHandler<String>()
-        let arr = d.getEmits()
         let res = d.emit(PayloadEmit<String>(1, 9, "", None))
+        d.getEmits()
         @Assert(res, true)
     }
 
@@ -38,11 +38,13 @@ public class CharSearchTest02 {
         let k: String = e.getKeyword()
         let b1: Bool = e ==(e2)
         let b2: Bool = e !=(e2)
-        let b3: Bool = e ==(e3)
+        let b3: Bool = e !=(e3)
         let b4: Bool = e ==(e3)
         @Assert(k, "cang")
         @Assert(b1, false)
         @Assert(b2, true)
+        @Assert(b3, false)
+        @Assert(b4, true)
     }
 
     @TestCase
@@ -53,11 +55,13 @@ public class CharSearchTest02 {
         let start = i.getStart()
         let b1: Bool = i ==(i2)
         let b2: Bool = i !=(i2)
-        let b3: Bool = i ==(i3)
+        let b3: Bool = i !=(i3)
         let b4: Bool = i ==(i3)
         @Assert(start, 5)
         @Assert(b1, false)
         @Assert(b2, true)
+        @Assert(b3, false)
+        @Assert(b4, true)
     }
 
     @TestCase
@@ -80,9 +84,9 @@ public class CharSearchTest02 {
         let p2: PayloadEmit<String> = PayloadEmit<String>(5, 7, "fff", "ggg")
         let str: String = p.getKeyword()
         let data = p.getPayload()
-        let str2: String = p2.toString()
         let b1: Bool = p ==(p2)
         let b2: Bool = p !=(p2)
+        p2.toString()
         @Assert(str, "sss")
         @Assert(data, "ddd")
         @Assert(b1, false)
