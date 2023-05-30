@@ -25,6 +25,9 @@ public class PayloadEmit<T> <: Interval & Intervalable {
         super(start,end)
         this.keyword = keyword
         this.payload = payload
+        if ((end - start) < 0) {
+            throw Exception("The start length must be smaller than the end length")
+        }
     }
 
     public func getKeyword(): String {
