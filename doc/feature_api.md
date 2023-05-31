@@ -357,7 +357,7 @@ class PayloadState
 
     * @param character - 传入的字符
     *
-    * @return 返回 Option 类型
+    * @return 返回 PayloadState 有效载荷状态节点
     */
     public func addState(character: Char): PayloadState<T>
 
@@ -391,7 +391,6 @@ class PayloadState
     *
     * @param failState - 传入 PayloadState 对象
     *
-    * @return 返回 Int64 类型
     */
     public func setFailure(failState: PayloadState<T>): Unit
 
@@ -405,9 +404,9 @@ class PayloadState
     /**
     * 获取该状态节点的失败状态节点，即在状态转移图中当没有匹配的子状态节点时，需要跳转到的状态节点
     *
-    * @return 返回该状态节点的失败状态节点
+    * @return 返回 Option 类型，表示该状态节点的失败状态节点
     */
-    public func failures(): PayloadState<T>
+    public func failures(): ?PayloadState<T>
 
     /**
     * 向该状态节点添加一个发出的负载集合
@@ -635,4 +634,64 @@ class PayloadTrie
     * @param emitHandler - 用于处理发出的负载的事件处理器
     */
     public func parseText(text: String, emitHandler: PayloadEmitHandler<T>): Unit
+```
+
+#### 1.3 示例
+
+```cangjie
+from ahoCorasick4cj import ahoCorasick4cj.*
+from std import unittest.*
+from std import unittest.testmacro.*
+
+main(): Int64 {
+    let charSearchTest01 = CharSearchTest01()
+    charSearchTest01.testCharSearch01()
+    charSearchTest01.testCharSearch02()
+    charSearchTest01.testCharSearch03()
+}
+
+@Test
+public class CharSearchTest01 {
+
+    @TestCase
+    public func testCharSearch01(): Unit {
+        var builder = Trie.builder()
+        var trie = builder.addKeyword("shier").build()
+        var emits = trie.parseText("dasm,nzxmvshier.sa,nd")
+        var iter = emits.iterator()
+        for (i in iter) {
+            println(i.toString())
+        }
+    }
+
+    @TestCase
+    public func testCharSearch02(): Unit {
+        var builder = Trie.builder()
+        var trie = builder.addKeyword("shisi").build()
+        var emits = trie.parseText("xz.jagajgspjlkn")
+        var iter = emits.iterator()
+        for (i in iter) {
+            println(i.toString())
+        }
+    }
+
+    @TestCase
+    public func testCharSearch03(): Unit {
+        var builder = Trie.builder()
+        var trie = builder.addKeyword("你").addKeyword("好").build()
+        var emits = trie.parseText("中国你好，加油仓颉")
+        var iter = emits.iterator()
+        for (i in iter) {
+            println(i.toString())
+        }
+    }
+}
+```
+
+执行结果如下:
+
+```shell
+10:14=shier
+2:2=你
+3:3=好
 ```

@@ -59,7 +59,6 @@
 └── test   
     ├── HLT
     ├── LLT
-    └── UT
 ├── CHANGELOG.md
 ├── gitee_gate.cfg
 ├── LICENSE
@@ -70,7 +69,7 @@
 
 - `doc` 存放库的设计文档、使用文档、需求文档、LLT 用例覆盖报告
 - `src` 是库源码目录
-- `test` 是存放测试用例的文件夹，含有 HLT 测试用例、LLT 自测用例和 UT 单元测试用例
+- `test` 是存放测试用例的文件夹，含有 HLT 测试用例、LLT 自测用例
 
 ### 接口说明
 
@@ -80,9 +79,9 @@
 
 ### 编译
 
-1. <a id = "jump1">本项目编译运行方式<a>
+1. 本项目编译运行方式
 
--  <a id = "jump">引入 testJekins 包<a>
+-  引入 testJekins 包
 
     ```
     git clone https://gitee.com/HW-PLLab/testJekins
@@ -98,7 +97,7 @@
     ```
     test/LLT 用例书写参考：https://gitee.com/HW-PLLab/cangjie-library-pages/wikis 的门禁测试脚本使用方式
 
-- 重复 [本项目编译运行方式的第二步](#jump)
+- 重复本项目编译运行方式的第二步
 
 ### 多字符搜索功能示例
 
@@ -136,7 +135,7 @@ public class CharSearchTest01 {
 2:5=hers
 ```
 
-注意：用例需放入 `test/LLT` 下，执行步骤是 [本项目编译运行方式](#jump1)
+注意：用例需放入 `test/LLT` 下，执行步骤是: 本项目编译运行方式
 
 
 ## <img alt="" src="./doc/assets/readme-icon-contribute.png" style="display: inline-block;" width=3%/> 参与贡献
