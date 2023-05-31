@@ -16,6 +16,9 @@ public class Emit <: Interval & Intervalable {
     public init(start: Int32, end: Int32, keyword: String) {
         super(start, end)
         this.keyword = keyword
+        if ((end - start) < 0) {
+            throw Exception("The start length must be smaller than the end length")
+        }
     }
 
     public func getKeyword(): String {

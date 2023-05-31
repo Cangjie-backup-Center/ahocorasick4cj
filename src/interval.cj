@@ -21,6 +21,9 @@ public open class Interval <: Intervalable {
     public init(start: Int32, end: Int32) {
         this.start = start
         this.end = end
+        if ((end - start) < 0) {
+            throw Exception("The start length must be smaller than the end length")
+        }
     }
 
     /**

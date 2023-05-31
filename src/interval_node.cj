@@ -9,8 +9,8 @@ package ahoCorasick4cj
  */
 public class IntervalNode {
 
-    var left: IntervalNode = IntervalNode()
-    var right: IntervalNode = IntervalNode()
+    var left: ?IntervalNode = None
+    var right: ?IntervalNode = None
     var point: Int32 = 0
     var intervals: ArrayList<Intervalable> = ArrayList<Intervalable>()
 
