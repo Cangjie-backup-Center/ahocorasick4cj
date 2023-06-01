@@ -26,10 +26,15 @@ public class IntervalTree {
             // Remove all overallping intervals
             removeIntervals.putAll(findOverlaps(interval))
         }
-
         // Remove all intervals that were overlapping
         for (removeInterval in removeIntervals) {
-            intervals.removeIf({removeInterval: Intervalable => return true})
+            intervals.removeIf({r: Intervalable => 
+                if (r == removeInterval) {
+                    return true
+                } else {
+                    return false
+                }
+            })
         }
         intervals.sortBy(comparePosition, stable: true)
         return intervals
@@ -40,7 +45,7 @@ public class IntervalTree {
     }
 
     private func compareSize(intervalable: Intervalable, intervalable2: Intervalable): Ordering {
-        var comparison = intervalable.size() - intervalable2.size()
+        var comparison = intervalable2.size() - intervalable.size()
         if (comparison > 0) {
             return Ordering.GT
         } else if(comparison < 0) {

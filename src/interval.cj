@@ -54,6 +54,38 @@ public open class Interval <: Intervalable {
     }
 
     /**
+     * Answers whether the given interval overlaps this interval
+     * instance.
+     *
+     * @param other the other interval to check for overlap
+     * @return true The intervals overlap.
+     */
+    public func overlapsWith(other: Interval): Bool {
+        return this.start <= other.getEnd() && this.end >= other.getStart()
+    }
+
+    public func overlapsWith(point: Int32): Bool {
+        return this.start <= point && point <= this.end
+    }
+
+    public func equals(other: Intervalable): Bool {
+        return this.start == other.getStart() && this.end == other.getEnd()
+    }
+
+    public func compareTo(o: Object): Int32 {
+        if (!(o is Intervalable)) {
+            return -1
+        }
+        var other: Intervalable = (o as Intervalable).getOrThrow()
+        let comparison = this.start - other.getStart()
+        if (comparison != 0) {
+            return comparison
+        } else {
+            return this.end - other.getEnd()
+        }
+    }
+
+    /**
      * Returns the starting offset and ending offset separated
      * by a full colon (:).
      *
@@ -78,9 +110,6 @@ public open class Interval <: Intervalable {
     }
 
     public open func hashCode(): Int64 {
-        var hash: Int64 = 0
-        hash = 31 * hash + Int64(start)
-        hash = 31 * hash + Int64(end)
-        return hash
+        return Int64(this.start % 100 + this.end % 100)
     }
 }

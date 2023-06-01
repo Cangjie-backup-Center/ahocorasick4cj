@@ -10,7 +10,7 @@ from std import unicode.*
  */
 public class PayloadTrie<T> {
     
-    private let trieConfig: TrieConfig
+    protected let trieConfig: TrieConfig
     private let rootState: PayloadState<T>
 
     protected init(trieConfig: TrieConfig) {
@@ -68,6 +68,45 @@ public class PayloadTrie<T> {
         return state
     }
 
+    /**
+     * Tokenizes the specified text and returns the emitted outputs.
+     *
+     * @param text The text to tokenize.
+     * @return the emitted outputs
+     */
+    public func tokenize(text: String): Collection<PayloadToken<T>> {
+        var tokens: ArrayList<PayloadToken<T>> = ArrayList<PayloadToken<T>>()
+        let collectedEmits: Collection<PayloadEmit<T>> = parseText(text)
+        var lastCollectedPosition: Int32 = -1
+
+        for (emit in collectedEmits) {
+            if (emit.getStart() - lastCollectedPosition > 1) {
+                tokens.append( createFragment( emit, text, lastCollectedPosition) )
+            }
+
+            tokens.append(createMatch(emit, text))
+            lastCollectedPosition = emit.getEnd()
+        }
+
+        if (Int32(text.size) - lastCollectedPosition > 1) {
+            tokens.append( createFragment( None, text, lastCollectedPosition) )
+        }
+
+        return tokens
+    }
+
+    private func createFragment(emit: ?PayloadEmit<T>, text: String, lastCollectedPosition: Int32): PayloadToken<T> {
+        if (let None = emit) {
+            return PayloadFragmentToken<T>(text[Int64(lastCollectedPosition + 1)..text.size])
+        } else {
+            return PayloadFragmentToken<T>(text[Int64(lastCollectedPosition + 1)..Int64(emit.getOrThrow().getStart())])
+        }
+    }
+
+    private func createMatch(emit: PayloadEmit<T>, text: String): PayloadToken<T> {
+        return PayloadMatchToken<T>(text[Int64(emit.getStart())..Int64(emit.getEnd() + 1)], emit)
+    }
+
     private func getRootState(): PayloadState<T> {
         return this.rootState
     }
@@ -109,14 +148,77 @@ public class PayloadTrie<T> {
         parseText(text, (emitHandler as PayloadEmitHandler<T>).getOrThrow())
         let collectedEmits: ArrayList<PayloadEmit<T>> = emitHandler.getEmits()
         if (!trieConfig.isAllowOverlaps()) {
-            let collectedIntervalable: ArrayList<Intervalable> = match (collectedEmits as ArrayList<Intervalable>) {
-                case Some(v) => v
-                case None => ArrayList<Intervalable>()
+            let convertArr: ArrayList<Intervalable> = ArrayList<Intervalable>()
+            for (col in collectedEmits) {
+                convertArr.append(col)
             }
-            let intervalTree: IntervalTree  = IntervalTree(collectedIntervalable)
-            intervalTree.removeOverlaps(collectedIntervalable)
+            let intervalTree: IntervalTree  = IntervalTree(convertArr)
+            intervalTree.removeOverlaps(convertArr)
+            let arr2: ArrayList<PayloadEmit<T>> = ArrayList<PayloadEmit<T>>()
+            for (coll in convertArr) {
+                arr2.append((coll as PayloadEmit<T>).getOrThrow())
+            }
+            return arr2
         }
         return collectedEmits
+    }
+
+    /**
+     * Returns true if the text contains one of the search terms; otherwise,
+     * returns false.
+     *
+     * @param text Specified text.
+     * @return true if the text contains one of the search terms. Else, returns
+     *         false.
+     */
+    public func containsMatch(text: String): Bool {
+        if (let Some(v) = firstMatch(text)) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    /**
+     * The first matching text sequence.
+     *
+     * @param text The text to search for keywords, must not be {@code null}.
+     * @return {@code null} if no matches found.
+     */
+    public func firstMatch(text: String): ?PayloadEmit<T> {
+        if (!trieConfig.isAllowOverlaps()) {
+            // Slow path. Needs to find all the matches to detect overlaps.
+            let parseText: Collection<PayloadEmit<T>> = parseText(text)
+            if (!parseText.isEmpty()) {
+                return parseText.iterator().next()
+            }
+        } else {
+            // Fast path. Returns first match found.
+            var currentState: PayloadState<T> = getRootState()
+            var position: Int64 = 0
+            while (position < text.size) {
+                var character: Char = text[position]
+                if (trieConfig.isCaseInsensitive()) {
+                    character = character.toLowerCase()
+                }
+                currentState = getState(currentState, character)
+                let payloads: Collection<Payload<T>> = currentState.emit()
+                if (!payloads.isEmpty()) {
+                    for (payload in payloads) {
+                        let emit: PayloadEmit<T> = PayloadEmit<T>(Int32(position - payload.getKeyword().size) + 1, Int32(position), payload.getKeyword(), payload.getData())
+                        if (trieConfig.isOnlyWholeWords()) {
+                            if (!isPartialMatch(text, emit)) {
+                                return emit
+                            }
+                        } else {
+                            return emit
+                        }
+                    }
+                }
+                position++
+            }
+        }
+        return None
     }
 
     public func parseText(text: String, emitHandler: PayloadEmitHandler<T>): Unit {
@@ -132,7 +234,7 @@ public class PayloadTrie<T> {
             if (processEmits(text, Int32(position), payloads, emitHandler) && trieConfig.isStopOnHit()) {
                 return
             }
-            position ++
+            position++
         }
     }
 

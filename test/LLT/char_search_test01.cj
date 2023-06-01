@@ -69,7 +69,7 @@ public class CharSearchTest {
         @Assert(start, 1)
         @Assert(b1, false)
         @Assert(b2, true)
-        @Assert(h, 33)
+        @Assert(h, 3)
         @Assert(b3, false)
         @Assert(b4, true)
     }

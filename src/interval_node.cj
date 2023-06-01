@@ -81,7 +81,9 @@ public class IntervalNode {
 
     protected func addToOverlaps(interval: Intervalable, overlaps: ArrayList<Intervalable>, newOverlaps: ArrayList<Intervalable>): Unit {
         for (currentInterval in newOverlaps) {
-            overlaps.append(currentInterval)
+            if (!currentInterval.equals(interval)) {
+                overlaps.append(currentInterval)
+            }
         }
     }
 
