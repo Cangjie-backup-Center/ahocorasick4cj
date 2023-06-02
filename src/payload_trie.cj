@@ -163,8 +163,8 @@ public class PayloadTrie<T> {
 
     private func getState(currentState: PayloadState<T>, character: Char): PayloadState<T> {
         var newCurrentState: ?PayloadState<T> = currentState.nextState(character)
+        var current: PayloadState<T> = currentState
         while (let None = newCurrentState) {
-            var current: PayloadState<T> = currentState
             current = current.failures().getOrThrow()
             newCurrentState = current.nextState(character)
         }
