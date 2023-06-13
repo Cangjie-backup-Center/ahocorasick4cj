@@ -4,9 +4,9 @@
 package ahoCorasick4cj
 
 /*
- * The interface is PayloadEmitHandler
+ * The class is EmitHandler
  * @since 0.38.2
  */
-public interface PayloadEmitHandler<T> {
-    func emit(emit: PayloadEmit<T>): Bool
+public interface EmitHandler {
+    func emit(emit: Emit): Bool
 }

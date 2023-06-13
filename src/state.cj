@@ -1,0 +1,129 @@
+/*
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2023. All rights reserved.
+ */
+package ahoCorasick4cj
+
+/*
+ * The class is State
+ * @since 0.38.2
+ */
+public class State {
+
+    /**
+     * effective the size of the keyword
+     */
+    private var depth: Int32 = 0
+
+    /**
+     * only used for the root state to refer to itself in case no matches have been
+     * found
+     */
+    public var rootState: ?State = None
+
+    /**
+     * referred to in the white paper as the 'goto' structure. From a state it is
+     * possible to go to other states, depending on the character passed.
+     */
+    private var success: Map<Char, State> = HashMap<Char, State>()
+
+    /**
+     * if no matching states are found, the failure state will be returned
+     */
+    private var failure: ?State = None
+
+    /**
+     * whenever this state is reached, it will emit the matches keywords for future
+     * reference
+     */
+    private var emits: ?Set<String> = HashSet<String>()
+
+    protected init() {
+        this(0)
+    }
+
+    public init(depth: Int32) {
+        this.depth = depth
+        if (depth == 0) {
+            this.rootState = this
+        } else {
+            this.rootState = None
+        }
+    }
+
+    private func nextState(character: Char, ignoreRootState: Bool): ?State {
+        var nextState: ?State = this.success.get(character)
+        if (!ignoreRootState) {
+            if (let None = nextState) {
+                if (let Some(v) = rootState) {
+                    nextState = this.rootState
+                }
+            }
+        }
+        return nextState
+    }
+
+    public func nextState(character: Char): ?State {
+        return nextState(character, false)
+    }
+
+    public func nextStateIgnoreRootState(character: Char): ?State {
+        return nextState(character, true)
+    }
+
+    public func addState(keyword: String): State {
+        var state: State = this
+        for (character in keyword.toCharArray()) {
+            state = state.addState(character)
+        }
+        return state
+    }
+
+    public func addState(character: Char): State {
+        var nextState: ?State = nextStateIgnoreRootState(character)
+        if (let None = nextState) {
+            nextState = State(this.depth + 1)
+            this.success.put(character, nextState.getOrThrow())
+        }
+        return nextState.getOrThrow()
+    }
+
+    public func getDepth(): Int32 {
+        return this.depth
+    }
+
+    public func addEmit(keyword: String): Unit {
+        if (let None = this.emits) {
+            this.emits = HashSet<String>()
+        }
+        this.emits.getOrThrow().put(keyword)
+    }
+
+    public func addEmit(emits: Collection<String>): Unit {
+        for (emit in emits) {
+            addEmit(emit)
+        }
+    }
+
+    public func emit(): Collection<String> {
+        if (let None = this.emits) {
+            return ArrayList<String>()
+        }
+        return this.emits.getOrThrow()
+    }
+
+    public func failures(): ?State {
+        return this.failure
+    }
+
+    public func setFailure(failState: State): Unit {
+        return this.failure = failState
+    }
+
+    public func getStates(): Collection<State> {
+        return this.success.values()
+    }
+
+    public func getTransitions(): Collection<Char> {
+        return this.success.keys()
+    }
+}

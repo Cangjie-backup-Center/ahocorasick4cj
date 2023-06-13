@@ -16,4 +16,6 @@ public interface Intervalable <: Hashable & Equatable<Intervalable> {
     func size(): Int32
 
     func toString(): String
+
+    func equals(o: Intervalable): Bool
 }

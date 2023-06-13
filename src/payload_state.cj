@@ -3,6 +3,10 @@
  */
 package ahoCorasick4cj
 
+/*
+ * The class is PayloadState
+ * @since 0.38.2
+ */
 public class PayloadState<T> {
 
     /**
@@ -73,6 +77,10 @@ public class PayloadState<T> {
 
     public func nextState(character: Char): ?PayloadState<T> {
         return nextState(character, false)
+    }
+
+    public func getDepth(): Int32 {
+        return this.depth
     }
 
     private func nextState(character: Char, ignoreRootState: Bool): ?PayloadState<T> {
