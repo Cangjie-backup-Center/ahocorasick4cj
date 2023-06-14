@@ -695,3 +695,896 @@ public class CharSearchTest01 {
 2:2=你
 3:3=好
 ```
+
+### 2 支持关键词库模式功能
+
+前置条件：NA
+场景：
+通过遍历关键词库进行匹配，可以在遇到匹配项时立即处理匹配项。
+约束：NA 
+性能： 支持版本几何性能持平
+可靠性： NA
+
+#### 2.1 主要接口
+
+它是一个用于存储和搜索字符串和负载的数据结构
+class PayloadTrie
+
+```cangjie
+
+    /**
+    * 根据给定的文本将文本分割成令牌，返回一个集合
+    *
+    * @param text - 指定的文本
+    *
+    * @return 返回一个 Collection 集合
+    */
+    public func tokenize(text: String): Collection<PayloadToken<T>>
+
+    /**
+    * 根据给定的文本搜索第一个匹配的字符串和负载，返回一个 PayloadEmit 对象或 None
+    *
+    * @param text - 指定的文本
+    *
+    * @return 返回一个 PayloadEmit 对象或 None
+    *
+    */
+    public func firstMatch(text: String): ?PayloadEmit<T>
+
+```
+
+#### 2.2 其他接口
+
+它实现了 StatefulEmitHandler 接口，用于处理匹配到的字符串
+class AbstractStatefulEmitHandler
+
+```cangjie
+
+    /**
+    * 给匹配器添加负载
+    *
+    * @param emit - 传入的负载类对象
+    *
+    */
+    public func addEmit(emit: Emit): Unit
+
+    /**
+    * 获取匹配器的负载集合
+    *
+    * @return 返回该匹配器的负载集合
+    *
+    */
+    public func getEmits(): ArrayList<Emit>
+
+```
+
+它实现了 StatefulPayloadEmitHandler 接口，用于处理匹配到的字符串和负载
+class AbstractStatefulPayloadEmitHandler
+
+```cangjie
+
+    /**
+    * 给匹配器添加负载和有效载荷
+    *
+    * @param emit - 传入的负载与载荷类对象
+    *
+    */
+    public func addEmit(emit: PayloadEmit<T>): Unit
+
+    /**
+    * 获取匹配器的负载和有效载荷的集合
+    *
+    * @return 返回该匹配器的负载和有效载荷的集合
+    *
+    */
+    public func getEmits(): ArrayList<PayloadEmit<T>>
+
+```
+
+它是一个默认的处理匹配到的字符串的类
+class DefaultEmitHandler
+
+```cangjie
+
+    /**
+    * 处理匹配到的字符串，返回true表示继续搜索。此方法只打印出匹配到的字符串和位置
+    *
+    * @param emit - 传入的负载对象
+    *
+    * @return 返回 Bool 类型
+    */
+    public func emit(emit: Emit): Bool
+
+    /**
+    * 获取匹配器的负载集合
+    *
+    * @return 返回该匹配器的负载集合
+    *
+    */
+    public func getEmits(): ArrayList<Emit>
+
+```
+
+它是一个默认的表示令牌的类
+class DefaultToken
+
+```cangjie
+
+    /**
+    * DefaultToken 的有参构造器
+    *
+    * @param payloadToken - 传入一个 PayloadToken 对象
+    *
+    */
+    public init(payloadToken: PayloadToken<String>)
+
+    /**
+    * 判断令牌是否是一个完整的匹配，即令牌的结束位置是否是一个关键词的结束位置
+    *
+    * @return 返回 Bool 类型
+    */
+    public func isMatch(): Bool
+
+    /**
+    * 获取令牌对应的Emit对象
+    *
+    * @return 返回 Option 类型
+    *
+    */
+    public func getEmit(): ?Emit
+
+```
+
+它是一个表示匹配到的字符串片段的类
+class FragmentToken
+
+```cangjie
+
+    /**
+    * FragmentToken 的有参构造器
+    *
+    * @param fragment - 根据给定的字符串片段创建一个令牌
+    *
+    */
+    public init(fragment: String)
+
+    /**
+    * 判断令牌是否是一个完整的匹配，对于这个类，总是返回false
+    *
+    * @return 返回 Bool 类型
+    */
+    public func isMatch(): Bool
+
+    /**
+    * 获取令牌对应的Emit对象，对于这个类，总是返回 None
+    *
+    * @return 返回 Option 类型
+    *
+    */
+    public func getEmit(): ?Emit
+
+```
+
+一个实现了Intervalable接口的类，它是一个表示匹配到的字符串的起始和结束位置的类
+class Interval
+
+```cangjie
+
+    /**
+    * 判断区间是否和另一个区间重叠与否
+    *
+    * @param other - 传入的另一个 Interval 对象
+    *
+    * @return 返回 Bool 类型
+    */
+    public func overlapsWith(other: Interval): Bool
+
+    /**
+    * 判断区间是否包含一个点
+    *
+    * @param point - Int32 类型
+    *
+    * @return 返回 Bool 类型
+    */
+    public func overlapsWith(point: Int32): Bool
+
+    /**
+    * 判断两个区间是否相等
+    *
+    * @param other - 传入的另一个 Interval 对象
+    *
+    * @return 返回 Bool 类型
+    *
+    */
+    public func equals(other: Intervalable): Bool
+
+    /**
+    * 比较两个区间的大小，先比较起始位置，再比较结束位置
+    *
+    * @param o - 传入的另一个 Object 对象
+    *
+    * @return 返回 Int32 类型
+    *
+    */
+    public func compareTo(o: Object): Int32
+
+```
+
+它是一个表示匹配到的字符串和位置的类
+class MatchToken
+
+```cangjie
+
+    /**
+    * MatchToken 的有参构造器
+    *
+    * @param fragment - 根据给定的字符串片段创建一个令牌
+    * @param emit - 传入的负载对象
+    *
+    */
+    public init(fragment: String, emit: Emit)
+
+    /**
+    * 判断令牌是否是一个完整的匹配，对于这个类，总是返回true
+    *
+    * @return 返回 Bool 类型
+    */
+    public func isMatch(): Bool
+
+    /**
+    * 获取令牌对应的Emit对象
+    *
+    * @return 返回 Option 类型
+    *
+    */
+    public func getEmit(): ?Emit
+
+```
+
+它是一个用于将匹配到的字符串和负载委托给另一个处理器的类
+class PayloadEmitDelegateHandler
+
+```cangjie
+
+    /**
+    * PayloadEmitDelegateHandler 的有参构造器
+    *
+    * @param handler - 根据给定的处理器创建一个委托处理器
+    *
+    */
+    public init(handler: EmitHandler)
+
+    /**
+    * 处理匹配到的字符串和负载，返回是否继续搜索。这个方法会调用委托处理器的emit方法
+    *
+    * @param emit - 传入一个 PayloadEmit 类对象
+    *
+    * @return 返回 Bool 类型
+    */
+    public func emit(emit: PayloadEmit<String>): Bool
+
+```
+
+它是一个表示匹配到的字符串片段和负载的类
+class PayloadFragmentToken
+
+```cangjie
+
+    /**
+    * MatchToken 的有参构造器
+    *
+    * @param fragment - 根据给定的字符串片段和负载创建一个令牌
+    *
+    */
+    public init(fragment: String)
+
+    /**
+    * 判断令牌是否是一个完整的匹配，对于这个类，总是返回false
+    *
+    * @return 返回 Bool 类型
+    */
+    public func isMatch(): Bool
+
+    /**
+    * 获取令牌对应的Emit对象，对于这个类，总是返回None
+    *
+    * @return 返回 Option 类型
+    *
+    */
+    public func getEmit(): ?Emit
+
+```
+
+它是一个表示匹配到的字符串和位置的类
+class PayloadMatchToken
+
+```cangjie
+
+    /**
+    * MatchToken 的有参构造器
+    *
+    * @param fragment - 根据给定的字符串片段创建一个令牌
+    * @param emit - 传入的 PayloadEmit 类对象
+    *
+    */
+    public init(fragment: String, emit: PayloadEmit<T>)
+
+    /**
+    * 判断令牌是否是一个完整的匹配，对于这个类，总是返回true
+    *
+    * @return 返回 Bool 类型
+    */
+    public func isMatch(): Bool
+
+    /**
+    * 获取令牌对应的Emit对象
+    *
+    * @return 返回 Option 类型
+    *
+    */
+    public func getEmit(): ?Emit
+
+```
+
+它是一个表示有效载荷状态的类
+class PayloadState
+
+```cangjie
+
+    /**
+    * 获取深度状态
+    *
+    * @return 返回 Int32 类型
+    *
+    */
+    public func getDepth(): Int32
+
+```
+
+它是一个携带有效载荷的令牌类
+class PayloadToken
+
+```cangjie
+
+    /**
+    * PayloadToken 的有参构造器
+    *
+    * @param fragment - 传入给定的字符串片段
+    *
+    */
+    public init(fragment: String)
+
+    /**
+    * 获取字符串片段
+    *
+    * @return 返回 String 类型
+    */
+    public func getFragment(): String
+
+    /**
+    * 是否匹配到关键词
+    *
+    * @return 返回 Bool 类型
+    *
+    */
+    public func isMatch(): Bool
+
+    /**
+    * 获取负载
+    *
+    * @return 返回 Option 类型
+    *
+    */
+    public func getEmit(): ?PayloadEmit<T>
+
+```
+
+它是一个用于存储和搜索字符串和负载的数据结构
+class PayloadTrie
+
+```cangjie
+
+    /**
+    * 根据给定的文本判断文本是否包含匹配的字符串
+    *
+    * @param text - 指定的文本
+    *
+    * @return 返回一个 Bool 类型
+    */
+    public func containsMatch(text: String): Bool
+
+```
+
+#### 2.3 示例
+
+```cangjie
+from ahoCorasick4cj import ahoCorasick4cj.*
+from std import unittest.*
+from std import collection.*
+from std import unittest.testmacro.*
+
+main(): Int64 {
+    let charSearchTest05 = CharSearchTest05()
+    charSearchTest05.testCharSearch01()
+    return 0
+}
+
+@Test
+public class CharSearchTest05 {
+
+    @TestCase
+    public func testCharSearch01(): Unit {
+
+        let speech: String = "The Answer to the Great Question... Of Life, " +
+            "the Universe and Everything... Is... Forty-two,' said " +
+            "Deep Thought, with infinite majesty and calm."
+
+        var trie = Trie.builder().ignoreOverlaps().onlyWholeWords().ignoreCase()
+            .addKeyword("great question")
+            .addKeyword("forty-two")
+            .addKeyword("deep thought")
+            .build()
+        var tokens = trie.tokenize(speech)
+        var html: StringBuilder = StringBuilder()
+        html.append("<html><body><p>")
+
+        for (token in tokens) {
+            if (token.isMatch()) {
+            html.append("<i>")
+        }
+
+        html.append(token.getFragment())
+        if (token.isMatch()) {
+            html.append("</i>")
+        }
+    }
+
+        html.append("</p></body></html>")
+        println(html)
+    }
+}
+
+```
+
+执行结果如下：
+
+```shell
+<html><body><p>The Answer to the <i>Great Question</i>... Of Life, the Universe and Everything... Is... <i>Forty-two</i>,' said <i>Deep Thought</i>, with infinite majesty and calm.</p></body></html>
+```
+
+### 3 支持自定义值输出模式功能
+
+前置条件：NA
+场景：
+指定关键字及其对应的自定义值，在匹配到该关键字时可以同时获取并处理该自定义值
+约束：NA 
+性能： 支持版本几何性能持平
+可靠性： NA
+
+#### 3.1 主要接口
+
+#### 3.2 其它接口
+
+它是一个用于存储和搜索字符串和负载的数据结构的构建类
+class PayloadTrieBuilder
+
+```cangjie
+
+    /**
+    * 配置Trie在搜索文本中的关键字时忽略大小写，这个方法必须在调用 addKeyword 之前调用
+    *
+    * @return 返回这个构建器
+    */
+    public func ignoreCase(): PayloadTrieBuilder<T>
+
+    /**
+    * 配置Trie忽略重叠的关键字
+    *
+    * @return 返回这个构建器
+    */
+    public func ignoreOverlaps(): PayloadTrieBuilder<T>
+
+    /**
+    * 添加关键字和有效载荷的列表
+    *
+    * @param keywords - 传入关键字集合
+    *
+    * @return 返回这个构建器
+    */
+    public func addKeywords(keywords: Collection<Payload<T>>): PayloadTrieBuilder<T>
+
+    /**
+    * 将Trie配置为匹配文本中的整个关键字
+    *
+    * @return 返回这个构建器
+    */
+    public func onlyWholeWords(): PayloadTrieBuilder<T>
+
+    /**
+    * 将Trie配置为匹配用空格分隔的整个关键字
+    *
+    * @return 返回这个构建器
+    */
+    public func onlyWholeWordsWhiteSpaceSeparated(): PayloadTrieBuilder<T>
+
+    /**
+    * 将Trie配置为在文本中找到第一个关键字后停止
+    *
+    * @return 返回这个构建器
+    */
+    public func stopOnHit(): PayloadTrieBuilder<T>
+
+    /**
+    * 配置Trie不区分大小写
+    *
+    * @return 返回这个构建器
+    */
+    public func caseInsensitive(): PayloadTrieBuilder<T>
+
+    /**
+    * 配置Trie删除重叠区间
+    *
+    * @return 返回这个构建器
+    */
+    public func removeOverlaps(): PayloadTrieBuilder<T>
+
+```
+
+它是一个用于存储和搜索字符串和负载的数据结构的构建类
+class State
+
+```cangjie
+
+    /**
+    * State 的有参构造器
+    *
+    * @param depth - 传入一个 Int32 类型
+    */
+    public init(depth: Int32)
+
+    /**
+    * 根据给定的字符获取下一个状态
+    *
+    * @param character - 传入一个字符
+    *
+    * @return 返回 Option 类型
+    */
+    public func nextState(character: Char): ?State
+
+    /**
+    * 根据给定的字符和是否忽略根状态获取下一个状态，返回一个状态对象或 None
+    *
+    * @param character - 传入一个字符
+    *
+    * @return 返回 Option 类型
+    */
+    public func nextStateIgnoreRootState(character: Char): ?State
+
+    /**
+    * 根据给定的关键字添加一个新的状态到当前状态，并返回新的状态
+    *
+    * @param keyword - 添加关键字
+    *
+    * @return 返回这个对象
+    */
+    public func addState(keyword: String): State
+
+    /**
+    * 根据给定的字符添加一个新的状态到当前状态，并返回新的状态
+    *
+    * @return 返回这个对象
+    */
+    public func addState(character: Char): State
+
+    /**
+    * 获取状态的深度
+    *
+    * @return 返回 Int32 类型
+    */
+    public func getDepth(): Int32
+
+    /**
+    * 添加一个匹配到的字符串到状态中
+    *
+    * @param keyword - 传入关键字
+    *
+    */
+    public func addEmit(keyword: String): Unit
+
+    /**
+    * 添加一个匹配到的字符串的集合到状态中
+    *
+    * @param emits - 传入一个集合
+    *
+    */
+    public func addEmit(emits: Collection<String>): Unit
+
+    /**
+    * 获取状态中的所有匹配到的字符串
+    *
+    * @return 返回一个集合
+    *
+    */
+    public func emit(): Collection<String>
+
+    /**
+    * 获取当前状态的失败状态节点
+    *
+    * @return 返回 Option 类型
+    *
+    */
+    public func failures(): ?State
+
+    /**
+    * 设置当前状态的失败状态
+    *
+    * @param failState - 传入一个 State 对象
+    *
+    */
+    public func setFailure(failState: State): Unit
+
+    /**
+    * 获取当前状态的所有子状态
+    *
+    * @return 返回一个集合
+    *
+    */
+    public func getStates(): Collection<State>
+
+    /**
+    * 获取当前状态的所有转移字符
+    *
+    * @return 返回一个集合
+    *
+    */
+    public func getTransitions(): Collection<Char>
+
+```
+
+一个用于将匹配到的字符串和负载委托给另一个处理器的类
+class StatefulPayloadEmitDelegateHandler
+
+```cangjie
+
+    /**
+    * StatefulPayloadEmitDelegateHandler 的有参构造器
+    *
+    * @param handler - 传入 StatefulEmitHandler 对象
+    *
+    */
+    public init(handler: StatefulEmitHandler)
+
+    /**
+    * 处理匹配到的字符串和负载，返回是否继续搜索。这个方法会调用委托处理器的emit方法，并更新当前状态
+    *
+    * @param emit - 传入一个 PayloadEmit 对象
+    *
+    * @return 返回 String 类型
+    */
+    public func emit(emit: PayloadEmit<String>): Bool
+
+    /**
+    * 获取所有的负载集合
+    *
+    * @return 返回一个 ArrayList 集合
+    */
+    public func getEmits(): ArrayList<PayloadEmit<String>>
+
+```
+
+它是一个令牌抽象类
+class Token
+
+```cangjie
+
+    /**
+    * Token 的有参构造器
+    *
+    * @param fragment - 根据给定的字符串片段创建一个令牌
+    *
+    */
+    public init(fragment: String)
+
+    /**
+    * 获取字符串片段
+    *
+    * @return 返回 String 类型
+    */
+    public func getFragment(): String
+
+    /**
+    * 是否匹配到关键词
+    *
+    * @return 返回 Bool 类型
+    *
+    */
+    public func isMatch(): Bool
+
+    /**
+    * 获取负载
+    *
+    * @return 返回 Option 类型
+    *
+    */
+    public func getEmit(): ?Emit
+
+```
+
+它是一个字典树类
+class Trie
+
+```cangjie
+
+    /**
+    * 根据给定的文本将文本分割成令牌，返回一个集合
+    *
+    * @param text - 指定的文本
+    *
+    * @return 返回一个 Collection 集合
+    */
+    public func tokenize(text: String): Collection<Token>
+
+    /**
+    * 解析给定的文本，并返回匹配的负载
+    *
+    * @param text - 传入的文本信息
+    * @param emitHandler - 用于处理发出的负载的事件处理器
+    *
+    * @return 返回一个 Collection 集合
+    */
+    public func parseText(text: String, emitHandler: StatefulEmitHandler): Collection<Emit>
+
+    /**
+    * 根据给定的文本判断文本是否包含匹配的字符串
+    *
+    * @param text - 指定的文本
+    *
+    * @return 返回一个 Bool 类型
+    */
+    public func containsMatch(text: String): Bool
+
+    /**
+    * 解析给定的文本，并返回匹配的负载
+    *
+    * @param text - 传入的文本信息
+    * @param emitHandler - 用于处理发出的负载的事件处理器
+    */
+    public func parseText(text: String, emitHandler: EmitHandler): Unit
+
+    /**
+    * 根据给定的文本搜索第一个匹配的字符串和负载，返回一个 Emit 对象或 None
+    *
+    * @param text - 指定的文本
+    *
+    * @return 返回一个 Emit 对象或 None
+    *
+    */
+    public func firstMatch(text: String): ?Emit
+
+```
+
+它是一个字典树构建类
+class TrieBuilder
+
+```cangjie
+
+    /**
+    * 配置Trie在搜索文本中的关键字时忽略大小写，这个方法必须在调用 addKeyword 之前调用
+    *
+    * @return 返回这个构建器
+    */
+    public func ignoreCase(): TrieBuilder
+
+    /**
+    * 配置Trie忽略重叠的关键字
+    *
+    * @return 返回这个构建器
+    */
+    public func ignoreOverlaps(): TrieBuilder
+
+    /**
+    * 添加关键字和有效载荷的列表
+    *
+    * @param keywords - 传入关键字数组
+    *
+    * @return 返回这个构建器
+    */
+    public func addKeywords(keywords: Array<String>): TrieBuilder
+
+    /**
+    * 添加关键字和有效载荷的列表
+    *
+    * @param keywords - 传入关键字集合
+    *
+    * @return 返回这个构建器
+    */
+    public func addKeywords(keywords: Collection<Payload<T>>): PayloadTrieBuilder<T>
+
+    /**
+    * 将Trie配置为匹配文本中的整个关键字
+    *
+    * @return 返回这个构建器
+    */
+    public func onlyWholeWords(): TrieBuilder
+
+    /**
+    * 将Trie配置为匹配用空格分隔的整个关键字
+    *
+    * @return 返回这个构建器
+    */
+    public func onlyWholeWordsWhiteSpaceSeparated(): TrieBuilder
+
+    /**
+    * 将Trie配置为在文本中找到第一个关键字后停止
+    *
+    * @return 返回这个构建器
+    */
+    public func stopOnHit(): TrieBuilder
+
+    /**
+    * 配置Trie不区分大小写
+    *
+    * @return 返回这个构建器
+    */
+    public func caseInsensitive(): TrieBuilder
+
+    /**
+    * 配置Trie删除重叠区间
+    *
+    * @return 返回这个构建器
+    */
+    public func removeOverlaps(): TrieBuilder
+
+```
+
+#### 3.3 示例
+
+```cangjie
+from ahoCorasick4cj import ahoCorasick4cj.*
+from std import unittest.*
+from std import unittest.testmacro.*
+
+main(): Int64 {
+    let charSearchTest06 = CharSearchTest06()
+    charSearchTest06.testCharSearch01()
+    return 0
+}
+
+@Test
+public class CharSearchTest06 {
+
+    @TestCase
+    public func testCharSearch01(): Unit {
+        var trie = PayloadTrie<Word>.builder()
+            .addKeyword("hers", Word("f"))
+            .addKeyword("his", Word("m"))
+            .addKeyword("she", Word("f"))
+            .addKeyword("he", Word("m"))
+            .addKeyword("nonbinary", Word("nb"))
+            .addKeyword("transgender", Word("tg"))
+            .build()
+        var emits: Collection<PayloadEmit<Word>> = trie.parseText("ushers")
+        var iter: Iterator<PayloadEmit<Word>> = emits.iterator()
+        for (i in iter) {
+            println(i.toString() + i.getPayload().getOrThrow().gender)
+        }
+    }
+}
+
+class Word {
+    protected var gender: String
+    public init(gender: String) {
+        this.gender = gender
+    }
+}
+
+
+```
+
+执行结果如下：
+
+```shell
+1:3=she->f
+2:3=he->m
+2:5=hers->f
+```
