@@ -708,7 +708,7 @@ public class CharSearchTest01 {
 #### 2.1 主要接口
 
 它是一个用于存储和搜索字符串和负载的数据结构
-class PayloadTrie
+class Trie
 
 ```cangjie
 
@@ -719,17 +719,17 @@ class PayloadTrie
     *
     * @return 返回一个 Collection 集合
     */
-    public func tokenize(text: String): Collection<PayloadToken<T>>
+    public func tokenize(text: String): Collection<Token>
 
     /**
-    * 根据给定的文本搜索第一个匹配的字符串和负载，返回一个 PayloadEmit 对象或 None
+    * 根据给定的文本搜索第一个匹配的字符串和负载，返回一个 Emit 对象或 None
     *
     * @param text - 指定的文本
     *
     * @return 返回一个 PayloadEmit 对象或 None
     *
     */
-    public func firstMatch(text: String): ?PayloadEmit<T>
+    public func firstMatch(text: String): ?Emit
 
 ```
 
@@ -1416,15 +1416,6 @@ class Trie
 ```cangjie
 
     /**
-    * 根据给定的文本将文本分割成令牌，返回一个集合
-    *
-    * @param text - 指定的文本
-    *
-    * @return 返回一个 Collection 集合
-    */
-    public func tokenize(text: String): Collection<Token>
-
-    /**
     * 解析给定的文本，并返回匹配的负载
     *
     * @param text - 传入的文本信息
@@ -1451,16 +1442,28 @@ class Trie
     */
     public func parseText(text: String, emitHandler: EmitHandler): Unit
 
+```
+
+```cangjie
+
     /**
-    * 根据给定的文本搜索第一个匹配的字符串和负载，返回一个 Emit 对象或 None
+    * 根据给定的文本将文本分割成令牌，返回一个集合
     *
     * @param text - 指定的文本
     *
-    * @return 返回一个 Emit 对象或 None
+    * @return 返回一个 Collection 集合
+    */
+    public func tokenize(text: String): Collection<PayloadToken<T>>
+
+    /**
+    * 根据给定的文本搜索第一个匹配的字符串和负载，返回一个 PayloadEmit 对象或 None
+    *
+    * @param text - 指定的文本
+    *
+    * @return 返回一个 PayloadEmit 对象或 None
     *
     */
-    public func firstMatch(text: String): ?Emit
-
+    public func firstMatch(text: String): ?PayloadEmit<T>
 ```
 
 它是一个字典树构建类
