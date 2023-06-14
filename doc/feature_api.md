@@ -707,7 +707,7 @@ public class CharSearchTest01 {
 
 #### 2.1 主要接口
 
-它是一个用于存储和搜索字符串和负载的数据结构
+它是一个字典树类
 class Trie
 
 ```cangjie
@@ -1443,6 +1443,8 @@ class Trie
     public func parseText(text: String, emitHandler: EmitHandler): Unit
 
 ```
+
+它是一个用于存储和搜索字符串和负载的数据结构 class PayloadTrie
 
 ```cangjie
 
