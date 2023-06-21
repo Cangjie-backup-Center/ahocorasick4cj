@@ -55,6 +55,7 @@ public class State {
         if (!ignoreRootState) {
             if (let None = nextState) {
                 if (let Some(v) = rootState) {
+                    v.depth
                     nextState = this.rootState
                 }
             }

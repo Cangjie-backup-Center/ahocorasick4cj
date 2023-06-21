@@ -172,11 +172,10 @@ public class PayloadTrie<T> {
      *         false.
      */
     public func containsMatch(text: String): Bool {
-        if (let Some(v) = firstMatch(text)) {
-            return true
-        } else {
+        if (let None = firstMatch(text)) {
             return false
         }
+        return true
     }
 
     /**
@@ -203,22 +202,38 @@ public class PayloadTrie<T> {
                 }
                 currentState = getState(currentState, character)
                 let payloads: Collection<Payload<T>> = currentState.emit()
-                if (!payloads.isEmpty()) {
-                    for (payload in payloads) {
-                        let emit: PayloadEmit<T> = PayloadEmit<T>(Int32(position - payload.getKeyword().size) + 1, Int32(position), payload.getKeyword(), payload.getData())
-                        if (trieConfig.isOnlyWholeWords()) {
-                            if (!isPartialMatch(text, emit)) {
+                let arrayList: ArrayList<Payload<T>> = ArrayList<Payload<T>>()
+                for (payload in payloads) {
+                    arrayList.append(payload)
+                }
+                arrayList.sortBy(compareTo, stable: true)
+                if (!arrayList.isEmpty()) {
+                    for (arr in arrayList) {
+                        let emit: PayloadEmit<T> = PayloadEmit<T>(Int32(position - arr.getKeyword().size) + 1, Int32(position), arr.getKeyword(), arr.getData())
+                            if (trieConfig.isOnlyWholeWords()) {
+                                if (!isPartialMatch(text, emit)) {
+                                    return emit
+                                }
+                            } else {
                                 return emit
                             }
-                        } else {
-                            return emit
-                        }
                     }
                 }
                 position++
             }
         }
         return None
+    }
+
+    private func compareTo(emit1: Payload<T>, emit2: Payload<T>): Ordering {
+        var comparison = emit2.getKeyword().size - emit1.getKeyword().size
+        if (comparison < 0) {
+            return Ordering.GT
+        } else if(comparison > 0) {
+            return Ordering.LT
+        } else {
+            return Ordering.EQ
+        }
     }
 
     public func parseText(text: String, emitHandler: PayloadEmitHandler<T>): Unit {
