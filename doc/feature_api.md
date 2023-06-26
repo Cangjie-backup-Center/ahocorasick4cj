@@ -726,7 +726,7 @@ class Trie
     *
     * @param text - 指定的文本
     *
-    * @return 返回一个 PayloadEmit 对象或 None
+    * @return 返回一个 Emit 对象或 None
     *
     */
     public func firstMatch(text: String): ?Emit
@@ -1272,6 +1272,8 @@ class State
     /**
     * 根据给定的字符添加一个新的状态到当前状态，并返回新的状态
     *
+    * @param character - 传入的字符
+    *
     * @return 返回这个对象
     */
     public func addState(character: Char): State
@@ -1359,7 +1361,7 @@ class StatefulPayloadEmitDelegateHandler
     *
     * @param emit - 传入一个 PayloadEmit 对象
     *
-    * @return 返回 String 类型
+    * @return 返回 Bool 类型
     */
     public func emit(emit: PayloadEmit<String>): Bool
 
@@ -1503,7 +1505,7 @@ class TrieBuilder
     *
     * @return 返回这个构建器
     */
-    public func addKeywords(keywords: Collection<Payload<T>>): PayloadTrieBuilder<T>
+    public func addKeywords(keywords: Collection<Payload<T>>): TrieBuilder
 
     /**
     * 将Trie配置为匹配文本中的整个关键字

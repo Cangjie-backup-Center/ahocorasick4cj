@@ -88,6 +88,7 @@ public class PayloadState<T> {
         if (!ignoreRootState) {
             if (let None = nextState) {
                 if (let Some(v) = rootState) {
+                    v.depth
                     nextState = this.rootState
                 }
             }

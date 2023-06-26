@@ -53,10 +53,10 @@ public class Trie {
     }
 
     public func containsMatch(text: String): Bool {
-        if (let Some(v) = firstMatch(text)) {
-            return true
+        if (let None = firstMatch(text)) {
+            return false
         }
-        return false
+        return true
     }
 
     public func parseText(text: String, emitHandler: EmitHandler): Unit {
