@@ -246,7 +246,12 @@ public class PayloadTrie<T> {
             }
             currentState = getState(currentState, character)
             let payloads: Collection<Payload<T>> = currentState.emit()
-            if (processEmits(text, Int32(position), payloads, emitHandler) && trieConfig.isStopOnHit()) {
+            let arrayList: ArrayList<Payload<T>> = ArrayList<Payload<T>>()
+            for (payload in payloads) {
+                arrayList.append(payload)
+            }
+            arrayList.sortBy(compareTo, stable: true)
+            if (processEmits(text, Int32(position), arrayList, emitHandler) && trieConfig.isStopOnHit()) {
                 return
             }
             position++
