@@ -1,4 +1,5 @@
 // 3rd_party_lib:ahocorasick4cj/build/ahoCorasick4cj
+// 3rd_party_lib_ohos:ahocorasick4cj/build/aarch64-linux-ohos/ahoCorasick4cj
 
 from ahoCorasick4cj import ahoCorasick4cj.*
 from std import unittest.*
@@ -14,7 +15,6 @@ public class AhoCorasickTest {
 @TestCase
   func testPayloadState_addState_01():Unit{ 
     var str1:String = "^%#$#@#"
-    let payload_1: Payload<String> = Payload(str1, Option<String>.None)
     let payloadState_1:PayloadState<String> = PayloadState<String>(0)
     @Assert(payloadState_1.getStates().size, 0)
     // public func addState(character: Char): PayloadState<T>
@@ -29,7 +29,6 @@ public class AhoCorasickTest {
 
     str1 = "你好 cangjie"
     let payloadState_2:PayloadState<String> = PayloadState<String>(-6)
-    let payload_2: Payload<String> = Payload(str1, str1)
     payloadState_2.addState('\\')
     payloadState_2.addState('\n')
     payloadStateArrL = payloadState_2.getStates()
@@ -42,13 +41,12 @@ public class AhoCorasickTest {
   func testPayloadState_addState_02():Unit{ 
     returnFlag = 0
     var str1:String = "^%#$#@#"
-    let payload_1: Payload<String> = Payload(str1, Option<String>.None)
+    //let payload_1: Payload<String> = Payload(str1, Option<String>.None)
     let payloadState_1:PayloadState<String> = PayloadState<String>(0)
     @Assert(payloadState_1.getStates().size, 0)
     payloadState_1.addState('$')
     var payloadStateArrL:Collection<PayloadState<String>> = payloadState_1.getStates()
     @Assert(payloadStateArrL.size, 1)
-    var arr1 = payloadStateArrL.toArray()
     payloadState_1.addState('^')
     payloadState_1.addState('】')
     @Assert(payloadState_1.getStates().size, 3)
@@ -57,7 +55,6 @@ public class AhoCorasickTest {
 
     str1 = "你好&*^&%cangjie12<>"
     let payloadState_2:PayloadState<String> = PayloadState<String>(Int32(52))
-    let payload_2: Payload<String> = Payload(str1, str1)
 
     try {
       payloadState_2.addState('\u{4f60}')
@@ -74,7 +71,6 @@ public class AhoCorasickTest {
     }
 
     @Assert(payloadState_2.getStates().size, 2)
-    let state1 = payloadState_2.nextState('\u{4f60}')
     let arrStates = payloadState_2.getTransitions().toArray()
     @Assert(arrStates.size, 2)
 
