@@ -206,10 +206,11 @@ public class PayloadTrie<T> {
                 for (payload in payloads) {
                     arrayList.append(payload)
                 }
-                arrayList.sortBy(compareTo, stable: true)
-                if (!arrayList.isEmpty()) {
-                    for (arr in arrayList) {
-                        let emit: PayloadEmit<T> = PayloadEmit<T>(Int32(position - arr.getKeyword().size) + 1, Int32(position), arr.getKeyword(), arr.getData())
+                let arr: Array<Payload<T>> = arrayList.toArray()
+                arr.sortBy(compareTo, stable: true)
+                if (!arr.isEmpty()) {
+                    for (meta in arr) {
+                        let emit: PayloadEmit<T> = PayloadEmit<T>(Int32(position - meta.getKeyword().size) + 1, Int32(position), meta.getKeyword(), meta.getData())
                             if (trieConfig.isOnlyWholeWords()) {
                                 if (!isPartialMatch(text, emit)) {
                                     return emit
@@ -246,19 +247,16 @@ public class PayloadTrie<T> {
             }
             currentState = getState(currentState, character)
             let payloads: Collection<Payload<T>> = currentState.emit()
-            let arrayList: ArrayList<Payload<T>> = ArrayList<Payload<T>>()
-            for (payload in payloads) {
-                arrayList.append(payload)
-            }
-            arrayList.sortBy(compareTo, stable: true)
-            if (processEmits(text, Int32(position), arrayList, emitHandler) && trieConfig.isStopOnHit()) {
+            let arr: Array<Payload<T>> = payloads.toArray()
+            arr.sortBy(compareTo, stable: true)
+            if (processEmits(text, Int32(position), arr, emitHandler) && trieConfig.isStopOnHit()) {
                 return
             }
             position++
         }
     }
 
-    private func processEmits(text: String, pos: Int32, payloads: Collection<Payload<T>>, emitHandler: PayloadEmitHandler<T>): Bool {
+    private func processEmits(text: String, pos: Int32, payloads: Array<Payload<T>>, emitHandler: PayloadEmitHandler<T>): Bool {
         var emitted: Bool = false
         for (payload in payloads) {
             let payloadEmit: PayloadEmit<T> = PayloadEmit<T>(pos - Int32(payload.getKeyword().size) + 1, pos, payload.getKeyword(), payload.getData())
