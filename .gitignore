@@ -9,3 +9,7 @@ module-resolve.json
 *.gcno
 output/
 *.bc
+.cjpm-history
+log/
+module-lock.json
+tmp/

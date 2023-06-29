@@ -1,4 +1,5 @@
 // 3rd_party_lib:ahocorasick4cj/build/ahoCorasick4cj
+// 3rd_party_lib_ohos:ahocorasick4cj/build/aarch64-linux-ohos/ahoCorasick4cj
 
 from ahoCorasick4cj import ahoCorasick4cj.*
 from std import unittest.*
@@ -40,8 +41,6 @@ public class AhoCorasickTest {
 
   @TestCase
   func testPayloadState_addEmit_Collection_02():Unit{ 
-    var str1:String = "^%#$#@#"
-    let payload_1: Payload<String> = Payload(str1, Option<String>.None)
     let payloadState_1:PayloadState<String> = PayloadState<String>(0)
     @Assert(payloadState_1.emit().size, 0)
     let payloadArrL:ArrayList<Payload<String>>  = ArrayList<Payload<String>>()
