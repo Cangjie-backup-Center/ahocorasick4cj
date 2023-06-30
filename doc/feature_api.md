@@ -736,7 +736,7 @@ class Trie
 #### 2.2 其他接口
 
 它实现了 StatefulEmitHandler 接口，用于处理匹配到的字符串
-class AbstractStatefulEmitHandler
+abstract class AbstractStatefulEmitHandler
 
 ```cangjie
 
@@ -759,7 +759,7 @@ class AbstractStatefulEmitHandler
 ```
 
 它实现了 StatefulPayloadEmitHandler 接口，用于处理匹配到的字符串和负载
-class AbstractStatefulPayloadEmitHandler
+abstract class AbstractStatefulPayloadEmitHandler
 
 ```cangjie
 
@@ -1042,7 +1042,7 @@ class PayloadState
 ```
 
 它是一个携带有效载荷的令牌类
-class PayloadToken
+abstract class PayloadToken
 
 ```cangjie
 
@@ -1375,7 +1375,7 @@ class StatefulPayloadEmitDelegateHandler
 ```
 
 它是一个令牌抽象类
-class Token
+abstract class Token
 
 ```cangjie
 
