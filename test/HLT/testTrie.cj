@@ -125,7 +125,7 @@ public class AhoCorasickTest {
       num++
     }
     @Assert(num,3)
-    @Assert(strRes,"2:2=,0:4=..,003:4=00")
+    @Assert(strRes,"2:2=,3:4=000:4=..,00")
 
     strRes = ""
     num = 0

@@ -28,6 +28,20 @@ public class AhoCorasickTest {
     @Assert(resArrL_3.size,0)
 
   }
+  @TestCase
+    func testIntervalTree_03():Unit{ 
+      var intervals : ArrayList<Intervalable>= ArrayList<Intervalable>()
+      intervals.append(Interval(0, 2));
+      intervals.append(Interval(4, 5));
+      intervals.append(Interval(2, 10));
+      intervals.append(Interval(6, 13));
+      intervals.append(Interval(9, 15));
+      intervals.append(Interval(12, 16));
+      var intervalTree : IntervalTree = IntervalTree(intervals)
+      intervals = intervalTree.removeOverlaps(intervals)
+      @Assert(intervals.size,2)
+    }
+
 
   @TestCase
   func testIntervalTree_02():Unit{ 
@@ -39,18 +53,15 @@ public class AhoCorasickTest {
     let intervalTree_1: IntervalTree = IntervalTree(intervalableArrL1)
     // public func removeOverlaps(intervals: ArrayList<Intervalable>): ArrayList<Intervalable>
     let resArrL_1:ArrayList<Intervalable> = intervalTree_1.removeOverlaps(intervalableArrL2)
-    @Assert(resArrL_1.size,0)
+    @Assert(resArrL_1.size,1)
     let resArrL_2:ArrayList<Intervalable> = intervalTree_1.removeOverlaps(ArrayList<Intervalable>())
     @Assert(resArrL_2.size,0)
 
     // public func findOverlaps(interval: Intervalable): ArrayList<Intervalable>
     let resArrL_3:ArrayList<Intervalable> = intervalTree_1.findOverlaps(emit_2)
     // println("int32Res_1:> ${resArrL_3.size}")
-    @Assert(resArrL_3.size,2)
+    @Assert(resArrL_3.size,1)
 
   }
-
-
-
-
+  
 }

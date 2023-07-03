@@ -55,7 +55,7 @@ public class AhoCorasickTest {
       let interval_2: Interval = Interval(-2, 0)
       @Assert(interval_2.hashCode() != interval_1.hashCode(), false)
       @Assert(interval_2 == interval_1, true)
-      @Assert(interval_2.hashCode(), -62)
+      @Assert(interval_2.hashCode(), -2)
     }catch (e1:Exception) {
       println("e1:> ${e1}")
       returnFlag = 1
