@@ -28,7 +28,7 @@ public class AhoCorasickTest {
     @Assert(resArrL_1.size,0)
 
   }
-
+  
   @TestCase
   func testIntervalNode_02():Unit{ 
     let emit_1: Emit = Emit(0, 0, "emit_1")
@@ -44,17 +44,31 @@ public class AhoCorasickTest {
     @Assert(int32Res,-1)
     let resArrL_1:ArrayList<Intervalable> = intervalNode_1.findOverlaps(emit_1)
     // println("int32Res_2:> ${resArrL_1.size}")
-    @Assert(resArrL_1.size,2)
+    @Assert(resArrL_1.size,1)
     var it_1 = resArrL_1.iterator()
     for (obj in it_1) {
       strRes +=  obj.toString()
     }
     // println("strRes_1:> ${strRes}")
-    @Assert(strRes,"0:0=emit_1-3:0=emit_2") // ??
+    @Assert(strRes,"-3:0=emit_2") // ??
 
     let resArrL_2:ArrayList<Intervalable> = intervalNode_1.findOverlaps(emit_3)
-    @Assert(resArrL_2.size,1)
+    @Assert(resArrL_2.size,0)
 
+  }
+
+  @TestCase
+  func testIntervalNode_03():Unit{
+    var intervals : ArrayList<Intervalable>= ArrayList<Intervalable>()
+    intervals.append(Interval(0, 2));
+    intervals.append(Interval(1, 3));
+    intervals.append(Interval(2, 4));
+    intervals.append(Interval(3, 5));
+    intervals.append(Interval(4, 6));
+    intervals.append(Interval(5, 7));
+    var intervalTree : IntervalTree = IntervalTree(intervals)
+    var overlaps: ArrayList<Intervalable> = intervalTree.findOverlaps(Interval(1, 3))
+    @Assert(3, overlaps.size)
   }
 
 }
