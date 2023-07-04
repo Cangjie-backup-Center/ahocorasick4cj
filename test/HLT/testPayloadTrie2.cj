@@ -78,10 +78,11 @@ public class AhoCorasickTest {
         var trie = PayloadTrie<String>.builder().addKeyword("abc", "alpha:hhh").build()
         var firstMatch = trie.firstMatch("ab")
 
-        var sBool2: Bool = match (firstMatch) {
-            case Some(s) => true
-            case None => false
+        var sBool2: Bool = true
+        if (let None = firstMatch) {
+            sBool2 = false
         }
         @Assert(sBool2,false)
+
     }
 }
