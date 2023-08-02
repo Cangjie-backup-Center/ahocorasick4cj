@@ -5,6 +5,7 @@ from ahoCorasick4cj import ahoCorasick4cj.*
 from std import unittest.*
 from std import unittest.testmacro.*
 from std import collection.*
+from std import math.MathExtension
 
 main(): Int64 {
     let bugfixTest = BugfixTest()

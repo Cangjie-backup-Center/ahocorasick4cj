@@ -58,8 +58,8 @@ public class TrieBuilder {
     * @return This builder.
     */
     public func addKeywords(keywords: Array<String>): TrieBuilder {
-        for (keyword in keywords) {
-            delegate.addKeyword(keyword, None)
+        for (i in 0..keywords.size) {
+            delegate.addKeyword(keywords[i], None)
         }
         return this
     }

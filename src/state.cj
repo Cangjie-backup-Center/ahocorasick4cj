@@ -35,7 +35,7 @@ public class State {
      * whenever this state is reached, it will emit the matches keywords for future
      * reference
      */
-    private var emits: ?Set<String> = HashSet<String>()
+    private var emits: ?ArrayList<String> = ArrayList<String>()
 
     protected init() {
         this(0)
@@ -73,8 +73,8 @@ public class State {
 
     public func addState(keyword: String): State {
         var state: State = this
-        for (character in keyword.toCharArray()) {
-            state = state.addState(character)
+        for (i in 0..keyword.toCharArray().size) {
+            state = state.addState(keyword.toCharArray()[i])
         }
         return state
     }
@@ -94,18 +94,19 @@ public class State {
 
     public func addEmit(keyword: String): Unit {
         if (let None = this.emits) {
-            this.emits = HashSet<String>()
+            this.emits = ArrayList<String>()
         }
-        this.emits.getOrThrow().put(keyword)
+        this.emits.getOrThrow().append(keyword)
     }
 
-    public func addEmit(emits: Collection<String>): Unit {
-        for (emit in emits) {
-            addEmit(emit)
+    public func addEmit(emits: ArrayList<String>): Unit {
+        let arr = unsafe { emits.getRawArray() }
+        for(i in 0..emits.size) {
+            addEmit(arr[i])
         }
     }
 
-    public func emit(): Collection<String> {
+    public func emit(): ArrayList<String> {
         if (let None = this.emits) {
             return ArrayList<String>()
         }

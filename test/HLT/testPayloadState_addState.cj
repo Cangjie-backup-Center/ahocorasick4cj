@@ -4,6 +4,7 @@
 from ahoCorasick4cj import ahoCorasick4cj.*
 from std import unittest.*
 from std import collection.*
+from std import math.MathExtension
 
 @Test
 public class AhoCorasickTest {
