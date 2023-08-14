@@ -3,6 +3,7 @@
  */
 package ahoCorasick4cj
 from std import unicode.*
+from std import sort.SortByExtension
 
 /*
  * The class is PayloadTrie
@@ -58,11 +59,11 @@ public class PayloadTrie<T> {
     private func addState(keyword: String): PayloadState<T> {
         var state: PayloadState<T> = getRootState()
         var adjustedChar: Char
-        for (character in keyword.toCharArray()) {
+        for (i in 0..keyword.toCharArray().size) {
             if (isCaseInsensitive()) { 
-                adjustedChar = character.toLowerCase()
+                adjustedChar = keyword.toCharArray()[i].toLowerCase()
             }
-            adjustedChar = character
+            adjustedChar = keyword.toCharArray()[i]
             state = state.addState(adjustedChar)
         }
         return state
@@ -149,14 +150,14 @@ public class PayloadTrie<T> {
         let collectedEmits: ArrayList<PayloadEmit<T>> = emitHandler.getEmits()
         if (!trieConfig.isAllowOverlaps()) {
             let convertArr: ArrayList<Intervalable> = ArrayList<Intervalable>()
-            for (col in collectedEmits) {
-                convertArr.append(col)
+            for (i in 0..collectedEmits.size) {
+                convertArr.append(collectedEmits[i])
             }
             let intervalTree: IntervalTree  = IntervalTree(convertArr)
             intervalTree.removeOverlaps(convertArr)
             let arr2: ArrayList<PayloadEmit<T>> = ArrayList<PayloadEmit<T>>()
-            for (coll in convertArr) {
-                arr2.append((coll as PayloadEmit<T>).getOrThrow())
+            for (i in 0..convertArr.size) {
+                arr2.append((convertArr[i] as PayloadEmit<T>).getOrThrow())
             }
             return arr2
         }
@@ -201,16 +202,11 @@ public class PayloadTrie<T> {
                     character = character.toLowerCase()
                 }
                 currentState = getState(currentState, character)
-                let payloads: Collection<Payload<T>> = currentState.emit()
-                let arrayList: ArrayList<Payload<T>> = ArrayList<Payload<T>>()
-                for (payload in payloads) {
-                    arrayList.append(payload)
-                }
-                let arr: Array<Payload<T>> = arrayList.toArray()
-                arr.sortBy(compareTo, stable: true)
-                if (!arr.isEmpty()) {
-                    for (meta in arr) {
-                        let emit: PayloadEmit<T> = PayloadEmit<T>(Int32(position - meta.getKeyword().size) + 1, Int32(position), meta.getKeyword(), meta.getData())
+                let payloads: ArrayList<Payload<T>> = currentState.emit()
+                payloads.sortBy(compareTo, stable: true)
+                if (!payloads.isEmpty()) {
+                    for (i in 0..payloads.size) {
+                        let emit: PayloadEmit<T> = PayloadEmit<T>(Int32(position - payloads[i].getKeyword().size) + 1, Int32(position), payloads[i].getKeyword(), payloads[i].getData())
                             if (trieConfig.isOnlyWholeWords()) {
                                 if (!isPartialMatch(text, emit)) {
                                     return emit
@@ -246,20 +242,19 @@ public class PayloadTrie<T> {
                 character = character.toLowerCase()
             }
             currentState = getState(currentState, character)
-            let payloads: Collection<Payload<T>> = currentState.emit()
-            let arr: Array<Payload<T>> = payloads.toArray()
-            arr.sortBy(compareTo, stable: true)
-            if (processEmits(text, Int32(position), arr, emitHandler) && trieConfig.isStopOnHit()) {
+            let payloads: ArrayList<Payload<T>> = currentState.emit()
+            payloads.sortBy(compareTo, stable: true)
+            if (processEmits(text, Int32(position), payloads, emitHandler) && trieConfig.isStopOnHit()) {
                 return
             }
             position++
         }
     }
 
-    private func processEmits(text: String, pos: Int32, payloads: Array<Payload<T>>, emitHandler: PayloadEmitHandler<T>): Bool {
+    private func processEmits(text: String, pos: Int32, payloads: ArrayList<Payload<T>>, emitHandler: PayloadEmitHandler<T>): Bool {
         var emitted: Bool = false
-        for (payload in payloads) {
-            let payloadEmit: PayloadEmit<T> = PayloadEmit<T>(pos - Int32(payload.getKeyword().size) + 1, pos, payload.getKeyword(), payload.getData())
+        for (i in 0..payloads.size) {
+            let payloadEmit: PayloadEmit<T> = PayloadEmit<T>(pos - Int32(payloads[i].getKeyword().size) + 1, pos, payloads[i].getKeyword(), payloads[i].getData())
             if (!(trieConfig.isOnlyWholeWords() && isPartialMatch(text, payloadEmit)) && !(trieConfig.isOnlyWholeWordsWhiteSpaceSeparated() && isPartialMatchWhiteSpaceSeparated(text, payloadEmit))) {
                 emitted = emitHandler.emit(payloadEmit) || emitted
                 if (emitted && trieConfig.isStopOnHit()) {

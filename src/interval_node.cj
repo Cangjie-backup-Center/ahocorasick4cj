@@ -22,14 +22,13 @@ public class IntervalNode {
 
         let toLeft: ArrayList<Intervalable> = ArrayList<Intervalable>()
         let toRight: ArrayList<Intervalable> = ArrayList<Intervalable>()
-
-        for (interval in intervals) {
-            if (interval.getEnd() < node.point) {
-                toLeft.append(interval)
-            } else if (interval.getStart() > node.point) {
-                toRight.append(interval)
+        for (i in 0..intervals.size) {
+            if (intervals[i].getEnd() < node.point) {
+                toLeft.append(intervals[i])
+            } else if (intervals[i].getStart() > node.point) {
+                toRight.append(intervals[i])
             } else {
-                node.intervals.append(interval)
+                node.intervals.append(intervals[i])
             }
         }
 
@@ -47,9 +46,9 @@ public class IntervalNode {
     public static func determineMedian(intervals: ArrayList<Intervalable>): Int32 {
         var start: Int32 = -1
         var end: Int32 = -1
-        for (interval in intervals) {
-            var currentStart: Int32 = interval.getStart()
-            var currentEnd: Int32 = interval.getEnd()
+        for (i in 0..intervals.size) {
+            var currentStart: Int32 = intervals[i].getStart()
+            var currentEnd: Int32 = intervals[i].getEnd()
             if (start == -1 || currentStart < start) {
                 start = currentStart
             }
@@ -80,9 +79,9 @@ public class IntervalNode {
     }
 
     protected func addToOverlaps(interval: Intervalable, overlaps: ArrayList<Intervalable>, newOverlaps: ArrayList<Intervalable>): Unit {
-        for (currentInterval in newOverlaps) {
-            if (!currentInterval.equals(interval)) {
-                overlaps.append(currentInterval)
+        for (i in 0..newOverlaps.size) {
+            if (!newOverlaps[i].equals(interval)) {
+                overlaps.append(newOverlaps[i])
             }
         }
     }
@@ -97,16 +96,16 @@ public class IntervalNode {
 
     private func checkForOverlaps(interval: Intervalable, direction: Direction): ArrayList<Intervalable> {
         var overlaps: ArrayList<Intervalable> = ArrayList<Intervalable>()
-        for (currentInterval in this.intervals) {
+        for (i in 0..this.intervals.size) {
             match (direction) {
                 case LEFT =>
-                    if (currentInterval.getStart() <= interval.getEnd()) {
-                        overlaps.append(currentInterval)
+                    if (this.intervals[i].getStart() <= interval.getEnd()) {
+                        overlaps.append(this.intervals[i])
                     }
                     break
                 case RIGHT =>
-                    if (currentInterval.getEnd() >= interval.getStart()) {
-                        overlaps.append(currentInterval)
+                    if (this.intervals[i].getEnd() >= interval.getStart()) {
+                        overlaps.append(this.intervals[i])
                     }
                     break
             }

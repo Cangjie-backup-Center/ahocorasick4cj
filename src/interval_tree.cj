@@ -17,14 +17,14 @@ public class IntervalTree {
 
     public func removeOverlaps(intervals: ArrayList<Intervalable>): ArrayList<Intervalable> {
         intervals.sortBy(compareSize, stable: true)
-        var removeIntervals: Set<Intervalable> = HashSet<Intervalable>()
-        for (interval in intervals) {
+        var removeIntervals: ArrayList<Intervalable> = ArrayList<Intervalable>()
+        for (i in 0..intervals.size) {
             // If the interval was already removed, ignore it
-            if (removeIntervals.contains(interval)) {
+            if (removeIntervals.contains(intervals[i])) {
                 continue
             }
             // Remove all overallping intervals
-            removeIntervals.putAll(findOverlaps(interval))
+            removeIntervals.appendAll(findOverlaps(intervals[i]))
         }
         // Remove all intervals that were overlapping
         for (removeInterval in removeIntervals) {

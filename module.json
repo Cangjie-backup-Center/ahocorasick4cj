@@ -1,6 +1,6 @@
 {
-  "cjc_version": "0.39.4",
-  "organization": "cangjie",
+  "cjc_version": "0.39.5",
+  "organization": "pllab",
   "name": "ahoCorasick4cj",
   "description": "nothing here",
   "version": "0.0.2",

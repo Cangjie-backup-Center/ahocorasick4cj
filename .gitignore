@@ -13,3 +13,4 @@ output/
 log/
 module-lock.json
 tmp/
+report/

@@ -19,19 +19,19 @@ public class AhoCorasickTest {
     let payloadState_1:PayloadState<String> = PayloadState<String>(0)
     @Assert(payloadState_1.emit().size, 0)
     // public func addEmit(emits: Collection<Payload<T>>): Unit
-    payloadState_1.addEmit(Array<Payload<String>>())
+    payloadState_1.addEmit(ArrayList<Payload<String>>())
     // public func emit(): Collection<Payload<T>>
     var payloadArrL:Collection<Payload<String>> = payloadState_1.emit()
     @Assert(payloadArrL.size, 0)
     let payload_2: Payload<String> = Payload("str1", "Option<String>.Some")
-    let payloadArr:Array<Payload<String>>  = Array<Payload<String>>([payload_2,payload_1])
+    let payloadArr: ArrayList<Payload<String>> = ArrayList<Payload<String>>(payload_1, payload_2)
     payloadState_1.addEmit(payloadArr)
     @Assert(payloadState_1.emit().size, 2)
 
     str1 = "你好 cangjie"
     let payloadState_2:PayloadState<String> = PayloadState<String>(-6)
     let payload_3: Payload<String> = Payload(str1, str1)
-    let payloadSet:HashSet<Payload<String>>  = HashSet<Payload<String>>([payload_3,payload_1])
+    let payloadSet:ArrayList<Payload<String>>  = ArrayList<Payload<String>>([payload_3,payload_1])
     payloadState_2.addEmit(payloadSet)
     let payloadRes = payloadState_2.emit()
     @Assert(payloadRes.size, 2)

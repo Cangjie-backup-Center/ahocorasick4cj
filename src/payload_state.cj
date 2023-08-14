@@ -35,7 +35,7 @@ public class PayloadState<T> {
      * whenever this state is reached, it will emit the matches keywords for future
      * reference
      */
-    private var emits: ?Set<Payload<T>> = HashSet<Payload<T>>()
+    private var emits: ?ArrayList<Payload<T>> = ArrayList<Payload<T>>()
 
     protected init() {
         this(0)
@@ -57,9 +57,9 @@ public class PayloadState<T> {
      */
     public func addEmit(payload: Payload<T>): Unit {
         if (let None = this.emits) {
-            this.emits = HashSet<Payload<T>>()
+            this.emits = ArrayList<Payload<T>>()
         }
-        this.emits.getOrThrow().put(payload)
+        this.emits.getOrThrow().append(payload)
     }
 
     public func addState(character: Char): PayloadState<T> {
@@ -112,9 +112,10 @@ public class PayloadState<T> {
         return this.failure
     }
 
-    public func addEmit(emits: Collection<Payload<T>>): Unit {
-        for (emit in emits) {
-            addEmit(emit)
+    public func addEmit(emits: ArrayList<Payload<T>>): Unit {
+        let arr = unsafe { emits.getRawArray() }
+        for(i in 0..emits.size) {
+            addEmit(arr[i])
         }
     }
 
@@ -123,7 +124,7 @@ public class PayloadState<T> {
      * 
      * @return Collection of emitted payloads.
      */
-    public func emit(): Collection<Payload<T>> {
+    public func emit(): ArrayList<Payload<T>> {
         if (let None = this.emits) {
             return ArrayList<Payload<T>>()
         }
