@@ -413,14 +413,14 @@ class PayloadState
     *
     * @param emits - 传入一个发出的负载集合
     */
-    public func addEmit(emits: Collection<Payload<T>>): Unit
+    public func addEmit(emits: ArrayList<Payload<T>>): Unit
 
     /**
     * 获取该状态节点的所有发出的负载的集合，即当到达该状态节点时，需要输出的负载
     *
     * @return 返回所有发出的负载的集合
     */
-    public func emit(): Collection<Payload<T>>
+    public func emit(): ArrayList<Payload<T>>
     
 ```
 
@@ -1299,7 +1299,7 @@ class State
     * @param emits - 传入一个集合
     *
     */
-    public func addEmit(emits: Collection<String>): Unit
+    public func addEmit(emits: ArrayList<String>): Unit
 
     /**
     * 获取状态中的所有匹配到的字符串
@@ -1307,7 +1307,7 @@ class State
     * @return 返回一个集合
     *
     */
-    public func emit(): Collection<String>
+    public func emit(): ArrayList<String>
 
     /**
     * 获取当前状态的失败状态节点
