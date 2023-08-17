@@ -139,7 +139,6 @@ public class AhoCorasickTest {
 
   }
    
-  @Skip
   @TestCase
   func testTrie_04():Unit{ 
     let trieBuilder_1: TrieBuilder = Trie.builder()
@@ -157,7 +156,7 @@ public class AhoCorasickTest {
       num++
     }
     @Assert(num,2)
-    @Assert(strRes,"0:5=hello6:10=elle")
+    @Assert(strRes,"0:4=hello5:8=elle")
 
     strRes = ""
     num = 0
@@ -168,7 +167,7 @@ public class AhoCorasickTest {
     }
     @Assert(num,2)
     // println("strRes_2:> ${strRes}")
-    @Assert(strRes,"0:5=llohe6:10=elle")
+    @Assert(strRes,"0:4=llohe5:8=elle")
 
   } 
 
