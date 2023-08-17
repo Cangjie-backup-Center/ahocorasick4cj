@@ -20,12 +20,6 @@
 - 🚀 支持关键词库模式
 - 🚀 支持自定义值输出模式
 
-### 路线
-
-<p align="center">
-<img src="./doc/assets/milestone.png" width="100%" >
-</p>
-
 ## <img alt="" src="./doc/assets/readme-icon-framework.png" style="display: inline-block;" width=3%/> 流程图
 
 <p align="center">
@@ -82,7 +76,7 @@
 ├── README.OpenSource
 ```
 
-- `doc` 存放库的设计文档、使用文档、需求文档、LLT 用例覆盖报告
+- `doc` 存放本库使用文档
 - `src` 是库源码目录
 - `test` 是存放测试用例的文件夹，含有 HLT 测试用例、LLT 自测用例
 
