@@ -143,7 +143,6 @@ public class AhoCorasickTest {
         @Assert(strRes,"2:3=00->0:5=<&00&>->6:6=,->7:7=,->")
     }
 
-    @Skip
     @TestCase
     func testPayloadTrie_04(): Unit {
         let payloadTrieBuilder_1: PayloadTrieBuilder<String> = PayloadTrieBuilder<String>()
@@ -161,7 +160,7 @@ public class AhoCorasickTest {
         for (obj in it_1) {
             strRes += obj.toString()
         }
-        @Assert(strRes,"0:5=hello->6:10=elle->")
+        @Assert(strRes,"0:4=hello->5:8=elle->")
 
         strRes = ""
         var num: Int64 = 0
@@ -171,6 +170,6 @@ public class AhoCorasickTest {
             num++
         }
         @Assert(num,2)
-        @Assert(strRes,"0:5=llohe->6:10=elle->")
+        @Assert(strRes,"0:4=llohe->5:8=elle->")
     }
 }
