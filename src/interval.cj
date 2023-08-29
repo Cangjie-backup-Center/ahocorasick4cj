@@ -9,8 +9,8 @@ package ahoCorasick4cj
  */
 public open class Interval <: Intervalable {
 
-    private let start: Int32
-    private let end: Int32
+    let start: Int32
+    let end: Int32
 
     /**
      * Constructs an interval with a start and end position.
@@ -61,7 +61,7 @@ public open class Interval <: Intervalable {
      * @return true The intervals overlap.
      */
     public func overlapsWith(other: Interval): Bool {
-        return this.start <= other.getEnd() && this.end >= other.getStart()
+        return this.start <= other.end && this.end >= other.start
     }
 
     public func overlapsWith(point: Int32): Bool {

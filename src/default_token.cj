@@ -13,7 +13,7 @@ public class DefaultToken <: Token {
     private var payloadToken: PayloadToken<String>
 
     public init(payloadToken: PayloadToken<String>) {
-        super(payloadToken.getFragment())
+        super(payloadToken.fragment)
         this.payloadToken = payloadToken
     }
 
@@ -23,7 +23,7 @@ public class DefaultToken <: Token {
 
     public func getEmit(): ?Emit {
         let emit: ?PayloadEmit<String> = payloadToken.getEmit()
-        return Emit(emit.getOrThrow().getStart(), emit.getOrThrow().getEnd(), emit.getOrThrow().getKeyword())
+        return Emit(emit.getOrThrow().start, emit.getOrThrow().end, emit.getOrThrow().keyword)
     }
 
 }

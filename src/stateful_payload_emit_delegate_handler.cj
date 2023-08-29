@@ -18,13 +18,13 @@ public class StatefulPayloadEmitDelegateHandler <: StatefulPayloadEmitHandler<St
     private static func asEmits(emits: Collection<Emit>): ArrayList<PayloadEmit<String>> {
         var result: ArrayList<PayloadEmit<String>> = ArrayList<PayloadEmit<String>>()
         for (emit in emits) {
-            result.append(PayloadEmit<String>(emit.getStart(), emit.getEnd(), emit.getKeyword(), None))
+            result.append(PayloadEmit<String>(emit.start, emit.end, emit.keyword, None))
         }
         return result
     }
 
     public func emit(emit: PayloadEmit<String>): Bool {
-        let newEmit: Emit = Emit(emit.getStart(), emit.getEnd(), emit.getKeyword())
+        let newEmit: Emit = Emit(emit.start, emit.end, emit.keyword)
         return handler.emit(newEmit)
     }
 

@@ -16,7 +16,7 @@ public class IntervalTree {
     }
 
     public func removeOverlaps(intervals: ArrayList<Intervalable>): ArrayList<Intervalable> {
-        intervals.sortBy(compareSize, stable: true)
+        intervals.sortBy(compareSize)
         var removeIntervals: ArrayList<Intervalable> = ArrayList<Intervalable>()
         for (i in 0..intervals.size) {
             // If the interval was already removed, ignore it
@@ -36,7 +36,7 @@ public class IntervalTree {
                 }
             })
         }
-        intervals.sortBy(comparePosition, stable: true)
+        intervals.sortBy(comparePosition)
         return intervals
     }
 

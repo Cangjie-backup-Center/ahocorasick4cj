@@ -9,8 +9,8 @@ package ahoCorasick4cj
  */
 public class Payload<T> <: Hashable & Equatable<Payload<T>> {
     
-    private let keyword: String
-    private let data: ?T
+    let keyword: String
+    let data: ?T
 
     public init(keyword: String, data: ?T) {
         super()
@@ -41,6 +41,6 @@ public class Payload<T> <: Hashable & Equatable<Payload<T>> {
     }
 
     public func compare(other: Payload<T>): Ordering {
-        return keyword.compare(other.getKeyword())
+        return keyword.compare(other.keyword)
     }
 }

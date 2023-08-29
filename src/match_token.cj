@@ -10,7 +10,7 @@ package ahoCorasick4cj
  */
 public class MatchToken <: Token {
 
-    private var emit: Emit
+    var emit: Emit
 
     public init(fragment: String, emit: Emit) {
         super(fragment)

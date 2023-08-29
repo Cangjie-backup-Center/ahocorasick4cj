@@ -76,7 +76,7 @@ public class PayloadTrieBuilder<T> {
     */
     public func addKeywords(keywords: Collection<Payload<T>>): PayloadTrieBuilder<T> {
         for (payload in keywords) {
-            this.trie.addKeyword(payload.getKeyword(), payload.getData())
+            this.trie.addKeyword(payload.keyword, payload.data)
         }
         return this
     }

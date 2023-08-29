@@ -71,7 +71,7 @@ public class IntervalNode {
             addToOverlaps(interval, overlaps, checkForOverlapsToTheLeft(interval))
         } else {
             // Somewhere in the middle
-            addToOverlaps(interval, overlaps, this.intervals);
+            addToOverlaps(interval, overlaps, this.intervals)
             addToOverlaps(interval, overlaps, findOverlappingRanges(this.left, interval))
             addToOverlaps(interval, overlaps, findOverlappingRanges(this.right, interval))
         }

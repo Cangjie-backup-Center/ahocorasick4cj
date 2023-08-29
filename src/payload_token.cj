@@ -10,7 +10,7 @@ package ahoCorasick4cj
  */
 public abstract class PayloadToken<T> {
 
-    private var fragment: String
+    var fragment: String
 
     public init(fragment: String) {
         this.fragment = fragment

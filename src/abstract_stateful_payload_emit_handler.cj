@@ -10,7 +10,7 @@ package ahoCorasick4cj
  */
 public abstract class AbstractStatefulPayloadEmitHandler<T> <: StatefulPayloadEmitHandler<T> {
 
-    private var emits: ArrayList<PayloadEmit<T>> = ArrayList<PayloadEmit<T>>()
+    var emits: ArrayList<PayloadEmit<T>> = ArrayList<PayloadEmit<T>>()
 
     public func addEmit(emit: PayloadEmit<T>): Unit {
         this.emits.append(emit)

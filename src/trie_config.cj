@@ -9,11 +9,11 @@ package ahoCorasick4cj
  */
 public class TrieConfig {
 
-    private var allowOverlaps: Bool = true
-    private var onlyWholeWords: Bool = false
-    private var onlyWholeWordsWhiteSpaceSeparated: Bool = false
-    private var caseInsensitive: Bool = false
-    private var stopOnHit: Bool = false
+    var allowOverlaps: Bool = true
+    var onlyWholeWords: Bool = false
+    var onlyWholeWordsWhiteSpaceSeparated: Bool = false
+    var caseInsensitive: Bool = false
+    var stopOnHit: Bool = false
 
     public func isStopOnHit(): Bool {
         return stopOnHit

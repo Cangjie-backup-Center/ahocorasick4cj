@@ -10,7 +10,7 @@ package ahoCorasick4cj
  */
 public class DefaultPayloadEmitHandler<T> <: StatefulPayloadEmitHandler<T> {
 
-    private let emits: ArrayList<PayloadEmit<T>> = ArrayList<PayloadEmit<T>>()
+    let emits: ArrayList<PayloadEmit<T>> = ArrayList<PayloadEmit<T>>()
 
     public func emit(emit: PayloadEmit<T>): Bool {
         this.emits.append(emit)

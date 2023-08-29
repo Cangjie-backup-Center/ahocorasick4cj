@@ -11,7 +11,7 @@ from std import convert.*
  */
 public class Emit <: Interval & Intervalable {
     
-    private let keyword: String
+    let keyword: String
 
     public init(start: Int32, end: Int32, keyword: String) {
         super(start, end)
