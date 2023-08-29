@@ -10,7 +10,7 @@ package ahoCorasick4cj
  */
 public class PayloadMatchToken<T> <: PayloadToken<T> {
 
-    private var emit: PayloadEmit<T>
+    var emit: PayloadEmit<T>
 
     public init(fragment: String, emit: PayloadEmit<T>) {
         super(fragment)

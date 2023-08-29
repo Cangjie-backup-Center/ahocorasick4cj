@@ -16,7 +16,7 @@ public class PayloadEmitDelegateHandler <: PayloadEmitHandler<String> {
     }
 
     public func emit(emit: PayloadEmit<String>): Bool {
-        let newEmit: Emit = Emit(emit.getStart(), emit.getEnd(), emit.getKeyword())
+        let newEmit: Emit = Emit(emit.start, emit.end, emit.keyword)
         return handler.emit(newEmit)
     }
 

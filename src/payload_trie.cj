@@ -81,12 +81,12 @@ public class PayloadTrie<T> {
         var lastCollectedPosition: Int32 = -1
 
         for (emit in collectedEmits) {
-            if (emit.getStart() - lastCollectedPosition > 1) {
+            if (emit.start - lastCollectedPosition > 1) {
                 tokens.append( createFragment( emit, text, lastCollectedPosition) )
             }
 
             tokens.append(createMatch(emit, text))
-            lastCollectedPosition = emit.getEnd()
+            lastCollectedPosition = emit.end
         }
 
         if (Int32(text.size) - lastCollectedPosition > 1) {
@@ -100,12 +100,12 @@ public class PayloadTrie<T> {
         if (let None = emit) {
             return PayloadFragmentToken<T>(text[Int64(lastCollectedPosition + 1)..text.size])
         } else {
-            return PayloadFragmentToken<T>(text[Int64(lastCollectedPosition + 1)..Int64(emit.getOrThrow().getStart())])
+            return PayloadFragmentToken<T>(text[Int64(lastCollectedPosition + 1)..Int64(emit.getOrThrow().start)])
         }
     }
 
     private func createMatch(emit: PayloadEmit<T>, text: String): PayloadToken<T> {
-        return PayloadMatchToken<T>(text[Int64(emit.getStart())..Int64(emit.getEnd() + 1)], emit)
+        return PayloadMatchToken<T>(text[Int64(emit.start)..Int64(emit.end + 1)], emit)
     }
 
     private func getRootState(): PayloadState<T> {
@@ -203,10 +203,10 @@ public class PayloadTrie<T> {
                 }
                 currentState = getState(currentState, character)
                 let payloads: ArrayList<Payload<T>> = currentState.emit()
-                payloads.sortBy(compareTo, stable: true)
+                payloads.sortBy(compareTo)
                 if (!payloads.isEmpty()) {
                     for (i in 0..payloads.size) {
-                        let emit: PayloadEmit<T> = PayloadEmit<T>(Int32(position - payloads[i].getKeyword().size) + 1, Int32(position), payloads[i].getKeyword(), payloads[i].getData())
+                        let emit: PayloadEmit<T> = PayloadEmit<T>(Int32(position - payloads[i].keyword.size) + 1, Int32(position), payloads[i].keyword, payloads[i].data)
                             if (trieConfig.isOnlyWholeWords()) {
                                 if (!isPartialMatch(text, emit)) {
                                     return emit
@@ -223,7 +223,7 @@ public class PayloadTrie<T> {
     }
 
     private func compareTo(emit1: Payload<T>, emit2: Payload<T>): Ordering {
-        var comparison = emit2.getKeyword().size - emit1.getKeyword().size
+        var comparison = emit2.keyword.size - emit1.keyword.size
         if (comparison < 0) {
             return Ordering.GT
         } else if(comparison > 0) {
@@ -238,13 +238,13 @@ public class PayloadTrie<T> {
         var position = 0
         while (position < text.size) {
             var character: Char = text[position]
-            if (trieConfig.isCaseInsensitive()) {
+            if (trieConfig.caseInsensitive) {
                 character = character.toLowerCase()
             }
             currentState = getState(currentState, character)
             let payloads: ArrayList<Payload<T>> = currentState.emit()
-            payloads.sortBy(compareTo, stable: true)
-            if (processEmits(text, Int32(position), payloads, emitHandler) && trieConfig.isStopOnHit()) {
+            payloads.sortBy(compareTo)
+            if (processEmits(text, Int32(position), payloads, emitHandler) && trieConfig.stopOnHit) {
                 return
             }
             position++
@@ -254,10 +254,10 @@ public class PayloadTrie<T> {
     private func processEmits(text: String, pos: Int32, payloads: ArrayList<Payload<T>>, emitHandler: PayloadEmitHandler<T>): Bool {
         var emitted: Bool = false
         for (i in 0..payloads.size) {
-            let payloadEmit: PayloadEmit<T> = PayloadEmit<T>(pos - Int32(payloads[i].getKeyword().size) + 1, pos, payloads[i].getKeyword(), payloads[i].getData())
-            if (!(trieConfig.isOnlyWholeWords() && isPartialMatch(text, payloadEmit)) && !(trieConfig.isOnlyWholeWordsWhiteSpaceSeparated() && isPartialMatchWhiteSpaceSeparated(text, payloadEmit))) {
+            let payloadEmit: PayloadEmit<T> = PayloadEmit<T>(pos - Int32(payloads[i].keyword.size) + 1, pos, payloads[i].keyword, payloads[i].data)
+            if (!(trieConfig.onlyWholeWords && isPartialMatch(text, payloadEmit)) && !(trieConfig.onlyWholeWordsWhiteSpaceSeparated && isPartialMatchWhiteSpaceSeparated(text, payloadEmit))) {
                 emitted = emitHandler.emit(payloadEmit) || emitted
-                if (emitted && trieConfig.isStopOnHit()) {
+                if (emitted && trieConfig.stopOnHit) {
                     break
                 }
             }
@@ -266,14 +266,13 @@ public class PayloadTrie<T> {
     }
 
     private func isPartialMatch(searchText: String, emit: PayloadEmit<T>): Bool {
-        return (emit.getStart() != 0 && (searchText[Int64(emit.getStart()) - 1]).isLetter()) ||
-                (Int64(emit.getEnd()) + 1 != searchText.size && (searchText[Int64(emit.getEnd()) + 1]).isLetter())
+        return (emit.start != 0 && (searchText[Int64(emit.start) - 1]).isLetter()) ||
+                (Int64(emit.end) + 1 != searchText.size && (searchText[Int64(emit.end) + 1]).isLetter())
     }
 
     private func isPartialMatchWhiteSpaceSeparated(searchText: String, emit: PayloadEmit<T>): Bool {
-        let size: Int64 = searchText.size
-        return (emit.getStart() != 0 && !(searchText[Int64(emit.getStart()) - 1]).isWhiteSpace()) ||
-                (Int64(emit.getEnd()) + 1 != size && !(searchText[Int64(emit.getEnd()) + 1]).isWhiteSpace())
+        return (emit.start != 0 && !(searchText[Int64(emit.start) - 1]).isWhiteSpace()) ||
+                (Int64(emit.end) + 1 != searchText.size && !(searchText[Int64(emit.end) + 1]).isWhiteSpace())
     }
 
     private func getState(currentState: PayloadState<T>, character: Char): PayloadState<T> {

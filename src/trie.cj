@@ -39,7 +39,7 @@ public class Trie {
     }
 
     private static func asEmit(payloadEmit: PayloadEmit<String>): Emit {
-        return Emit(payloadEmit.getStart(), payloadEmit.getEnd(), payloadEmit.getKeyword())
+        return Emit(payloadEmit.start, payloadEmit.end, payloadEmit.keyword)
     }
 
     public func parseText(text: String): Collection<Emit> {
@@ -74,7 +74,7 @@ public class Trie {
         if (let None = payload) {
             return None
         } else {
-            return Emit(payload.getOrThrow().getStart(), payload.getOrThrow().getEnd(), payload.getOrThrow().getKeyword())
+            return Emit(payload.getOrThrow().start, payload.getOrThrow().end, payload.getOrThrow().keyword)
         }
     }
 

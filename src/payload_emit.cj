@@ -9,9 +9,9 @@ package ahoCorasick4cj
  */
 public class PayloadEmit<T> <: Interval & Intervalable {
 
-    private let keyword: String
+    let keyword: String
 
-    private let payload: ?T
+    let payload: ?T
 
     /**
      * Created a PayloadEmit

@@ -10,7 +10,7 @@ package ahoCorasick4cj
  */
 public abstract class Token {
 
-    private var fragment: String
+    var fragment: String
 
     public init(fragment: String) {
         this.fragment = fragment

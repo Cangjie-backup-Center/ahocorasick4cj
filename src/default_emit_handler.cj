@@ -10,7 +10,7 @@ package ahoCorasick4cj
  */
 public class DefaultEmitHandler <: StatefulEmitHandler {
 
-    private let emits: ArrayList<Emit> = ArrayList<Emit>()
+    let emits: ArrayList<Emit> = ArrayList<Emit>()
 
     public func emit(emit: Emit): Bool {
         this.emits.append(emit)
