@@ -11,14 +11,14 @@ public class AhoCorasickTest {
     func testState_01(): Unit {
         var state = State(0)
         var sBool: Bool = true
-        if (let None = state.rootState) {
+        if (let None <- state.rootState) {
             sBool = false
         }
         @Assert(sBool,true)
 
         var state2 = State(4)
         var sBool2: Bool = true
-        if (let None = state2.rootState) {
+        if (let None <- state2.rootState) {
             sBool2 = false
         }
         @Assert(sBool2,false)
@@ -41,7 +41,7 @@ public class AhoCorasickTest {
         currentState = currentState.getOrThrow().nextState('f')
 
         var currentStateBool: Bool = true
-        if (let None = currentState) {
+        if (let None <- currentState) {
             currentStateBool = false
         }
         @Assert(currentStateBool,false)
@@ -55,7 +55,7 @@ public class AhoCorasickTest {
         var currentState: ?State = rootState.nextStateIgnoreRootState('a')
 
         var currentStateBool1: Bool = true
-        if (let None = currentState) {
+        if (let None <- currentState) {
             currentStateBool1 = false
         }
         
@@ -64,7 +64,7 @@ public class AhoCorasickTest {
         currentState = currentState.getOrThrow().nextStateIgnoreRootState('f')
 
         var currentStateBool: Bool = true
-        if (let None = currentState) {
+        if (let None <- currentState) {
             currentStateBool = false
         }
         
@@ -88,7 +88,7 @@ public class AhoCorasickTest {
         currentState = currentState.getOrThrow().nextState('f')
 
         var currentStateBool: Bool = true
-        if (let None = currentState) {
+        if (let None <- currentState) {
             currentStateBool = false
         }
         

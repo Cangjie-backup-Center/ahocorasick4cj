@@ -21,7 +21,7 @@ public class AhoCorasickTest {
     @Assert(ismatchs, false)
     var fremit = ft0.getEmit()
     var fragemitBool: Bool = true
-    if (let None = fremit) {
+    if (let None <- fremit) {
       fragemitBool = false
     }
     @Assert(fragemitBool,false)

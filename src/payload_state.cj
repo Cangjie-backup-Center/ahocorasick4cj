@@ -56,7 +56,7 @@ public class PayloadState<T> {
      * @param payload to be emitted.
      */
     public func addEmit(payload: Payload<T>): Unit {
-        if (let None = this.emits) {
+        if (let None <- this.emits) {
             this.emits = ArrayList<Payload<T>>()
         }
         this.emits.getOrThrow().append(payload)
@@ -64,7 +64,7 @@ public class PayloadState<T> {
 
     public func addState(character: Char): PayloadState<T> {
         var nextState: ?PayloadState<T> = nextStateIgnoreRootState(character)
-        if (let None = nextState) {
+        if (let None <- nextState) {
             nextState = PayloadState<T>(this.depth + 1)
             this.success.put(character, nextState.getOrThrow())
         }
@@ -86,8 +86,8 @@ public class PayloadState<T> {
     private func nextState(character: Char, ignoreRootState: Bool): ?PayloadState<T> {
         var nextState: ?PayloadState<T> = this.success.get(character)
         if (!ignoreRootState) {
-            if (let None = nextState) {
-                if (let Some(v) = rootState) {
+            if (let None <- nextState) {
+                if (let Some(v) <- rootState) {
                     v.depth
                     nextState = this.rootState
                 }
@@ -125,7 +125,7 @@ public class PayloadState<T> {
      * @return Collection of emitted payloads.
      */
     public func emit(): ArrayList<Payload<T>> {
-        if (let None = this.emits) {
+        if (let None <- this.emits) {
             return ArrayList<Payload<T>>()
         }
         return this.emits.getOrThrow()
