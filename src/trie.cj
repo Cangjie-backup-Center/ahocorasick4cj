@@ -53,7 +53,7 @@ public class Trie {
     }
 
     public func containsMatch(text: String): Bool {
-        if (let None = firstMatch(text)) {
+        if (let None <- firstMatch(text)) {
             return false
         }
         return true
@@ -71,7 +71,7 @@ public class Trie {
      */
     public func firstMatch(text: String): ?Emit {
         let payload: ?PayloadEmit<String> = this.payloadTrie.firstMatch(text)
-        if (let None = payload) {
+        if (let None <- payload) {
             return None
         } else {
             return Emit(payload.getOrThrow().start, payload.getOrThrow().end, payload.getOrThrow().keyword)

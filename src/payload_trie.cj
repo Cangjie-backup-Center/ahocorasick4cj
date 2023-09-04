@@ -97,7 +97,7 @@ public class PayloadTrie<T> {
     }
 
     private func createFragment(emit: ?PayloadEmit<T>, text: String, lastCollectedPosition: Int32): PayloadToken<T> {
-        if (let None = emit) {
+        if (let None <- emit) {
             return PayloadFragmentToken<T>(text[Int64(lastCollectedPosition + 1)..text.size])
         } else {
             return PayloadFragmentToken<T>(text[Int64(lastCollectedPosition + 1)..Int64(emit.getOrThrow().start)])
@@ -131,7 +131,7 @@ public class PayloadTrie<T> {
                 var targetState: PayloadState<T> = currentState.nextState(transition).getOrThrow()
                 arrayList.append(targetState)
                 var traceFailureState: ?PayloadState<T> = currentState.failures()
-                while (let None = traceFailureState.getOrThrow().nextState(transition)) {
+                while (let None <- traceFailureState.getOrThrow().nextState(transition)) {
                     traceFailureState = traceFailureState.getOrThrow().failures()
                 }
                 var newFailureState: PayloadState<T> = traceFailureState.getOrThrow().nextState(transition).getOrThrow()
@@ -173,7 +173,7 @@ public class PayloadTrie<T> {
      *         false.
      */
     public func containsMatch(text: String): Bool {
-        if (let None = firstMatch(text)) {
+        if (let None <- firstMatch(text)) {
             return false
         }
         return true
@@ -278,7 +278,7 @@ public class PayloadTrie<T> {
     private func getState(currentState: PayloadState<T>, character: Char): PayloadState<T> {
         var newCurrentState: ?PayloadState<T> = currentState.nextState(character)
         var current: PayloadState<T> = currentState
-        while (let None = newCurrentState) {
+        while (let None <- newCurrentState) {
             current = current.failures().getOrThrow()
             newCurrentState = current.nextState(character)
         }

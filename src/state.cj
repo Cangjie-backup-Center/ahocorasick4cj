@@ -53,8 +53,8 @@ public class State {
     private func nextState(character: Char, ignoreRootState: Bool): ?State {
         var nextState: ?State = this.success.get(character)
         if (!ignoreRootState) {
-            if (let None = nextState) {
-                if (let Some(v) = rootState) {
+            if (let None <- nextState) {
+                if (let Some(v) <- rootState) {
                     v.depth
                     nextState = this.rootState
                 }
@@ -81,7 +81,7 @@ public class State {
 
     public func addState(character: Char): State {
         var nextState: ?State = nextStateIgnoreRootState(character)
-        if (let None = nextState) {
+        if (let None <- nextState) {
             nextState = State(this.depth + 1)
             this.success.put(character, nextState.getOrThrow())
         }
@@ -93,7 +93,7 @@ public class State {
     }
 
     public func addEmit(keyword: String): Unit {
-        if (let None = this.emits) {
+        if (let None <- this.emits) {
             this.emits = ArrayList<String>()
         }
         this.emits.getOrThrow().append(keyword)
@@ -107,7 +107,7 @@ public class State {
     }
 
     public func emit(): ArrayList<String> {
-        if (let None = this.emits) {
+        if (let None <- this.emits) {
             return ArrayList<String>()
         }
         return this.emits.getOrThrow()

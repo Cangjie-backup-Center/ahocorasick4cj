@@ -17,7 +17,7 @@ public class AhoCorasickTest {
     @Assert(false, fragt.isMatch())
     var fragemit = fragt.getEmit()
     var fragemitBool: Bool = true
-    if (let None = fragemit) {
+    if (let None <- fragemit) {
       fragemitBool = false
     }
     @Assert(fragemitBool,false)

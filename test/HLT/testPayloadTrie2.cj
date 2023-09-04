@@ -79,7 +79,7 @@ public class AhoCorasickTest {
         var firstMatch = trie.firstMatch("ab")
 
         var sBool2: Bool = true
-        if (let None = firstMatch) {
+        if (let None <- firstMatch) {
             sBool2 = false
         }
         @Assert(sBool2,false)

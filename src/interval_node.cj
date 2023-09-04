@@ -114,7 +114,7 @@ public class IntervalNode {
     }
 
     protected func findOverlappingRanges(node: ?IntervalNode, interval: Intervalable): ArrayList<Intervalable> {
-        if (let None = node) {
+        if (let None <- node) {
             return ArrayList<Intervalable>()
         }
         return node.getOrThrow().findOverlaps(interval)
