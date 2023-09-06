@@ -186,7 +186,7 @@ public class PayloadTrie<T> {
      * @return {@code null} if no matches found.
      */
     public func firstMatch(text: String): ?PayloadEmit<T> {
-        if (!trieConfig.isAllowOverlaps()) {
+        if (!trieConfig.allowOverlaps) {
             // Slow path. Needs to find all the matches to detect overlaps.
             let parseText: Collection<PayloadEmit<T>> = parseText(text)
             if (!parseText.isEmpty()) {
@@ -198,22 +198,24 @@ public class PayloadTrie<T> {
             var position: Int64 = 0
             while (position < text.size) {
                 var character: Char = text[position]
-                if (trieConfig.isCaseInsensitive()) {
+                if (trieConfig.caseInsensitive) {
                     character = character.toLowerCase()
                 }
                 currentState = getState(currentState, character)
                 let payloads: ArrayList<Payload<T>> = currentState.emit()
                 payloads.sortBy(compareTo)
                 if (!payloads.isEmpty()) {
-                    for (i in 0..payloads.size) {
+                    var i = 0
+                    while (i < payloads.size) {
                         let emit: PayloadEmit<T> = PayloadEmit<T>(Int32(position - payloads[i].keyword.size) + 1, Int32(position), payloads[i].keyword, payloads[i].data)
-                            if (trieConfig.isOnlyWholeWords()) {
-                                if (!isPartialMatch(text, emit)) {
-                                    return emit
-                                }
-                            } else {
+                        if (trieConfig.isOnlyWholeWords()) {
+                            if (!isPartialMatch(text, emit)) {
                                 return emit
                             }
+                        } else {
+                            return emit
+                        }
+                        i++
                     }
                 }
                 position++
@@ -253,7 +255,8 @@ public class PayloadTrie<T> {
 
     private func processEmits(text: String, pos: Int32, payloads: ArrayList<Payload<T>>, emitHandler: PayloadEmitHandler<T>): Bool {
         var emitted: Bool = false
-        for (i in 0..payloads.size) {
+        var i = 0
+        while (i < payloads.size) {
             let payloadEmit: PayloadEmit<T> = PayloadEmit<T>(pos - Int32(payloads[i].keyword.size) + 1, pos, payloads[i].keyword, payloads[i].data)
             if (!(trieConfig.onlyWholeWords && isPartialMatch(text, payloadEmit)) && !(trieConfig.onlyWholeWordsWhiteSpaceSeparated && isPartialMatchWhiteSpaceSeparated(text, payloadEmit))) {
                 emitted = emitHandler.emit(payloadEmit) || emitted
@@ -261,6 +264,7 @@ public class PayloadTrie<T> {
                     break
                 }
             }
+            i++
         }
         return emitted
     }
