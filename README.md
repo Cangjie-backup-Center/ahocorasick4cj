@@ -86,8 +86,6 @@
 
 ## <img alt="" src="./doc/assets/readme-icon-compile.png" style="display: inline-block;" width=3%/> 使用说明
 
-## 使用说明
-
 ### 编译构建
 
 ```shell
