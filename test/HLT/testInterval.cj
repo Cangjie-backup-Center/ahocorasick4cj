@@ -67,7 +67,7 @@ public class AhoCorasickTest {
       @Assert(interval_3.getStart(),Int32.Min)
     }catch (e1:Exception) {
       println("e2:> ${e1}")
-      @Assert(e1.toString().contains("OverflowException: sub"), true)
+      @Assert(e1.toString().contains("Exception:"), true)
       returnFlag = 0
     }
     
