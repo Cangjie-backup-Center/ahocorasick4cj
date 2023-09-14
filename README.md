@@ -128,6 +128,7 @@ public class CharSearchTest01 {
 2:5=hers
 ```
 
+## 功能示例
 ### 关键词库模式功能示例
 
 ```cangjie
@@ -239,6 +240,9 @@ class Word {
 
 注意：用例需放入 `test/LLT` 下，执行步骤是: 本项目编译运行方式
 
+## 开源协议
+
+Apache License 2.0
 
 ## <img alt="" src="./doc/assets/readme-icon-contribute.png" style="display: inline-block;" width=3%/> 参与贡献
 
