@@ -648,6 +648,7 @@ main(): Int64 {
     charSearchTest01.testCharSearch01()
     charSearchTest01.testCharSearch02()
     charSearchTest01.testCharSearch03()
+    return 0
 }
 
 @Test
