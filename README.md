@@ -88,9 +88,23 @@
 
 ### 编译构建
 
+#### linux环境编译
+
+编译描述和具体shell命令
+
 ```shell
 cjpm build
 ```
+
+#### Windows环境编译
+
+编译描述和具体cmd命令
+
+```cmd
+cjpm build
+```
+
+### 功能示例
 
 ### 多字符搜索功能示例
 
