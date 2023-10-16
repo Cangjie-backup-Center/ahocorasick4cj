@@ -22,7 +22,7 @@ public open class Interval <: Intervalable {
         this.start = start
         this.end = end
         if ((end - start) < 0) {
-            throw Exception("The start length must be smaller than the end length")
+            throw IllegalArgumentException("The start length must be smaller than the end length")
         }
     }
 
