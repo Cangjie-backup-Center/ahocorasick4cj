@@ -1,6 +1,5 @@
 // 3rd_party_lib:ahocorasick4cj/build/ahoCorasick4cj
 // 3rd_party_lib_ohos:ahocorasick4cj/build/aarch64-linux-ohos/ahoCorasick4cj
-
 from ahoCorasick4cj import ahoCorasick4cj.*
 from std import unittest.*
 from std import collection.*
@@ -15,13 +14,9 @@ public class AhoCorasickTest {
     @TestCase
     func testPayloadEmit_01(): Unit {
         var str1: String = "^%#$#@#"
-        //var payload_1: Option<String> = Option<String>.Some("strData")
-        // public init(start: Int32, end: Int32, keyword: String, payload: ?T)
         var emit_1: PayloadEmit<String> = PayloadEmit<String>(0, 0, str1, None)
-        // public func getKeyword(): String
         strRes = emit_1.getKeyword()
         @Assert(strRes, "^%#$#@#")
-        // public func getPayload(): ?T
         @Assert(emit_1.getPayload(),Option<String>.None)
         @Assert(emit_1.hashCode(),545161237)
         var emit_2: PayloadEmit<String> = PayloadEmit<String>(0, 0, "^%#$#@#", None)
