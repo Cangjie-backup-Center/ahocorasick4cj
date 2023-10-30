@@ -97,7 +97,7 @@ class Emit
     * @param end - 结束位置
     * @param keyword - 关键字
     *
-    * @exception 若 start 的值小于 end 的值，则说明构造的 emit 是错误的，长度不可能是负数，抛出非法参数异常 IllegalArgumentException
+    * @exception 若 end 的值小于 start 的值，则说明构造的 emit 是错误的，长度不可能是负数，抛出非法参数异常 IllegalArgumentException
     */
     public init(start: Int32, end: Int32, keyword: String)
 
@@ -152,7 +152,7 @@ class Interval
     * @param start - 起始位置
     * @param end - 结束位置
     *
-    * @exception 若 start 的值小于 end 的值，则说明构造的 Interval 是错误的，长度不可能是负数，抛出非法参数异常 IllegalArgumentException
+    * @exception 若 end 的值小于 start 的值，则说明构造的 Interval 是错误的，长度不可能是负数，抛出非法参数异常 IllegalArgumentException
     */
     public init(start: Int32, end: Int32)
 
@@ -287,7 +287,7 @@ class PayloadEmit
     * @param keyword - 关键字信息
     * @param payload - 对应的载体数据
     *
-    * @exception 若 start 的值小于 end 的值，则说明构造的 PayloadEmit 是错误的，长度不可能是负数，抛出非法参数异常 IllegalArgumentException
+    * @exception 若 end 的值小于 start 的值，则说明构造的 PayloadEmit 是错误的，长度不可能是负数，抛出非法参数异常 IllegalArgumentException
     */
     public init(start: Int32, end: Int32, keyword: String, payload: ?T)
 
