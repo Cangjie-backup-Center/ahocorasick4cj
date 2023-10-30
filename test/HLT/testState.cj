@@ -1,6 +1,5 @@
 // 3rd_party_lib:ahocorasick4cj/build/ahoCorasick4cj
 // 3rd_party_lib_ohos:ahocorasick4cj/build/aarch64-linux-ohos/ahoCorasick4cj
-
 from ahoCorasick4cj import ahoCorasick4cj.*
 from std import unittest.*
 from std import collection.*
@@ -28,18 +27,13 @@ public class AhoCorasickTest {
     func testState_02(): Unit {
         var rootState = State(0)
         rootState.addState('a').addState('b').addState('c')
-
         var currentState: ?State = rootState.nextState('a')
         @Assert(currentState.getOrThrow().getDepth(), 1)
-
         currentState = currentState.getOrThrow().nextState('b')
         @Assert(currentState.getOrThrow().getDepth(), 2)
-
         currentState = currentState.getOrThrow().nextState('c')
         @Assert(currentState.getOrThrow().getDepth(), 3)
-
         currentState = currentState.getOrThrow().nextState('f')
-
         var currentStateBool: Bool = true
         if (let None <- currentState) {
             currentStateBool = false
@@ -51,23 +45,17 @@ public class AhoCorasickTest {
     func testState_03(): Unit {
         var rootState = State(0)
         rootState.addState('a').addState('b').addState('c')
-
         var currentState: ?State = rootState.nextStateIgnoreRootState('a')
-
         var currentStateBool1: Bool = true
         if (let None <- currentState) {
             currentStateBool1 = false
         }
-        
         @Assert(currentStateBool1,true)
-
         currentState = currentState.getOrThrow().nextStateIgnoreRootState('f')
-
         var currentStateBool: Bool = true
         if (let None <- currentState) {
             currentStateBool = false
         }
-        
         @Assert(currentStateBool,false)
     }
 
@@ -75,23 +63,17 @@ public class AhoCorasickTest {
     func testState_04(): Unit {
         var rootState = State(0)
         rootState.addState("abc")
-
         var currentState: ?State = rootState.nextState('a')
         @Assert(currentState.getOrThrow().getDepth(), 1)
-
         currentState = currentState.getOrThrow().nextState('b')
         @Assert(currentState.getOrThrow().getDepth(), 2)
-
         currentState = currentState.getOrThrow().nextState('c')
         @Assert(currentState.getOrThrow().getDepth(), 3)
-
         currentState = currentState.getOrThrow().nextState('f')
-
         var currentStateBool: Bool = true
         if (let None <- currentState) {
             currentStateBool = false
         }
-        
         @Assert(currentStateBool,false)
     }
 
@@ -99,7 +81,6 @@ public class AhoCorasickTest {
     func testState_05(): Unit {
         var rootState = State(0)
         rootState.addState("")
-
         let emitColl_1: Collection<Char> = rootState.getTransitions()
         @Assert(emitColl_1.size,0)
     }
@@ -108,7 +89,6 @@ public class AhoCorasickTest {
     func testState_06(): Unit {
         var rootState = State(0)
         rootState.addState("foo")
-
         let states: Collection<State> = rootState.getStates()
         @Assert(states.size,1)
     }
@@ -117,7 +97,6 @@ public class AhoCorasickTest {
     func testState_07(): Unit {
         var rootState = State(0)
         rootState.addState("foo")
-
         let transitions: Collection<Char> = rootState.getTransitions()
         @Assert(transitions.size,1)
         var transitionChar = transitions.toArray().get(0)
@@ -152,7 +131,6 @@ public class AhoCorasickTest {
     func testState_10(): Unit {
         var rootState = State(0)
         rootState.addState('a').addEmit(ArrayList<String>(["tag", "kuvv"]))
-
         let actual: Collection<String> = rootState.nextState('a').getOrThrow().emit()
         @Assert(actual.toArray().get(0),"tag")
         @Assert(actual.toArray().get(1),"kuvv")

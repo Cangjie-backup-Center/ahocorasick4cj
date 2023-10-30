@@ -12,17 +12,12 @@ public class AhoCorasickTest {
         let p2: Payload<String> = Payload<String>("Beta", "greek:Beta")
         let p3: Payload<String> = Payload<String>("Gamma", "greek:Gamma")
         let arr: ArrayList<Payload<String>> = ArrayList<Payload<String>>()
-
         arr.append(p1)
         arr.append(p2)
         arr.append(p3)
-
         var trie = PayloadTrie<String>.builder().addKeywords(arr).build()
-
         var tokens = trie.tokenize("Hear: Alpha team first, Beta from the rear, Gamma in reserve")
-
         @Assert(tokens.size, 7)
-
         var it_1 = tokens.iterator()
         var strRes1: String = ""
         for (obj in it_1) {
@@ -37,15 +32,11 @@ public class AhoCorasickTest {
         let p2: Payload<String> = Payload<String>("Beta", "greek:Beta")
         let p3: Payload<String> = Payload<String>("Gamma", "greek:Gamma")
         let arr: ArrayList<Payload<String>> = ArrayList<Payload<String>>()
-
         arr.append(p1)
         arr.append(p2)
         arr.append(p3)
-
         var trie = PayloadTrie<String>.builder().addKeywords(arr).build()
-
         var tokens = trie.tokenize("Alpha Beta Gamma")
-
         @Assert(tokens.size, 5)
     }
 
@@ -69,7 +60,6 @@ public class AhoCorasickTest {
     func testPayloadTrie_05(): Unit {
         var trie = PayloadTrie<String>.builder().addKeyword("abc", "alpha:hhh").build()
         var firstMatch = trie.firstMatch(" " + "abc").getOrThrow()
-
         @Assert(firstMatch.toString(), "1:3=abc->")
     }
 
@@ -77,12 +67,10 @@ public class AhoCorasickTest {
     func testPayloadTrie_06(): Unit {
         var trie = PayloadTrie<String>.builder().addKeyword("abc", "alpha:hhh").build()
         var firstMatch = trie.firstMatch("ab")
-
         var sBool2: Bool = true
         if (let None <- firstMatch) {
             sBool2 = false
         }
         @Assert(sBool2,false)
-
     }
 }
