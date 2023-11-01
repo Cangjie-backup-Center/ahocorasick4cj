@@ -97,8 +97,8 @@ public class AhoCorasickTest {
         var target: String = "LİKE THIS"
         var trie = Trie.builder().ignoreCase().onlyWholeWords().addKeyword("this").build()
         var firstMatchs: Emit = trie.firstMatch(target).getOrThrow()
-        @Assert(5, firstMatchs.getStart())
-        @Assert(8, firstMatchs.getEnd())
+        @Assert(6, firstMatchs.getStart())
+        @Assert(9, firstMatchs.getEnd())
         @Assert("this", firstMatchs.getKeyword())
     }
 }

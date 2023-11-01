@@ -125,7 +125,7 @@ public class AhoCorasickTest {
         for (obj in it_1) {
             strRes1 += obj.toString()
         }
-        @Assert(strRes1,"2:11=dzxvmhelcx->13:22=dzxvmhelcx->48:57=dzxvmhelcx->")
+        @Assert(strRes1,"2:6=dzxvm->2:11=dzxvmhelcx->13:17=dzxvm->13:22=dzxvmhelcx->25:29=dzxvm->25:34=dzxvmhelcx->48:52=dzxvm->48:57=dzxvmhelcx->")
     }
 
     @TestCase

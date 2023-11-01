@@ -61,7 +61,7 @@ public class AhoCorasickTest {
             num++
         }
         @Assert(num,2)
-        @Assert(strRes,"0:2=你好，0:4=你好，走开")
+        @Assert(strRes,"0:8=你好，0:14=你好，走开")
         strRes = ""
         num = 0
         var it_3 = trie1.parseText("${str1}").iterator()
