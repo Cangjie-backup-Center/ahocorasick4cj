@@ -195,7 +195,6 @@ public class CharSearchTest01 {
 2:5=hers
 ```
 
-## 功能示例
 ### 关键词库模式功能示例
 
 ```cangjie
