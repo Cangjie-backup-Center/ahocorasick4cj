@@ -122,7 +122,7 @@ cjc -O2 --import-path xxxxx/build/release -L xxxxx/build/release/ahoCorasick4cj 
 ```shell
 cjc -O2
 ```
-- --import-path 导入charset库编译出来的库文件地址, 注意地址最后有".."
+- --import-path 导入 ahoCorasick4cj 库编译出来的库文件地址, 注意地址最后有".."
 - xxx 代表自己的工作目录，应替换成自己的实际工作目录
 - -L 导入库文件的完整路径
 - 导入多个库,每个库都需要--import-path和 -L
