@@ -73,8 +73,8 @@ public class State {
 
     public func addState(keyword: String): State {
         var state: State = this
-        for (i in 0..keyword.toCharArray().size) {
-            state = state.addState(keyword.toCharArray()[i])
+        for (i in 0..keyword.size) {
+            state = state.addState(Char(keyword[i]))
         }
         return state
     }

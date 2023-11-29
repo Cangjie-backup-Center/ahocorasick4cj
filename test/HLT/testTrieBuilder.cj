@@ -120,7 +120,7 @@ public class AhoCorasickTest {
         for (obj in it_1) {
             strRes1 += obj.toString()
         }
-        @Assert(strRes1,"2:11=dzxvmhelcx13:22=dzxvmhelcx48:57=dzxvmhelcx")
+        @Assert(strRes1,"2:6=dzxvm2:11=dzxvmhelcx13:17=dzxvm13:22=dzxvmhelcx25:29=dzxvm25:34=dzxvmhelcx48:52=dzxvm48:57=dzxvmhelcx")
     }
 
     @TestCase

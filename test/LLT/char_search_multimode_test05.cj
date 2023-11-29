@@ -29,7 +29,7 @@ public class CharSearchTest07 {
         var trie = builder.build()
         trie.parseText("dzxvmhelcx,mznvjwio", DefaultEmitHandler())
         let t1 = trie.containsMatch("dzxvmhelcx,mznvjwio")
-        @Assert(t1, false)
+        @Assert(t1, true)
     }
 
     @TestCase

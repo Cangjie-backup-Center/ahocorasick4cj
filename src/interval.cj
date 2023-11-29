@@ -96,14 +96,14 @@ public open class Interval <: Intervalable {
     }
 
     public open operator func ==(rhs: Intervalable): Bool {
-        if (this.toString().equals(rhs.toString())) {
+        if (this.toString() == rhs.toString()) {
             return true
         }
         return false
     }
 
     public open operator func !=(rhs: Intervalable): Bool {
-        if (!this.toString().equals(rhs.toString())) {
+        if (this.toString() != rhs.toString()) {
             return true
         }
         return false

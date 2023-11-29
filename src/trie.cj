@@ -74,6 +74,7 @@ public class Trie {
         if (let None <- payload) {
             return None
         } else {
+            println( "开始值" + payload.getOrThrow().start.toString() + "结束值" + payload.getOrThrow().end.toString())
             return Emit(payload.getOrThrow().start, payload.getOrThrow().end, payload.getOrThrow().keyword)
         }
     }
