@@ -16,5 +16,4 @@ tmp/
 report/
 *.macrocall
 .cache/
-cjpm.*
 target/
