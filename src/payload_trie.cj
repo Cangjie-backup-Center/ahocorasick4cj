@@ -203,7 +203,7 @@ public class PayloadTrie<T> {
                 }
                 currentState = getState(currentState, character)
                 let payloads: ArrayList<Payload<T>> = currentState.emit()
-                payloads.sortBy(compareTo)
+                payloads.sortBy(stable: false, comparator: compareTo)
                 if (!payloads.isEmpty()) {
                     var i = 0
                     while (i < payloads.size) {
@@ -245,7 +245,7 @@ public class PayloadTrie<T> {
             }
             currentState = getState(currentState, character)
             let payloads: ArrayList<Payload<T>> = currentState.emit()
-            payloads.sortBy(compareTo)
+            payloads.sortBy(stable: false, comparator: compareTo)
             if (processEmits(text, Int32(position), payloads, emitHandler) && trieConfig.stopOnHit) {
                 return
             }
