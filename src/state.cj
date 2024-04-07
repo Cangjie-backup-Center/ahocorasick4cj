@@ -54,8 +54,7 @@ public class State {
         var nextState: ?State = this.success.get(character)
         if (!ignoreRootState) {
             if (let None <- nextState) {
-                if (let Some(v) <- rootState) {
-                    v.depth
+                if (let Some(_) <- rootState) {
                     nextState = this.rootState
                 }
             }
