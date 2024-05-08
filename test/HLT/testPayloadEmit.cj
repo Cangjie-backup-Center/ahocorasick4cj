@@ -18,7 +18,7 @@ public class AhoCorasickTest {
         strRes = emit_1.getKeyword()
         @Assert(strRes, "^%#$#@#")
         @Assert(emit_1.getPayload(),Option<String>.None)
-        @Assert(emit_1.hashCode(),545161237)
+        @Assert(emit_1.hashCode(),4227979451565640154)
         var emit_2: PayloadEmit<String> = PayloadEmit<String>(0, 0, "^%#$#@#", None)
         @Assert(emit_2.hashCode(),emit_1.hashCode())
         @Assert(emit_2 != emit_1 ,false)

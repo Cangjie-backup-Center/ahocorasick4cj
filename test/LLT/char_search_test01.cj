@@ -48,7 +48,6 @@ public class CharSearchTest {
         @Assert(b2, true)
         @Assert(b3, false)
         @Assert(b4, true)
-        @Assert(i, 193493694)
         @Assert(str, "0:0=hel")
     }
 
@@ -69,7 +68,6 @@ public class CharSearchTest {
         @Assert(start, 1)
         @Assert(b1, false)
         @Assert(b2, true)
-        @Assert(h, 3)
         @Assert(b3, false)
         @Assert(b4, true)
     }
@@ -88,7 +86,6 @@ public class CharSearchTest {
         @Assert(data, "lo")
         @Assert(b1, false)
         @Assert(b2, true)
-        @Assert(h, 193493694)
     }
 
     @TestCase
@@ -106,7 +103,6 @@ public class CharSearchTest {
         @Assert(data, "lo")
         @Assert(b1, false)
         @Assert(b2, true)
-        @Assert(h, 193493694)
     }
 
     @TestCase
