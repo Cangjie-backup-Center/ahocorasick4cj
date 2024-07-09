@@ -167,8 +167,9 @@ from std import unittest.*
 from std import unittest.testmacro.*
 
 main(): Int64 {
-    let charSearchTest03 = CharSearchTest01()
-    charSearchTest01.testCharSearch01()
+    let test = CharSearchTest01()
+    test.testCharSearch01()
+    return 0
 }
 
 @Test
@@ -190,8 +191,8 @@ public class CharSearchTest01 {
 执行结果如下：
 
 ```shell
-1:3=she
 2:3=he
+1:3=she
 2:5=hers
 ```
 
@@ -299,8 +300,8 @@ class Word {
 执行结果如下：
 
 ```shell
-1:3=she->f
 2:3=he->m
+1:3=she->f
 2:5=hers->f
 ```
 
