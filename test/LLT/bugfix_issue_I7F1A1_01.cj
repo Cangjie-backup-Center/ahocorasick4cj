@@ -1,10 +1,10 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 
-from ahoCorasick4cj import ahoCorasick4cj.*
-from std import unittest.*
-from std import time.*
-from std import unittest.testmacro.*
+import ahoCorasick4cj.*
+import std.unittest.*
+import std.time.*
+import std.unittest.testmacro.*
 
 main(): Int64 {
     let charSearchTest01 = CharSearchTest01()

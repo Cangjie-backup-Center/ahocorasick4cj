@@ -1,11 +1,11 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 
-from ahoCorasick4cj import ahoCorasick4cj.*
-from std import unittest.*
-from std import unittest.testmacro.*
-from std import collection.*
-from std import math.MathExtension
+import ahoCorasick4cj.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import std.collection.*
+import std.math.MathExtension
 
 main(): Int64 {
     let bugfixTest = BugfixTest()
@@ -22,14 +22,14 @@ public class BugfixTest {
     @TestCase
     public func testAddState01(): Unit {
         var payloadState: PayloadState<String> = PayloadState<String>(Int32(Int16.Max))
-        payloadState.addState('\u{4f60}')
+        payloadState.addState(r'\u{4f60}')
         @Assert(payloadState.getStates().size, 1)
     }
 
     @TestCase
     public func testAddState02(): Unit {
         var payloadState: PayloadState<String> = PayloadState<String>(Int32(Int16.Max))
-        payloadState.addState('?')
+        payloadState.addState(r'?')
         @Assert(payloadState.getStates().size, 1)
     }
 

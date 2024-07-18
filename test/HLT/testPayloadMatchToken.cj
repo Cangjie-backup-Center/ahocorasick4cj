@@ -1,8 +1,8 @@
 // 3rd_party_lib:ahocorasick4cj/build/ahoCorasick4cj
 // 3rd_party_lib_ohos:ahocorasick4cj/build/aarch64-linux-ohos/ahoCorasick4cj
-from ahoCorasick4cj import ahoCorasick4cj.*
-from std import unittest.*
-from std import collection.*
+import ahoCorasick4cj.*
+import std.unittest.*
+import std.collection.*
 
 @Test
 public class AhoCorasickTest {

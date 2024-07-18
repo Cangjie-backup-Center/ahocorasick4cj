@@ -1,9 +1,9 @@
 // 3rd_party_lib:ahocorasick4cj/build/ahoCorasick4cj
 // 3rd_party_lib_ohos:ahocorasick4cj/build/aarch64-linux-ohos/ahoCorasick4cj
-from ahoCorasick4cj import ahoCorasick4cj.*
-from std import unittest.*
-from std import collection.*
-from std import math.MathExtension
+import ahoCorasick4cj.*
+import std.unittest.*
+import std.collection.*
+import std.math.MathExtension
 
 @Test
 public class AhoCorasickTest {
@@ -17,17 +17,17 @@ public class AhoCorasickTest {
         var str1: String = "^%#$#@#"
         let payloadState_1: PayloadState<String> = PayloadState<String>(0)
         @Assert(payloadState_1.getStates().size, 0)
-        payloadState_1.addState(' ')
+        payloadState_1.addState(r' ')
         var payloadStateArrL: Collection<PayloadState<String>> = payloadState_1.getStates()
         @Assert(payloadStateArrL.size, 1)
         var arr1 = payloadStateArrL.toArray()
-        payloadState_1.addState('2')
-        payloadState_1.addState('R')
+        payloadState_1.addState(r'2')
+        payloadState_1.addState(r'R')
         @Assert(payloadState_1.getStates().size, 3)
         str1 = "你好 cangjie"
         let payloadState_2: PayloadState<String> = PayloadState<String>(-6)
-        payloadState_2.addState('\\')
-        payloadState_2.addState('\n')
+        payloadState_2.addState(r'\\')
+        payloadState_2.addState(r'\n')
         payloadStateArrL = payloadState_2.getStates()
         arr1 = payloadStateArrL.toArray()
         @Assert(arr1.size, 2)
@@ -39,23 +39,23 @@ public class AhoCorasickTest {
         var str1: String = "^%#$#@#"
         let payloadState_1: PayloadState<String> = PayloadState<String>(0)
         @Assert(payloadState_1.getStates().size, 0)
-        payloadState_1.addState('$')
+        payloadState_1.addState(r'$')
         var payloadStateArrL: Collection<PayloadState<String>> = payloadState_1.getStates()
         @Assert(payloadStateArrL.size, 1)
-        payloadState_1.addState('^')
-        payloadState_1.addState('】')
+        payloadState_1.addState(r'^')
+        payloadState_1.addState(r'】')
         @Assert(payloadState_1.getStates().size, 3)
-        payloadState_1.addState('】')
+        payloadState_1.addState(r'】')
         @Assert(payloadState_1.getStates().size, 3)
         str1 = "你好&*^&%cangjie12<>"
         let payloadState_2: PayloadState<String> = PayloadState<String>(Int32(52))
         try {
-            payloadState_2.addState('\u{4f60}')
+            payloadState_2.addState(r'\u{4f60}')
         } catch (e1: IllegalArgumentException) {
             returnFlag = 1
         }
         try {
-            payloadState_2.addState('?') 
+            payloadState_2.addState(r'?') 
         } catch (e1: IllegalArgumentException) {
             returnFlag = 2
         }
@@ -64,7 +64,7 @@ public class AhoCorasickTest {
         @Assert(arrStates.size, 2)
         let payloadState_3: PayloadState<String> = PayloadState<String>(Int32.Max)
         try {
-            payloadState_3.addState('9') 
+            payloadState_3.addState(r'9') 
         } catch (e1: OverflowException) {
             @Assert(e1.toString().contains("OverflowException: add"),true)
             returnFlag = 0

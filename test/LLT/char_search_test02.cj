@@ -1,9 +1,9 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 
-from ahoCorasick4cj import ahoCorasick4cj.*
-from std import unittest.*
-from std import unittest.testmacro.*
+import ahoCorasick4cj.*
+import std.unittest.*
+import std.unittest.testmacro.*
 
 main(): Int64 {
     let charSearchTest02 = CharSearchTest02()
@@ -97,9 +97,9 @@ public class CharSearchTest02 {
     public func testPayloadState(): Unit {
         let p: PayloadState<String> = PayloadState<String>(0)
         p.addEmit(Payload<String>("uuu", "vvv"))
-        let ps: PayloadState<String> = p.addState('a')
-        p.nextStateIgnoreRootState('b')
-        p.nextState('c')
+        let ps: PayloadState<String> = p.addState(r'a')
+        p.nextStateIgnoreRootState(r'b')
+        p.nextState(r'c')
         p.getStates()
         p.setFailure(ps)
         let col = p.getTransitions().toArray().toString()

@@ -1,9 +1,9 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 
-from ahoCorasick4cj import ahoCorasick4cj.*
-from std import unittest.*
-from std import unittest.testmacro.*
+import ahoCorasick4cj.*
+import std.unittest.*
+import std.unittest.testmacro.*
 
 main(): Int64 {
     let charSearchTest04 = CharSearchTest04()
@@ -104,8 +104,8 @@ public class CharSearchTest04 {
         var sped: StatefulPayloadEmitDelegateHandler = StatefulPayloadEmitDelegateHandler(DefaultEmitHandler())
         sped.emit(PayloadEmit<String>(0, 13, "ccs", None))
         sped.getEmits()
-        s.nextState('c')
-        s.nextStateIgnoreRootState('b')
+        s.nextState(r'c')
+        s.nextStateIgnoreRootState(r'b')
         var s1 = s.addState("cccd")
         var s2 = s1.addState("weeee")
         s2.getDepth()
@@ -188,8 +188,8 @@ public class CharSearchTest04 {
         var sped: StatefulPayloadEmitDelegateHandler = StatefulPayloadEmitDelegateHandler(DefaultEmitHandler())
         sped.emit(PayloadEmit<String>(1, 50, "ccs", None))
         sped.getEmits()
-        s.nextState('c')
-        s.nextStateIgnoreRootState('b')
+        s.nextState(r'c')
+        s.nextStateIgnoreRootState(r'b')
         var s1 = s.addState("cccd")
         var s2 = s1.addState("weeee")
         let col = s2.getTransitions().toArray().toString()
@@ -202,8 +202,8 @@ public class CharSearchTest04 {
         var sped: StatefulPayloadEmitDelegateHandler = StatefulPayloadEmitDelegateHandler(DefaultEmitHandler())
         sped.emit(PayloadEmit<String>(0, 13, "asfasf", None))
         sped.getEmits()
-        s.nextState('a')
-        s.nextStateIgnoreRootState('t')
+        s.nextState(r'a')
+        s.nextStateIgnoreRootState(r't')
         var s1 = s.addState("cccd")
         var s2 = s1.addState("fsafasgzxbv")
         let col = s2.getTransitions().toArray().toString()
@@ -280,8 +280,8 @@ public class CharSearchTest04 {
         var sped: StatefulPayloadEmitDelegateHandler = StatefulPayloadEmitDelegateHandler(DefaultEmitHandler())
         sped.emit(PayloadEmit<String>(1, 32, "ccs", None))
         sped.getEmits()
-        s.nextState('c')
-        s.nextStateIgnoreRootState('b')
+        s.nextState(r'c')
+        s.nextStateIgnoreRootState(r'b')
         var s1 = s.addState("cccd")
         var s2 = s1.addState("weeee")
         let col = s2.getTransitions().toArray().toString()

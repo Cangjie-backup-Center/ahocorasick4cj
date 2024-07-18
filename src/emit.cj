@@ -1,9 +1,9 @@
 /*
- * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2023. All rights reserved.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2024. All rights reserved.
  */
 package ahoCorasick4cj
 
-from std import convert.*
+
 
 /*
  * The class is Emit

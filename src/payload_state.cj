@@ -1,5 +1,5 @@
 /*
- * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2023. All rights reserved.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2024. All rights reserved.
  */
 package ahoCorasick4cj
 
@@ -24,7 +24,7 @@ public class PayloadState<T> {
      * referred to in the white paper as the 'goto' structure. From a state it is
      * possible to go to other states, depending on the character passed.
      */
-    private var success: Map<Char, PayloadState<T>> = HashMap<Char, PayloadState<T>>()
+    private var success: Map<Rune, PayloadState<T>> = HashMap<Rune, PayloadState<T>>()
 
     /**
      * if no matching states are found, the failure state will be returned
@@ -62,7 +62,7 @@ public class PayloadState<T> {
         this.emits.getOrThrow().append(payload)
     }
 
-    public func addState(character: Char): PayloadState<T> {
+    public func addState(character: Rune): PayloadState<T> {
         var nextState: ?PayloadState<T> = nextStateIgnoreRootState(character)
         if (let None <- nextState) {
             nextState = PayloadState<T>(this.depth + 1)
@@ -71,11 +71,11 @@ public class PayloadState<T> {
         return nextState.getOrThrow()
     }
 
-    public func nextStateIgnoreRootState(character: Char): ?PayloadState<T> {
+    public func nextStateIgnoreRootState(character: Rune): ?PayloadState<T> {
         return nextState(character, true)
     }
 
-    public func nextState(character: Char): ?PayloadState<T> {
+    public func nextState(character: Rune): ?PayloadState<T> {
         return nextState(character, false)
     }
 
@@ -83,7 +83,7 @@ public class PayloadState<T> {
         return this.depth
     }
 
-    private func nextState(character: Char, ignoreRootState: Bool): ?PayloadState<T> {
+    private func nextState(character: Rune, ignoreRootState: Bool): ?PayloadState<T> {
         var nextState: ?PayloadState<T> = this.success.get(character)
         if (!ignoreRootState) {
             if (let None <- nextState) {
@@ -103,7 +103,7 @@ public class PayloadState<T> {
         return this.failure = failState
     }
 
-    public func getTransitions(): Collection<Char> {
+    public func getTransitions(): Collection<Rune> {
         return this.success.keys()
     }
 

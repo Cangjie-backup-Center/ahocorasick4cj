@@ -1,6 +1,6 @@
 // 3rd_party_lib:ahocorasick4cj/build/ahoCorasick4cj
-from ahoCorasick4cj import ahoCorasick4cj.*
-from fuzz import fuzz.*
+import ahoCorasick4cj.*
+import fuzz.fuzz.*
 
 var returnFlag: Int32 = 0
 let trieConfig_1: TrieConfig = TrieConfig()
