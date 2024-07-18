@@ -1,8 +1,8 @@
 // 3rd_party_lib:ahocorasick4cj/build/ahoCorasick4cj
 // 3rd_party_lib_ohos:ahocorasick4cj/build/aarch64-linux-ohos/ahoCorasick4cj
-from ahoCorasick4cj import ahoCorasick4cj.*
-from std import unittest.*
-from std import collection.*
+import ahoCorasick4cj.*
+import std.unittest.*
+import std.collection.*
 
 @Test
 public class AhoCorasickTest {
@@ -25,8 +25,8 @@ public class AhoCorasickTest {
             returnFlag = 0
         }
         payloadState_1.addEmit(payload_1)
-        payloadState_1.addState('&')
-        payloadState_1.setFailure(payloadState_1.addState('>'))
+        payloadState_1.addState(r'&')
+        payloadState_1.setFailure(payloadState_1.addState(r'>'))
         var failures = payloadState_1.failures().getOrThrow()
         @Assert(failures.emit().toArray().isEmpty() , true)
         @Assert(returnFlag, 0)

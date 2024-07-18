@@ -1,9 +1,7 @@
 /*
- * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2023. All rights reserved.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2024. All rights reserved.
  */
 package ahoCorasick4cj
-from std import unicode.*
-from std import sort.SortByExtension
 
 /*
  * The class is PayloadTrie
@@ -58,12 +56,12 @@ public class PayloadTrie<T> {
 
     private func addState(keyword: String): PayloadState<T> {
         var state: PayloadState<T> = getRootState()
-        var adjustedChar: Char
+        var adjustedChar: Rune
         for (i in 0..keyword.size) {
             if (isCaseInsensitive()) { 
-                adjustedChar = Char(keyword[i]).toLowerCase()
+                adjustedChar = Rune(keyword[i]).toLowerCase()
             }
-            adjustedChar = Char(keyword[i])
+            adjustedChar = Rune(keyword[i])
             state = state.addState(adjustedChar)
         }
         return state
@@ -197,7 +195,7 @@ public class PayloadTrie<T> {
             var currentState: PayloadState<T> = getRootState()
             var position: Int64 = 0
             while (position < text.size) {
-                var character: Char = Char(text[position])
+                var character: Rune = Rune(text[position])
                 if (trieConfig.caseInsensitive) {
                     character = character.toLowerCase()
                 }
@@ -239,7 +237,7 @@ public class PayloadTrie<T> {
         var currentState: PayloadState<T> = getRootState()
         var position = 0
         while (position < text.size) {
-            var character: Char = Char(text[position])
+            var character: Rune = Rune(text[position])
             if (trieConfig.caseInsensitive) {
                 character = character.toLowerCase()
             }
@@ -270,16 +268,16 @@ public class PayloadTrie<T> {
     }
 
     private func isPartialMatch(searchText: String, emit: PayloadEmit<T>): Bool {
-        return (emit.start != 0 && Char((searchText[Int64(emit.start) - 1])).isLetter()) ||
-                (Int64(emit.end) + 1 != searchText.size && Char((searchText[Int64(emit.end) + 1])).isLetter())
+        return (emit.start != 0 && Rune((searchText[Int64(emit.start) - 1])).isLetter()) ||
+                (Int64(emit.end) + 1 != searchText.size && Rune((searchText[Int64(emit.end) + 1])).isLetter())
     }
 
     private func isPartialMatchWhiteSpaceSeparated(searchText: String, emit: PayloadEmit<T>): Bool {
-        return (emit.start != 0 && Char(!(searchText[Int64(emit.start) - 1])).isWhiteSpace()) ||
-                (Int64(emit.end) + 1 != searchText.size && Char(!(searchText[Int64(emit.end) + 1])).isWhiteSpace())
+        return (emit.start != 0 && Rune(!(searchText[Int64(emit.start) - 1])).isWhiteSpace()) ||
+                (Int64(emit.end) + 1 != searchText.size && Rune(!(searchText[Int64(emit.end) + 1])).isWhiteSpace())
     }
 
-    private func getState(currentState: PayloadState<T>, character: Char): PayloadState<T> {
+    private func getState(currentState: PayloadState<T>, character: Rune): PayloadState<T> {
         var newCurrentState: ?PayloadState<T> = currentState.nextState(character)
         var current: PayloadState<T> = currentState
         while (let None <- newCurrentState) {

@@ -1,10 +1,10 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 
-from ahoCorasick4cj import ahoCorasick4cj.*
-from std import unittest.*
-from std import unittest.testmacro.*
-from std import collection.*
+import ahoCorasick4cj.*
+import std.unittest.*
+import std.unittest.testmacro.*
+import std.collection.*
 
 main(): Int64 {
     let bugfixTest = BugfixTest02()

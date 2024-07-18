@@ -645,9 +645,9 @@ class PayloadTrie
 #### 1.3 示例
 
 ```cangjie
-from ahoCorasick4cj import ahoCorasick4cj.*
-from std import unittest.*
-from std import unittest.testmacro.*
+import ahoCorasick4cj.*
+import std.unittest.*
+import std.unittest.testmacro.*
 
 main(): Int64 {
     let charSearchTest01 = CharSearchTest01()
@@ -1105,10 +1105,10 @@ class PayloadTrie
 #### 2.3 示例
 
 ```cangjie
-from ahoCorasick4cj import ahoCorasick4cj.*
-from std import unittest.*
-from std import collection.*
-from std import unittest.testmacro.*
+import ahoCorasick4cj.*
+import std.unittest.*
+import std.collection.*
+import std.unittest.testmacro.*
 
 main(): Int64 {
     let charSearchTest05 = CharSearchTest05()
@@ -1554,9 +1554,9 @@ class TrieBuilder
 #### 3.3 示例
 
 ```cangjie
-from ahoCorasick4cj import ahoCorasick4cj.*
-from std import unittest.*
-from std import unittest.testmacro.*
+import ahoCorasick4cj.*
+import std.unittest.*
+import std.unittest.testmacro.*
 
 main(): Int64 {
     let charSearchTest06 = CharSearchTest06()

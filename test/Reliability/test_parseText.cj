@@ -1,9 +1,9 @@
 // 3rd_party_lib:ahocorasick4cj/build/ahoCorasick4cj
 
-from ahoCorasick4cj import ahoCorasick4cj.*
-from std import time.*
-from std import math.*
-from std import collection.*
+import ahoCorasick4cj.*
+import std.time.*
+import std.math.*
+import std.collection.*
 
 main() {
     println("TCS: ahoCorasick4cj, time elapsed: 1 ns, RESULT:")

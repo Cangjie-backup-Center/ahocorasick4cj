@@ -1,5 +1,5 @@
 /*
- * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2023. All rights reserved.
+ * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2024. All rights reserved.
  */
 package ahoCorasick4cj
 
@@ -24,7 +24,7 @@ public class State {
      * referred to in the white paper as the 'goto' structure. From a state it is
      * possible to go to other states, depending on the character passed.
      */
-    private var success: Map<Char, State> = HashMap<Char, State>()
+    private var success: Map<Rune, State> = HashMap<Rune, State>()
 
     /**
      * if no matching states are found, the failure state will be returned
@@ -50,7 +50,7 @@ public class State {
         }
     }
 
-    private func nextState(character: Char, ignoreRootState: Bool): ?State {
+    private func nextState(character: Rune, ignoreRootState: Bool): ?State {
         var nextState: ?State = this.success.get(character)
         if (!ignoreRootState) {
             if (let None <- nextState) {
@@ -62,23 +62,23 @@ public class State {
         return nextState
     }
 
-    public func nextState(character: Char): ?State {
+    public func nextState(character: Rune): ?State {
         return nextState(character, false)
     }
 
-    public func nextStateIgnoreRootState(character: Char): ?State {
+    public func nextStateIgnoreRootState(character: Rune): ?State {
         return nextState(character, true)
     }
 
     public func addState(keyword: String): State {
         var state: State = this
         for (i in 0..keyword.size) {
-            state = state.addState(Char(keyword[i]))
+            state = state.addState(Rune(keyword[i]))
         }
         return state
     }
 
-    public func addState(character: Char): State {
+    public func addState(character: Rune): State {
         var nextState: ?State = nextStateIgnoreRootState(character)
         if (let None <- nextState) {
             nextState = State(this.depth + 1)
@@ -124,7 +124,7 @@ public class State {
         return this.success.values()
     }
 
-    public func getTransitions(): Collection<Char> {
+    public func getTransitions(): Collection<Rune> {
         return this.success.keys()
     }
 }

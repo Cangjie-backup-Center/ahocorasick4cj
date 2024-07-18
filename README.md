@@ -3,9 +3,9 @@
 </div>
 
 <p align="center">
-<img alt="" src="https://img.shields.io/badge/release-v0.0.2-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/release-v0.0.1-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjc-v0.51.4-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjc-v0.53.4-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjcov-94.8%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
@@ -162,9 +162,9 @@ test.cj.out
 ### 多字符搜索功能示例
 
 ```cangjie
-from ahoCorasick4cj import ahoCorasick4cj.*
-from std import unittest.*
-from std import unittest.testmacro.*
+import ahoCorasick4cj.*
+import std.unittest.*
+import std.unittest.testmacro.*
 
 main(): Int64 {
     let test = CharSearchTest01()
@@ -199,10 +199,10 @@ public class CharSearchTest01 {
 ### 关键词库模式功能示例
 
 ```cangjie
-from ahoCorasick4cj import ahoCorasick4cj.*
-from std import unittest.*
-from std import collection.*
-from std import unittest.testmacro.*
+import ahoCorasick4cj.*
+import std.unittest.*
+import std.collection.*
+import std.unittest.testmacro.*
 
 main(): Int64 {
     let charSearchTest05 = CharSearchTest05()
@@ -256,9 +256,9 @@ public class CharSearchTest05 {
 ### 自定义值输出模式功能示例
 
 ```cangjie
-from ahoCorasick4cj import ahoCorasick4cj.*
-from std import unittest.*
-from std import unittest.testmacro.*
+import ahoCorasick4cj.*
+import std.unittest.*
+import std.unittest.testmacro.*
 
 main(): Int64 {
     let charSearchTest06 = CharSearchTest06()
@@ -307,9 +307,16 @@ class Word {
 
 注意：用例需放入 `test/LLT` 下，执行步骤是: 本项目编译运行方式
 
+## 约束与限制
+
+在下述版本验证通过：
+```shell
+Cangjie Version: 0.53.4
+```
+
 ## 开源协议
 
-Apache License 2.0
+本项目基于 [Apache License 2.0](https://gitcode.com/Cangjie-TPC/ahocorasick4cj/blob/master/LICENSE) ，请自由的享受和参与开源。
 
 ## <img alt="" src="./doc/assets/readme-icon-contribute.png" style="display: inline-block;" width=3%/> 参与贡献
 
