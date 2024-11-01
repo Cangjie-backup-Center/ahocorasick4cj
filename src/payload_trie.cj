@@ -223,14 +223,7 @@ public class PayloadTrie<T> {
     }
 
     private func compareTo(emit1: Payload<T>, emit2: Payload<T>): Ordering {
-        var comparison = emit2.keyword.size - emit1.keyword.size
-        if (comparison < 0) {
-            return Ordering.GT
-        } else if(comparison > 0) {
-            return Ordering.LT
-        } else {
-            return Ordering.EQ
-        }
+        return emit1.keyword.size.compare(emit2.keyword.size)
     }
 
     public func parseText(text: String, emitHandler: PayloadEmitHandler<T>): Unit {
