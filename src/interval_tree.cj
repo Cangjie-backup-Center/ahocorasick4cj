@@ -45,23 +45,10 @@ public class IntervalTree {
     }
 
     private func compareSize(intervalable: Intervalable, intervalable2: Intervalable): Ordering {
-        var comparison = intervalable2.size() - intervalable.size()
-        if (comparison > 0) {
-            return Ordering.GT
-        } else if(comparison < 0) {
-            return Ordering.LT
-        } else {
-            return Ordering.EQ
-        }
+        return intervalable2.size().compare(intervalable.size())
     }
 
     private func comparePosition(intervalable: Intervalable, intervalable2: Intervalable): Ordering {
-        if (intervalable.getStart() > intervalable2.getStart()) {
-            return Ordering.GT
-        } else if(intervalable.getStart() < intervalable2.getStart()) {
-            return Ordering.LT
-        } else {
-            return Ordering.EQ
-        }
+        return intervalable.getStart().compare(intervalable2.getStart())
     }
 }
