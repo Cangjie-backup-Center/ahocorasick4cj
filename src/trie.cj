@@ -23,7 +23,7 @@ public class Trie {
     private static func asTokens(tokens: Collection<PayloadToken<String>>): Collection<Token> {
         var result: ArrayList<Token> = ArrayList<Token>()
         for (payloadToken in tokens) {
-            result.append(DefaultToken(payloadToken))
+            result.add(DefaultToken(payloadToken))
         }
         return result
     }
@@ -31,7 +31,7 @@ public class Trie {
     private static func asEmits(emits: Collection<PayloadEmit<String>>): Collection<Emit> {
         var result: ArrayList<Emit> = ArrayList<Emit>()
         for (emit in emits) {
-            result.append(asEmit(emit))
+            result.add(asEmit(emit))
         }
         return result
     }

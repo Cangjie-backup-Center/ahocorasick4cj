@@ -13,7 +13,7 @@ public class DefaultEmitHandler <: StatefulEmitHandler {
     let emits: ArrayList<Emit> = ArrayList<Emit>()
 
     public func emit(emit: Emit): Bool {
-        this.emits.append(emit)
+        this.emits.add(emit)
         return true
     }
 

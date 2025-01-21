@@ -13,7 +13,7 @@ public abstract class AbstractStatefulEmitHandler<T> <: StatefulEmitHandler {
     var emits: ArrayList<Emit> = ArrayList<Emit>()
 
     public func addEmit(emit: Emit): Unit {
-        this.emits.append(emit)
+        this.emits.add(emit)
     }
 
     public func getEmits(): ArrayList<Emit> {

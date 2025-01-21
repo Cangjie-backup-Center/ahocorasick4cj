@@ -35,8 +35,8 @@ public class CharSearchTest07 {
     @TestCase
     public func testCharSearch02(): Unit {
         let arr: ArrayList<String> = ArrayList<String>()
-        arr.append("wuliuqi")
-        arr.append("ccj1k4m!@@@#")
+        arr.add("wuliuqi")
+        arr.add("ccj1k4m!@@@#")
         var builder = Trie.builder()
             .addKeywords(arr)
             .removeOverlaps()

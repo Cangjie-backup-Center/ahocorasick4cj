@@ -24,7 +24,7 @@ public class IntervalTree {
                 continue
             }
             // Remove all overallping intervals
-            removeIntervals.appendAll(findOverlaps(intervals[i]))
+            removeIntervals.add(all: findOverlaps(intervals[i]))
         }
         // Remove all intervals that were overlapping
         for (removeInterval in removeIntervals) {
