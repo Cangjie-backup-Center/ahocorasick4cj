@@ -21,7 +21,7 @@ public class AhoCorasickTest {
         var payloadArrL: Collection<Payload<String>> = payloadState_1.emit()
         @Assert(payloadArrL.size, 0)
         let payload_2: Payload<String> = Payload("str1", "Option<String>.Some")
-        let payloadArr: ArrayList<Payload<String>> = ArrayList<Payload<String>>(payload_1, payload_2)
+        let payloadArr: ArrayList<Payload<String>> = ArrayList<Payload<String>>([payload_1, payload_2])
         payloadState_1.addEmit(payloadArr)
         @Assert(payloadState_1.emit().size, 2)
         str1 = "你好 cangjie"
@@ -40,7 +40,7 @@ public class AhoCorasickTest {
         @Assert(payloadState_1.emit().size, 0)
         let payloadArrL: ArrayList<Payload<String>> = ArrayList<Payload<String>>()
         for (i in 0..200) {
-            payloadArrL.append(Payload("Payload_key_${i}", "Payload_data_${i}"))
+            payloadArrL.add(Payload("Payload_key_${i}", "Payload_data_${i}"))
         }
         payloadState_1.addEmit(payloadArrL)
         var payloadArrL2: Collection<Payload<String>> = payloadState_1.emit()

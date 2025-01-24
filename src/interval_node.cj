@@ -24,11 +24,11 @@ public class IntervalNode {
         let toRight: ArrayList<Intervalable> = ArrayList<Intervalable>()
         for (i in 0..intervals.size) {
             if (intervals[i].getEnd() < node.point) {
-                toLeft.append(intervals[i])
+                toLeft.add(intervals[i])
             } else if (intervals[i].getStart() > node.point) {
-                toRight.append(intervals[i])
+                toRight.add(intervals[i])
             } else {
-                node.intervals.append(intervals[i])
+                node.intervals.add(intervals[i])
             }
         }
 
@@ -81,7 +81,7 @@ public class IntervalNode {
     protected func addToOverlaps(interval: Intervalable, overlaps: ArrayList<Intervalable>, newOverlaps: ArrayList<Intervalable>): Unit {
         for (i in 0..newOverlaps.size) {
             if (!newOverlaps[i].equals(interval)) {
-                overlaps.append(newOverlaps[i])
+                overlaps.add(newOverlaps[i])
             }
         }
     }
@@ -100,12 +100,12 @@ public class IntervalNode {
             match (direction) {
                 case LEFT =>
                     if (this.intervals[i].getStart() <= interval.getEnd()) {
-                        overlaps.append(this.intervals[i])
+                        overlaps.add(this.intervals[i])
                     }
                     break
                 case RIGHT =>
                     if (this.intervals[i].getEnd() >= interval.getStart()) {
-                        overlaps.append(this.intervals[i])
+                        overlaps.add(this.intervals[i])
                     }
                     break
             }

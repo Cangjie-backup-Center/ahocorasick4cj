@@ -82,7 +82,7 @@ public class State {
         var nextState: ?State = nextStateIgnoreRootState(character)
         if (let None <- nextState) {
             nextState = State(this.depth + 1)
-            this.success.put(character, nextState.getOrThrow())
+            this.success.add(character, nextState.getOrThrow())
         }
         return nextState.getOrThrow()
     }
@@ -95,7 +95,7 @@ public class State {
         if (let None <- this.emits) {
             this.emits = ArrayList<String>()
         }
-        this.emits.getOrThrow().append(keyword)
+        this.emits.getOrThrow().add(keyword)
     }
 
     public func addEmit(emits: ArrayList<String>): Unit {

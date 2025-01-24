@@ -25,19 +25,19 @@ main() {
                     try {
                         let emitColl_1:Collection<Emit> = trie1.parseText("helloqhh3Q")
                         if(emitColl_1.size == 2){
-                            result.append("success")
+                            result.add("success")
                         }else{
-                            result.append("fail")
+                            result.add("fail")
                         }
                     } catch (e: Exception) {
                         println("e> ${e.toString()}")
-                        result.append("fail")
+                        result.add("fail")
                         continue
                     }
                 }
                 return result
         }
-        futures.append(thread)
+        futures.add(thread)
     }
 
     for (f in futures) {

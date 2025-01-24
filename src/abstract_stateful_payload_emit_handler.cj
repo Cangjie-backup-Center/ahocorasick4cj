@@ -13,7 +13,7 @@ public abstract class AbstractStatefulPayloadEmitHandler<T> <: StatefulPayloadEm
     var emits: ArrayList<PayloadEmit<T>> = ArrayList<PayloadEmit<T>>()
 
     public func addEmit(emit: PayloadEmit<T>): Unit {
-        this.emits.append(emit)
+        this.emits.add(emit)
     }
 
     public func getEmits(): ArrayList<PayloadEmit<T>> {

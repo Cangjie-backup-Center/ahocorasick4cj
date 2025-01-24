@@ -80,15 +80,15 @@ public class PayloadTrie<T> {
 
         for (emit in collectedEmits) {
             if (emit.start - lastCollectedPosition > 1) {
-                tokens.append( createFragment( emit, text, lastCollectedPosition) )
+                tokens.add( createFragment( emit, text, lastCollectedPosition) )
             }
 
-            tokens.append(createMatch(emit, text))
+            tokens.add(createMatch(emit, text))
             lastCollectedPosition = emit.end
         }
 
         if (Int32(text.size) - lastCollectedPosition > 1) {
-            tokens.append( createFragment( None, text, lastCollectedPosition) )
+            tokens.add( createFragment( None, text, lastCollectedPosition) )
         }
 
         return tokens
@@ -120,14 +120,14 @@ public class PayloadTrie<T> {
         // First, set the fail state of all depth 1 states to the root state
         for (depthOneState in startState.getStates()) {
             depthOneState.setFailure(startState)
-            arrayList.append(depthOneState)
+            arrayList.add(depthOneState)
         }
         // Second, determine the fail state for all depth > 1 state
         while (!arrayList.isEmpty()) {
-            var currentState: PayloadState<T> = arrayList.remove(0)
+            var currentState: PayloadState<T> = arrayList.remove(at: 0)
             for (transition in currentState.getTransitions()) {
                 var targetState: PayloadState<T> = currentState.nextState(transition).getOrThrow()
-                arrayList.append(targetState)
+                arrayList.add(targetState)
                 var traceFailureState: ?PayloadState<T> = currentState.failures()
                 while (let None <- traceFailureState.getOrThrow().nextState(transition)) {
                     traceFailureState = traceFailureState.getOrThrow().failures()
@@ -149,13 +149,13 @@ public class PayloadTrie<T> {
         if (!trieConfig.isAllowOverlaps()) {
             let convertArr: ArrayList<Intervalable> = ArrayList<Intervalable>()
             for (i in 0..collectedEmits.size) {
-                convertArr.append(collectedEmits[i])
+                convertArr.add(collectedEmits[i])
             }
             let intervalTree: IntervalTree  = IntervalTree(convertArr)
             intervalTree.removeOverlaps(convertArr)
             let arr2: ArrayList<PayloadEmit<T>> = ArrayList<PayloadEmit<T>>()
             for (i in 0..convertArr.size) {
-                arr2.append((convertArr[i] as PayloadEmit<T>).getOrThrow())
+                arr2.add((convertArr[i] as PayloadEmit<T>).getOrThrow())
             }
             return arr2
         }

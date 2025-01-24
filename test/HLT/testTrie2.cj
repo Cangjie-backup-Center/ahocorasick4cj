@@ -31,7 +31,7 @@ public class EmitHandlerImpl <: EmitHandler {
     private var emits: ArrayList<Emit> = ArrayList<Emit>()
 
     public override func emit(emit: Emit): Bool {
-        emits.append(emit)
+        emits.add(emit)
         return true
     }
 

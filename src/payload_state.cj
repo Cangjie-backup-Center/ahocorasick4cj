@@ -59,14 +59,14 @@ public class PayloadState<T> {
         if (let None <- this.emits) {
             this.emits = ArrayList<Payload<T>>()
         }
-        this.emits.getOrThrow().append(payload)
+        this.emits.getOrThrow().add(payload)
     }
 
     public func addState(character: Rune): PayloadState<T> {
         var nextState: ?PayloadState<T> = nextStateIgnoreRootState(character)
         if (let None <- nextState) {
             nextState = PayloadState<T>(this.depth + 1)
-            this.success.put(character, nextState.getOrThrow())
+            this.success.add(character, nextState.getOrThrow())
         }
         return nextState.getOrThrow()
     }

@@ -49,12 +49,12 @@ public class AhoCorasickTest {
     @TestCase
     func testIntervalNode_03(): Unit {
         var intervals: ArrayList<Intervalable> = ArrayList<Intervalable>()
-        intervals.append(Interval(0, 2));
-        intervals.append(Interval(1, 3));
-        intervals.append(Interval(2, 4));
-        intervals.append(Interval(3, 5));
-        intervals.append(Interval(4, 6));
-        intervals.append(Interval(5, 7));
+        intervals.add(Interval(0, 2));
+        intervals.add(Interval(1, 3));
+        intervals.add(Interval(2, 4));
+        intervals.add(Interval(3, 5));
+        intervals.add(Interval(4, 6));
+        intervals.add(Interval(5, 7));
         var intervalTree: IntervalTree = IntervalTree(intervals)
         var overlaps: ArrayList<Intervalable> = intervalTree.findOverlaps(Interval(1, 3))
         @Assert(3, overlaps.size)
