@@ -3,9 +3,9 @@
 </div>
 
 <p align="center">
-<img alt="" src="https://img.shields.io/badge/release-v1.0.2-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/release-v1.0.3-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjc-v0.59.6-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjc-v0.60.5-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjcov-94.8%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
@@ -104,6 +104,16 @@ cjpm build
 
 ```cmd
 cjpm build
+```
+
+#### RK3568 开发板环境编译
+
+编译描述
+
+```cmd
+1、请关注 cjpm.toml 文件中 [target.aarch64-hm-gnu] 项
+    ${RK3568_CANGJIE_HOME} 环境变量代表 RK3568 板子版本，例如 ohos-xxx/out/rk3568/obj/third_party
+    ${CLANG_HOME} 环境变量代表 RK3568 板子的 pribuilts 工具版本，例如 ohos-xxx/prebuilts/clang/ohos
 ```
 
 ### 执行用例
@@ -311,7 +321,7 @@ class Word {
 
 在下述版本验证通过：
 ```shell
-Cangjie Version: 0.59.6
+Cangjie Version: 0.60.5
 ```
 
 ## 开源协议
