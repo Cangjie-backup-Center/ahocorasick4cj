@@ -24,7 +24,7 @@ public class PayloadState<T> {
      * referred to in the white paper as the 'goto' structure. From a state it is
      * possible to go to other states, depending on the character passed.
      */
-    private var success: Map<Rune, PayloadState<T>> = HashMap<Rune, PayloadState<T>>()
+    private var success: HashMap<Rune, PayloadState<T>> = HashMap<Rune, PayloadState<T>>()
 
     /**
      * if no matching states are found, the failure state will be returned

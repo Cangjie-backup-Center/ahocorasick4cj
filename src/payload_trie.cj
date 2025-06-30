@@ -140,26 +140,40 @@ public class PayloadTrie<T> {
     }
 
     public func parseText(text: String): Collection<PayloadEmit<T>> {
-        return parseText(text, DefaultPayloadEmitHandler<T>())
+        let emitHandler = DefaultPayloadEmitHandler<T>()
+        var currentState: PayloadState<T> = getRootState()
+        var position = 0
+        while (position < text.size) {
+            var character: Rune = Rune(text[position])
+            if (trieConfig.caseInsensitive) {
+                character = character.toLowerCase()
+            }
+            currentState = getState(currentState, character)
+            let payloads: ArrayList<Payload<T>> = currentState.emit()
+            payloads.sortBy(stable: false, comparator: compareTo)
+            var emitted: Bool = false
+            var i = 0
+            while (i < payloads.size) {
+                let payloadEmit: PayloadEmit<T> = PayloadEmit<T>(Int32(position) - Int32(payloads[i].keyword.size) + 1, Int32(position), payloads[i].keyword, payloads[i].data)
+                if (!(trieConfig.onlyWholeWords && isPartialMatch(text, payloadEmit)) && !(trieConfig.onlyWholeWordsWhiteSpaceSeparated && isPartialMatchWhiteSpaceSeparated(text, payloadEmit))) {
+                    emitted = emitHandler.emit(payloadEmit) || emitted
+                    if (emitted && trieConfig.stopOnHit) {
+                        break
+                    }
+                }
+                i++
+            }
+            if (emitted && trieConfig.stopOnHit) {
+                break
+            }
+            position++
+        }
+        return HandleNonOverlapArr(emitHandler.getEmits())
     }
 
     public func parseText(text: String, emitHandler: StatefulPayloadEmitHandler<T>): Collection<PayloadEmit<T>> {
         parseText(text, (emitHandler as PayloadEmitHandler<T>).getOrThrow())
-        let collectedEmits: ArrayList<PayloadEmit<T>> = emitHandler.getEmits()
-        if (!trieConfig.isAllowOverlaps()) {
-            let convertArr: ArrayList<Intervalable> = ArrayList<Intervalable>()
-            for (i in 0..collectedEmits.size) {
-                convertArr.add(collectedEmits[i])
-            }
-            let intervalTree: IntervalTree  = IntervalTree(convertArr)
-            intervalTree.removeOverlaps(convertArr)
-            let arr2: ArrayList<PayloadEmit<T>> = ArrayList<PayloadEmit<T>>()
-            for (i in 0..convertArr.size) {
-                arr2.add((convertArr[i] as PayloadEmit<T>).getOrThrow())
-            }
-            return arr2
-        }
-        return collectedEmits
+        return HandleNonOverlapArr(emitHandler.getEmits())
     }
 
     /**
@@ -278,5 +292,22 @@ public class PayloadTrie<T> {
             newCurrentState = current.nextState(character)
         }
         return newCurrentState.getOrThrow()
+    }
+
+    private func HandleNonOverlapArr(collectedEmits: ArrayList<PayloadEmit<T>>): ArrayList<PayloadEmit<T>> {
+        if (trieConfig.isAllowOverlaps()) {
+            return collectedEmits
+        }
+        let convertArr: ArrayList<Intervalable> = ArrayList<Intervalable>()
+        for (i in 0..collectedEmits.size) {
+            convertArr.add(collectedEmits[i])
+        }
+        let intervalTree: IntervalTree  = IntervalTree(convertArr)
+        intervalTree.removeOverlaps(convertArr)
+        let arr2: ArrayList<PayloadEmit<T>> = ArrayList<PayloadEmit<T>>()
+        for (i in 0..convertArr.size) {
+            arr2.add((convertArr[i] as PayloadEmit<T>).getOrThrow())
+        }
+        return arr2
     }
 }
