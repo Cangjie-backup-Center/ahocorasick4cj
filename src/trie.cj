@@ -15,12 +15,12 @@ public class Trie {
         this.payloadTrie = payloadTrie
     }
 
-    public func tokenize(text: String): Collection<Token> {
-        let tokens: Collection<PayloadToken<String>> = this.payloadTrie.tokenize(text)
+    public func tokenize(text: String): ArrayList<Token> {
+        let tokens: ArrayList<PayloadToken<String>> = this.payloadTrie.tokenize(text)
         return asTokens(tokens)
     }
 
-    private static func asTokens(tokens: Collection<PayloadToken<String>>): Collection<Token> {
+    private static func asTokens(tokens: ArrayList<PayloadToken<String>>): ArrayList<Token> {
         var result: ArrayList<Token> = ArrayList<Token>()
         for (payloadToken in tokens) {
             result.add(DefaultToken(payloadToken))
@@ -28,7 +28,7 @@ public class Trie {
         return result
     }
 
-    private static func asEmits(emits: Collection<PayloadEmit<String>>): Collection<Emit> {
+    private static func asEmits(emits: ArrayList<PayloadEmit<String>>): ArrayList<Emit> {
         var result: ArrayList<Emit> = ArrayList<Emit>()
         for (emit in emits) {
             result.add(asEmit(emit))
@@ -40,13 +40,13 @@ public class Trie {
         return Emit(payloadEmit.start, payloadEmit.end, payloadEmit.keyword)
     }
 
-    public func parseText(text: String): Collection<Emit> {
-        let parsedText: Collection<PayloadEmit<String>> = this.payloadTrie.parseText(text)
+    public func parseText(text: String): ArrayList<Emit> {
+        let parsedText: ArrayList<PayloadEmit<String>> = this.payloadTrie.parseText(text)
         return asEmits(parsedText)
     }
 
-    public func parseText(text: String, emitHandler: StatefulEmitHandler): Collection<Emit> {
-        let parsedText: Collection<PayloadEmit<String>> = this.payloadTrie.parseText(text, StatefulPayloadEmitDelegateHandler(emitHandler))
+    public func parseText(text: String, emitHandler: StatefulEmitHandler): ArrayList<Emit> {
+        let parsedText: ArrayList<PayloadEmit<String>> = this.payloadTrie.parseText(text, StatefulPayloadEmitDelegateHandler(emitHandler))
         return asEmits(parsedText)
     }
 

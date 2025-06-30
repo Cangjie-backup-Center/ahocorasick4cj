@@ -74,7 +74,7 @@ public class PayloadTrieBuilder<T> {
     * @param keywords The keywords to add to the list.
     * @return This builder.
     */
-    public func addKeywords(keywords: Collection<Payload<T>>): PayloadTrieBuilder<T> {
+    public func addKeywords(keywords: ArrayList<Payload<T>>): PayloadTrieBuilder<T> {
         for (payload in keywords) {
             this.trie.addKeyword(payload.keyword, payload.data)
         }
