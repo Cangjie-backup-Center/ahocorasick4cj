@@ -119,9 +119,9 @@ public class PayloadState<T> {
     }
 
     /**
-     * Returns a collection of emitted payloads for this state.
+     * Returns a ArrayList of emitted payloads for this state.
      * 
-     * @return Collection of emitted payloads.
+     * @return ArrayList of emitted payloads.
      */
     public func emit(): ArrayList<Payload<T>> {
         if (let None <- this.emits) {

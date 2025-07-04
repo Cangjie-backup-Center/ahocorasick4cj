@@ -31,9 +31,9 @@ class Trie
     *
     * @param text - 传入的文本信息
     *
-    * @return 返回一个 Collection 集合
+    * @return 返回一个 ArrayList 集合
     */
-    public func parseText(text: String): Collection<Emit>
+    public func parseText(text: String): ArrayList<Emit>
 
 ```
 
@@ -365,7 +365,7 @@ class PayloadState
     *
     * @return 返回 PayloadState 有效载荷状态节点
     */
-    public func addState(character: Char): PayloadState<T>
+    public func addState(character: Rune): PayloadState<T>
 
     /**
     * 获取该状态节点在给定字符下的子状态节点，如果没有匹配的子状态节点，则返回空指针
@@ -374,7 +374,7 @@ class PayloadState
     *
     * @return 返回 Option 类型
     */
-    public func nextStateIgnoreRootState(character: Char): ?PayloadState<T>
+    public func nextStateIgnoreRootState(character: Rune): ?PayloadState<T>
 
     /**
     * 获取该状态节点在给定字符下的子状态节点，如果没有匹配的子状态节点，则返回失败状态节点或根状态节点
@@ -383,7 +383,7 @@ class PayloadState
     *
     * @return 返回 Option 类型
     */
-    public func nextState(character: Char): ?PayloadState<T>
+    public func nextState(character: Rune): ?PayloadState<T>
 
     /**
     * 获取该状态节点的所有子状态节点的集合
@@ -405,7 +405,7 @@ class PayloadState
     *
     * @return 返回所有转移字符的集合
     */
-    public func getTransitions(): Collection<Char>
+    public func getTransitions(): Collection<Rune>
 
     /**
     * 获取该状态节点的失败状态节点，即在状态转移图中当没有匹配的子状态节点时，需要跳转到的状态节点
@@ -619,9 +619,9 @@ class PayloadTrie
     *
     * @param text - 传入的文本信息
     *
-    * @return 返回一个 Collection 集合
+    * @return 返回一个 ArrayList 集合
     */
-    public func parseText(text: String): Collection<PayloadEmit<T>>
+    public func parseText(text: String): ArrayList<PayloadEmit<T>>
 
     /**
     * 解析给定的文本，并返回匹配的负载
@@ -629,9 +629,9 @@ class PayloadTrie
     * @param text - 传入的文本信息
     * @param emitHandler - 用于处理发出的负载的事件处理器
     *
-    * @return 返回一个 Collection 集合
+    * @return 返回一个 ArrayList 集合
     */
-    public func parseText(text: String, emitHandler: StatefulPayloadEmitHandler<T>): Collection<PayloadEmit<T>>
+    public func parseText(text: String, emitHandler: StatefulPayloadEmitHandler<T>): ArrayList<PayloadEmit<T>>
 
     /**
     * 解析给定的文本，并返回匹配的负载
@@ -724,9 +724,9 @@ class Trie
     *
     * @param text - 指定的文本
     *
-    * @return 返回一个 Collection 集合
+    * @return 返回一个 ArrayList 集合
     */
-    public func tokenize(text: String): Collection<Token>
+    public func tokenize(text: String): ArrayList<Token>
 
     /**
     * 根据给定的文本搜索第一个匹配的字符串和负载，返回一个 Emit 对象或 None
@@ -1198,7 +1198,7 @@ class PayloadTrieBuilder
     *
     * @return 返回这个构建器
     */
-    public func addKeywords(keywords: Collection<Payload<T>>): PayloadTrieBuilder<T>
+    public func addKeywords(keywords: ArrayList<Payload<T>>): PayloadTrieBuilder<T>
 
     /**
     * 将Trie配置为匹配文本中的整个关键字
@@ -1256,7 +1256,7 @@ class State
     *
     * @return 返回 Option 类型
     */
-    public func nextState(character: Char): ?State
+    public func nextState(character: Rune): ?State
 
     /**
     * 根据给定的字符和是否忽略根状态获取下一个状态，返回一个状态对象或 None
@@ -1265,7 +1265,7 @@ class State
     *
     * @return 返回 Option 类型
     */
-    public func nextStateIgnoreRootState(character: Char): ?State
+    public func nextStateIgnoreRootState(character: Rune): ?State
 
     /**
     * 根据给定的关键字添加一个新的状态到当前状态，并返回新的状态
@@ -1283,7 +1283,7 @@ class State
     *
     * @return 返回这个对象
     */
-    public func addState(character: Char): State
+    public func addState(character: Rune): State
 
     /**
     * 获取状态的深度
@@ -1346,7 +1346,7 @@ class State
     * @return 返回一个集合
     *
     */
-    public func getTransitions(): Collection<Char>
+    public func getTransitions(): Collection<Rune>
 
 ```
 
@@ -1430,9 +1430,9 @@ class Trie
     * @param text - 传入的文本信息
     * @param emitHandler - 用于处理发出的负载的事件处理器
     *
-    * @return 返回一个 Collection 集合
+    * @return 返回一个 ArrayList 集合
     */
-    public func parseText(text: String, emitHandler: StatefulEmitHandler): Collection<Emit>
+    public func parseText(text: String, emitHandler: StatefulEmitHandler): ArrayList<Emit>
 
     /**
     * 根据给定的文本判断文本是否包含匹配的字符串
@@ -1462,9 +1462,9 @@ class Trie
     *
     * @param text - 指定的文本
     *
-    * @return 返回一个 Collection 集合
+    * @return 返回一个 ArrayList 集合
     */
-    public func tokenize(text: String): Collection<PayloadToken<T>>
+    public func tokenize(text: String): ArrayList<PayloadToken<T>>
 
     /**
     * 根据给定的文本搜索第一个匹配的字符串和负载，返回一个 PayloadEmit 对象或 None
@@ -1512,7 +1512,7 @@ class TrieBuilder
     *
     * @return 返回这个构建器
     */
-    public func addKeywords(keywords: Collection<Payload<T>>): TrieBuilder
+    public func addKeywords(keywords: ArrayList<Payload<T>>): TrieBuilder
 
     /**
     * 将Trie配置为匹配文本中的整个关键字
@@ -1577,7 +1577,7 @@ public class CharSearchTest06 {
             .addKeyword("nonbinary", Word("nb"))
             .addKeyword("transgender", Word("tg"))
             .build()
-        var emits: Collection<PayloadEmit<Word>> = trie.parseText("ushers")
+        var emits: ArrayList<PayloadEmit<Word>> = trie.parseText("ushers")
         var iter: Iterator<PayloadEmit<Word>> = emits.iterator()
         for (i in iter) {
             println(i.toString() + i.getPayload().getOrThrow().gender)

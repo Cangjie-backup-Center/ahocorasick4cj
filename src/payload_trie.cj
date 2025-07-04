@@ -73,9 +73,9 @@ public class PayloadTrie<T> {
      * @param text The text to tokenize.
      * @return the emitted outputs
      */
-    public func tokenize(text: String): Collection<PayloadToken<T>> {
+    public func tokenize(text: String): ArrayList<PayloadToken<T>> {
         var tokens: ArrayList<PayloadToken<T>> = ArrayList<PayloadToken<T>>()
-        let collectedEmits: Collection<PayloadEmit<T>> = parseText(text)
+        let collectedEmits: ArrayList<PayloadEmit<T>> = parseText(text)
         var lastCollectedPosition: Int32 = -1
 
         for (emit in collectedEmits) {
@@ -139,7 +139,7 @@ public class PayloadTrie<T> {
         }
     }
 
-    public func parseText(text: String): Collection<PayloadEmit<T>> {
+    public func parseText(text: String): ArrayList<PayloadEmit<T>> {
         let emitHandler = DefaultPayloadEmitHandler<T>()
         var currentState: PayloadState<T> = getRootState()
         var position = 0
@@ -171,7 +171,7 @@ public class PayloadTrie<T> {
         return HandleNonOverlapArr(emitHandler.getEmits())
     }
 
-    public func parseText(text: String, emitHandler: StatefulPayloadEmitHandler<T>): Collection<PayloadEmit<T>> {
+    public func parseText(text: String, emitHandler: StatefulPayloadEmitHandler<T>): ArrayList<PayloadEmit<T>> {
         parseText(text, (emitHandler as PayloadEmitHandler<T>).getOrThrow())
         return HandleNonOverlapArr(emitHandler.getEmits())
     }
@@ -200,7 +200,7 @@ public class PayloadTrie<T> {
     public func firstMatch(text: String): ?PayloadEmit<T> {
         if (!trieConfig.allowOverlaps) {
             // Slow path. Needs to find all the matches to detect overlaps.
-            let parseText: Collection<PayloadEmit<T>> = parseText(text)
+            let parseText: ArrayList<PayloadEmit<T>> = parseText(text)
             if (!parseText.isEmpty()) {
                 return parseText.iterator().next()
             }

@@ -3,9 +3,9 @@
 </div>
 
 <p align="center">
-<img alt="" src="https://img.shields.io/badge/release-v1.0.3-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/release-v1.0.4-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/build-pass-brightgreen" style="display: inline-block;" />
-<img alt="" src="https://img.shields.io/badge/cjc-v0.60.5-brightgreen" style="display: inline-block;" />
+<img alt="" src="https://img.shields.io/badge/cjc-v1.0.0-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/cjcov-94.8%25-brightgreen" style="display: inline-block;" />
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
@@ -84,7 +84,7 @@
 
 ### 接口说明
 
-主要是核心类和成员函数说明,详情见 [API](./doc/feature_api.md)
+主要是核心类和成员函数说明,详情见 [API](https://gitcode.com/Cangjie-TPC/ahocorasick4cj/blob/develop/doc/feature_api.md)
 
 ## <img alt="" src="./doc/assets/readme-icon-compile.png" style="display: inline-block;" width=3%/> 使用说明
 
@@ -123,7 +123,7 @@ cjpm build
 ```shell
 cd test/
 mkdir tmp
-cjc -O2 --import-path xxxxx/build/release -L xxxxx/build/release/ahoCorasick4cj -l ahoCorasick4cj_ahoCorasick4cj test/HLT/testTrie.cj -o test/tmp/test.cj.out --test
+cjc -O2 --import-path xxxxx/target/release -L xxxxx/target/release/ahoCorasick4cj -l ahoCorasick4cj_ahoCorasick4cj test/HLT/testTrie.cj -o test/tmp/test.cj.out --test
 ```
 
 ##### 1.1 具体说明
@@ -138,7 +138,7 @@ cjc -O2
 - 导入多个库,每个库都需要--import-path和 -L
 
 ```shell
---import-path xxxxx/build/release -L xxxxx/build/release/ahoCorasick4cj -l ahoCorasick4cj_ahoCorasick4cj
+--import-path xxxxx/target/release -L xxxxx/target/release/ahoCorasick4cj -l ahoCorasick4cj_ahoCorasick4cj
 ```
 - -l 要导入的具体的包, 用"库名_包名",一般库文件生成时是"lib库名_包名.后缀"的格式
 - 导入一个库中有多个包时,用多个 -l
@@ -151,7 +151,7 @@ test/HLT/testTrie.cj -o test/tmp/test.cj.out --test
 ```
 
 #### 2. 把编译好的文件复制到 .out 文件下(test/tmp/) 
-- 把build/release/ahoCorasick4cj 目录中的文件都复制到 .out 文件位置(test/tmp/ 中)
+- target/release/ahoCorasick4cj 目录中的文件都复制到 .out 文件位置(test/tmp/ 中)
 
 #### 3. 进入到.out文件位置，执行用例
 - 进入到.out文件位置执行用例
@@ -289,7 +289,7 @@ public class CharSearchTest06 {
             .addKeyword("nonbinary", Word("nb"))
             .addKeyword("transgender", Word("tg"))
             .build()
-        var emits: Collection<PayloadEmit<Word>> = trie.parseText("ushers")
+        var emits: ArrayList<PayloadEmit<Word>> = trie.parseText("ushers")
         var iter: Iterator<PayloadEmit<Word>> = emits.iterator()
         for (i in iter) {
             println(i.toString() + i.getPayload().getOrThrow().gender)
@@ -321,12 +321,12 @@ class Word {
 
 在下述版本验证通过：
 ```shell
-Cangjie Version: 0.60.5
+Cangjie Version: 1.0.0
 ```
 
 ## 开源协议
 
-本项目基于 [Apache License 2.0](https://gitcode.com/Cangjie-TPC/ahocorasick4cj/blob/master/LICENSE) ，请自由的享受和参与开源。
+本项目基于 [Apache License 2.0](https://gitcode.com/Cangjie-TPC/ahocorasick4cj/blob/develop/LICENSE) ，请自由的享受和参与开源。
 
 ## <img alt="" src="./doc/assets/readme-icon-contribute.png" style="display: inline-block;" width=3%/> 参与贡献
 

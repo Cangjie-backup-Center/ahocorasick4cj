@@ -15,7 +15,7 @@ public class StatefulPayloadEmitDelegateHandler <: StatefulPayloadEmitHandler<St
         this.handler = handler
     }
 
-    private static func asEmits(emits: Collection<Emit>): ArrayList<PayloadEmit<String>> {
+    private static func asEmits(emits: ArrayList<Emit>): ArrayList<PayloadEmit<String>> {
         var result: ArrayList<PayloadEmit<String>> = ArrayList<PayloadEmit<String>>()
         for (emit in emits) {
             result.add(PayloadEmit<String>(emit.start, emit.end, emit.keyword, None))

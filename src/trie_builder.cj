@@ -70,7 +70,7 @@ public class TrieBuilder {
     * @param keywords The keywords to add to the list.
     * @return This builder.
     */
-    public func addKeywords(keywords: Collection<String>): TrieBuilder {
+    public func addKeywords(keywords: ArrayList<String>): TrieBuilder {
         for (keyword in keywords) {
             this.delegate.addKeyword(keyword, None)
         }
