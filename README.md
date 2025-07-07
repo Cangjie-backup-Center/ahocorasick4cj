@@ -10,7 +10,7 @@
 <img alt="" src="https://img.shields.io/badge/project-open-brightgreen" style="display: inline-block;" />
 </p>
 
-## <img alt="" src="./doc/assets/readme-icon-introduction.png" style="display: inline-block;" width=3%/>介绍
+## <img alt="" src="https://raw.gitcode.com/Cangjie-TPC/ahocorasick4cj/blobs/15213299d979e856624253d41858a9369a44ad5c/readme-icon-introduction.png" style="display: inline-block;" width=3%/>介绍
 
 使用 Aho-Corasick 字符串搜索算法，能够提供高效的字符串匹配功能
 
@@ -20,10 +20,10 @@
 - 🚀 支持关键词库模式
 - 🚀 支持自定义值输出模式
 
-## <img alt="" src="./doc/assets/readme-icon-framework.png" style="display: inline-block;" width=3%/> 流程图
+## <img alt="" src="https://raw.gitcode.com/Cangjie-TPC/ahocorasick4cj/blobs/cde6bdb14ced62261c2f5cb6bd976b9a9aa10fa9/readme-icon-framework.png" style="display: inline-block;" width=3%/> 流程图
 
 <p align="center">
-<img src="./doc/assets/readme-icon-liu.jpg" width="60%" >
+<img src="https://raw.gitcode.com/Cangjie-TPC/ahocorasick4cj/blobs/a7d1e064b17da56ac1be68b06f942bc6a1bc09aa/readme-icon-liu.jpg" width="60%" >
 </p>
 
 
@@ -86,7 +86,7 @@
 
 主要是核心类和成员函数说明,详情见 [API](https://gitcode.com/Cangjie-TPC/ahocorasick4cj/blob/develop/doc/feature_api.md)
 
-## <img alt="" src="./doc/assets/readme-icon-compile.png" style="display: inline-block;" width=3%/> 使用说明
+## <img alt="" src="https://raw.gitcode.com/Cangjie-TPC/ahocorasick4cj/blobs/da64231ac2d2bf0a586c6a35353585af005e2faf/readme-icon-compile.png" style="display: inline-block;" width=3%/> 使用说明
 
 ### 编译构建
 
@@ -328,6 +328,6 @@ Cangjie Version: 1.0.0
 
 本项目基于 [Apache License 2.0](https://gitcode.com/Cangjie-TPC/ahocorasick4cj/blob/develop/LICENSE) ，请自由的享受和参与开源。
 
-## <img alt="" src="./doc/assets/readme-icon-contribute.png" style="display: inline-block;" width=3%/> 参与贡献
+## <img alt="" src="https://raw.gitcode.com/Cangjie-TPC/ahocorasick4cj/blobs/db89f3665c31896952fbb4c657fd09d30adf952b/readme-icon-contribute.png" style="display: inline-block;" width=3%/> 参与贡献
 
 欢迎给我们提交 PR，欢迎给我们提交 issue，欢迎参与任何形式的贡献。
