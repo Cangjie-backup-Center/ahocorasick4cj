@@ -12,6 +12,10 @@ public class DefaultPayloadEmitHandler<T> <: StatefulPayloadEmitHandler<T> {
 
     let emits: ArrayList<PayloadEmit<T>> = ArrayList<PayloadEmit<T>>()
 
+    @Frozen
+    public init() {}
+
+    @Frozen
     public func emit(emit: PayloadEmit<T>): Bool {
         this.emits.add(emit)
         return true

@@ -33,6 +33,7 @@ public class PayloadTrie<T> {
      * @param keyword The search term to add to the list of search terms.
      * @throws NullPointerException if the keyword is null.
      */
+    @Frozen
     protected func addKeyword(keyword: String): Unit {
         if (keyword.isEmpty()) {
             return
@@ -47,6 +48,7 @@ public class PayloadTrie<T> {
      * @param emit    the payload to emit for this search term.
      * @throws NullPointerException if the keyword is null.
      */
+    @Frozen
     protected func addKeyword(keyword: String, emit: ?T): Unit {
         if (keyword.isEmpty()) {
             return
@@ -54,6 +56,7 @@ public class PayloadTrie<T> {
         addState(keyword).addEmit(Payload<T>(keyword, emit))
     }
 
+    @Frozen
     private func addState(keyword: String): PayloadState<T> {
         var state: PayloadState<T> = getRootState()
         var adjustedChar: Rune
@@ -114,18 +117,21 @@ public class PayloadTrie<T> {
         return trieConfig.isCaseInsensitive()
     }
 
+    @Frozen
     protected func constructFailureStates(): Unit {
         var arrayList: ArrayList<PayloadState<T>> = ArrayList<PayloadState<T>>()
         var startState: PayloadState<T> = getRootState()
         // First, set the fail state of all depth 1 states to the root state
-        for (depthOneState in startState.getStates()) {
+        let states = startState.getStates().toArray()
+        for (depthOneState in states) {
             depthOneState.setFailure(startState)
             arrayList.add(depthOneState)
         }
         // Second, determine the fail state for all depth > 1 state
         while (!arrayList.isEmpty()) {
             var currentState: PayloadState<T> = arrayList.remove(at: 0)
-            for (transition in currentState.getTransitions()) {
+            let transitions = currentState.getTransitions().toArray()
+            for (transition in transitions) {
                 var targetState: PayloadState<T> = currentState.nextState(transition).getOrThrow()
                 arrayList.add(targetState)
                 var traceFailureState: ?PayloadState<T> = currentState.failures()
@@ -139,6 +145,7 @@ public class PayloadTrie<T> {
         }
     }
 
+    @Frozen
     public func parseText(text: String): ArrayList<PayloadEmit<T>> {
         let emitHandler = DefaultPayloadEmitHandler<T>()
         var currentState: PayloadState<T> = getRootState()
@@ -150,7 +157,7 @@ public class PayloadTrie<T> {
             }
             currentState = getState(currentState, character)
             let payloads: ArrayList<Payload<T>> = currentState.emit()
-            payloads.sortBy(stable: false, comparator: compareTo)
+            payloads.sortBy(stable: false, comparator: this.compareTo)
             var emitted: Bool = false
             var i = 0
             while (i < payloads.size) {
@@ -197,6 +204,7 @@ public class PayloadTrie<T> {
      * @param text The text to search for keywords, must not be {@code null}.
      * @return {@code null} if no matches found.
      */
+    @Frozen
     public func firstMatch(text: String): ?PayloadEmit<T> {
         if (!trieConfig.allowOverlaps) {
             // Slow path. Needs to find all the matches to detect overlaps.
@@ -215,7 +223,7 @@ public class PayloadTrie<T> {
                 }
                 currentState = getState(currentState, character)
                 let payloads: ArrayList<Payload<T>> = currentState.emit()
-                payloads.sortBy(stable: false, comparator: compareTo)
+                payloads.sortBy(stable: false, comparator: this.compareTo)
                 if (!payloads.isEmpty()) {
                     var i = 0
                     while (i < payloads.size) {
@@ -236,10 +244,12 @@ public class PayloadTrie<T> {
         return None
     }
 
+    @Frozen
     private func compareTo(emit1: Payload<T>, emit2: Payload<T>): Ordering {
         return emit1.keyword.size.compare(emit2.keyword.size)
     }
 
+    @Frozen
     public func parseText(text: String, emitHandler: PayloadEmitHandler<T>): Unit {
         var currentState: PayloadState<T> = getRootState()
         var position = 0
@@ -250,7 +260,7 @@ public class PayloadTrie<T> {
             }
             currentState = getState(currentState, character)
             let payloads: ArrayList<Payload<T>> = currentState.emit()
-            payloads.sortBy(stable: false, comparator: compareTo)
+            payloads.sortBy(stable: false, comparator: this.compareTo)
             if (processEmits(text, Int32(position), payloads, emitHandler) && trieConfig.stopOnHit) {
                 return
             }
@@ -284,6 +294,7 @@ public class PayloadTrie<T> {
                 (Int64(emit.end) + 1 != searchText.size && Rune(!(searchText[Int64(emit.end) + 1])).isWhiteSpace())
     }
 
+    @Frozen
     private func getState(currentState: PayloadState<T>, character: Rune): PayloadState<T> {
         var newCurrentState: ?PayloadState<T> = currentState.nextState(character)
         var current: PayloadState<T> = currentState
@@ -294,6 +305,7 @@ public class PayloadTrie<T> {
         return newCurrentState.getOrThrow()
     }
 
+    @Frozen
     private func HandleNonOverlapArr(collectedEmits: ArrayList<PayloadEmit<T>>): ArrayList<PayloadEmit<T>> {
         if (trieConfig.isAllowOverlaps()) {
             return collectedEmits
