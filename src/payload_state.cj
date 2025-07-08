@@ -41,6 +41,7 @@ public class PayloadState<T> {
         this(0)
     }
 
+    @Frozen
     public init(depth: Int32) {
         this.depth = depth
         if (depth == 0) {
@@ -55,6 +56,7 @@ public class PayloadState<T> {
      * 
      * @param payload to be emitted.
      */
+    @Frozen
     public func addEmit(payload: Payload<T>): Unit {
         if (let None <- this.emits) {
             this.emits = ArrayList<Payload<T>>()
@@ -62,6 +64,7 @@ public class PayloadState<T> {
         this.emits.getOrThrow().add(payload)
     }
 
+    @Frozen
     public func addState(character: Rune): PayloadState<T> {
         var nextState: ?PayloadState<T> = nextStateIgnoreRootState(character)
         if (let None <- nextState) {
@@ -71,10 +74,12 @@ public class PayloadState<T> {
         return nextState.getOrThrow()
     }
 
+    @Frozen
     public func nextStateIgnoreRootState(character: Rune): ?PayloadState<T> {
         return nextState(character, true)
     }
 
+    @Frozen
     public func nextState(character: Rune): ?PayloadState<T> {
         return nextState(character, false)
     }
@@ -83,6 +88,7 @@ public class PayloadState<T> {
         return this.depth
     }
 
+    @Frozen
     private func nextState(character: Rune, ignoreRootState: Bool): ?PayloadState<T> {
         var nextState: ?PayloadState<T> = this.success.get(character)
         if (!ignoreRootState) {
@@ -95,6 +101,7 @@ public class PayloadState<T> {
         return nextState
     }
 
+    @Frozen
     public func getStates(): Collection<PayloadState<T>> {
         return this.success.values()
     }
@@ -103,6 +110,7 @@ public class PayloadState<T> {
         return this.failure = failState
     }
 
+    @Frozen
     public func getTransitions(): Collection<Rune> {
         return this.success.keys()
     }
@@ -111,6 +119,7 @@ public class PayloadState<T> {
         return this.failure
     }
 
+    @Frozen
     public func addEmit(emits: ArrayList<Payload<T>>): Unit {
         let arr = unsafe { emits.getRawArray() }
         for(i in 0..emits.size) {
@@ -123,6 +132,7 @@ public class PayloadState<T> {
      * 
      * @return ArrayList of emitted payloads.
      */
+    @Frozen
     public func emit(): ArrayList<Payload<T>> {
         if (let None <- this.emits) {
             return ArrayList<Payload<T>>()

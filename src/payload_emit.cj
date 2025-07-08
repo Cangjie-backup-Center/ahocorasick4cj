@@ -21,6 +21,7 @@ public class PayloadEmit<T> <: Interval & Intervalable {
      * @param keyword Keyword that matched.
      * @param payload Emitted payload data.
      */
+    @Frozen
     public init(start: Int32, end: Int32, keyword: String, payload: ?T) {
         super(start,end)
         this.keyword = keyword
