@@ -35,6 +35,7 @@ public class PayloadTrieBuilder<T> {
         return this
     }
 
+    @Frozen
     public func build(): PayloadTrie<T> {
         this.trie.constructFailureStates()
         return this.trie
@@ -48,6 +49,7 @@ public class PayloadTrieBuilder<T> {
      * @return This builder.
      * @throws NullPointerException if the keyword is null.
      */
+    @Frozen
     public func addKeyword(keyword: String): PayloadTrieBuilder<T> {
         this.trie.addKeyword(keyword)
         return this
@@ -62,6 +64,7 @@ public class PayloadTrieBuilder<T> {
      * @return This builder.
      * @throws NullPointerException if the keyword is null.
      */
+    @Frozen
     public func addKeyword(keyword: String, payload: ?T): PayloadTrieBuilder<T> {
         this.trie.addKeyword(keyword, payload)
         return this
@@ -74,6 +77,7 @@ public class PayloadTrieBuilder<T> {
     * @param keywords The keywords to add to the list.
     * @return This builder.
     */
+    @Frozen
     public func addKeywords(keywords: ArrayList<Payload<T>>): PayloadTrieBuilder<T> {
         for (payload in keywords) {
             this.trie.addKeyword(payload.keyword, payload.data)
