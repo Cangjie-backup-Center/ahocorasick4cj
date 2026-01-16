@@ -1,6 +1,6 @@
 // 3rd_party_lib:ahocorasick4cj/build/ahoCorasick4cj
 // 3rd_party_lib_ohos:ahocorasick4cj/build/aarch64-linux-ohos/ahoCorasick4cj
-import ahoCorasick4cj.*
+import cangjie_tpc::ahoCorasick4cj.*
 import std.unittest.*
 import std.collection.*
 import std.math.MathExtension

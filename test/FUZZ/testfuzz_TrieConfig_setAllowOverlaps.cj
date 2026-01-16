@@ -1,5 +1,5 @@
 // 3rd_party_lib:ahocorasick4cj/build/ahoCorasick4cj
-import ahoCorasick4cj.*
+import cangjie_tpc::ahoCorasick4cj.*
 import fuzz.fuzz.*
 
 var returnFlag: Int32 = 0

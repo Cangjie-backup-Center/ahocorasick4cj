@@ -1,7 +1,7 @@
 /*
  * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2024. All rights reserved.
  */
-package ahoCorasick4cj
+package cangjie_tpc::ahoCorasick4cj
 
 /*
  * The class is PayloadTrie
@@ -157,7 +157,7 @@ public class PayloadTrie<T> {
             }
             currentState = getState(currentState, character)
             let payloads: ArrayList<Payload<T>> = currentState.emit()
-            payloads.sortBy(stable: false, comparator: this.compareTo)
+            sort(payloads, stable: false, by: this.compareTo)
             var emitted: Bool = false
             var i = 0
             while (i < payloads.size) {
@@ -223,7 +223,7 @@ public class PayloadTrie<T> {
                 }
                 currentState = getState(currentState, character)
                 let payloads: ArrayList<Payload<T>> = currentState.emit()
-                payloads.sortBy(stable: false, comparator: this.compareTo)
+                sort(payloads, stable: false, by: this.compareTo)
                 if (!payloads.isEmpty()) {
                     var i = 0
                     while (i < payloads.size) {
@@ -260,7 +260,7 @@ public class PayloadTrie<T> {
             }
             currentState = getState(currentState, character)
             let payloads: ArrayList<Payload<T>> = currentState.emit()
-            payloads.sortBy(stable: false, comparator: this.compareTo)
+            sort(payloads, stable: false, by: this.compareTo)
             if (processEmits(text, Int32(position), payloads, emitHandler) && trieConfig.stopOnHit) {
                 return
             }

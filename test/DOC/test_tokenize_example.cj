@@ -1,7 +1,7 @@
 // EXEC: cjc %import-path %L %l %f
 // EXEC: ./main
 
-import ahoCorasick4cj.*
+import cangjie_tpc::ahoCorasick4cj.*
 import std.unittest.*
 import std.collection.*
 import std.unittest.testmacro.*

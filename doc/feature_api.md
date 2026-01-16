@@ -645,7 +645,7 @@ class PayloadTrie
 #### 1.3 示例
 
 ```cangjie
-import ahoCorasick4cj.*
+import cangjie_tpc::ahoCorasick4cj.*
 import std.unittest.*
 import std.unittest.testmacro.*
 
@@ -1105,7 +1105,7 @@ class PayloadTrie
 #### 2.3 示例
 
 ```cangjie
-import ahoCorasick4cj.*
+import cangjie_tpc::ahoCorasick4cj.*
 import std.unittest.*
 import std.collection.*
 import std.unittest.testmacro.*
@@ -1554,7 +1554,7 @@ class TrieBuilder
 #### 3.3 示例
 
 ```cangjie
-import ahoCorasick4cj.*
+import cangjie_tpc::ahoCorasick4cj.*
 import std.unittest.*
 import std.unittest.testmacro.*
 

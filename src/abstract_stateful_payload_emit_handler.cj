@@ -2,7 +2,7 @@
  * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2024. All rights reserved.
  */
 
-package ahoCorasick4cj
+package cangjie_tpc::ahoCorasick4cj
 
 /*
  * The class is AbstractStatefulPayloadEmitHandler

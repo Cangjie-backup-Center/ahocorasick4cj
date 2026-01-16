@@ -1,6 +1,6 @@
 // 3rd_party_lib:ahocorasick4cj/build/ahoCorasick4cj
 
-import ahoCorasick4cj.*
+import cangjie_tpc::ahoCorasick4cj.*
 import std.time.*
 import std.math.*
 import std.collection.*

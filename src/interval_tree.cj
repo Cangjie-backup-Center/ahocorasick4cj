@@ -1,7 +1,7 @@
 /*
  * @Copyright (c) Huawei Technologies Co., Ltd. 2023-2024. All rights reserved.
  */
-package ahoCorasick4cj
+package cangjie_tpc::ahoCorasick4cj
 
 /*
  * The class is IntervalTree
@@ -16,7 +16,7 @@ public class IntervalTree {
     }
 
     public func removeOverlaps(intervals: ArrayList<Intervalable>): ArrayList<Intervalable> {
-        intervals.sortBy(stable: false, comparator: compareSize)
+        sort(intervals, stable: false, by: compareSize)
         var removeIntervals: ArrayList<Intervalable> = ArrayList<Intervalable>()
         for (i in 0..intervals.size) {
             // If the interval was already removed, ignore it
@@ -36,7 +36,7 @@ public class IntervalTree {
                 }
             })
         }
-        intervals.sortBy(stable: false, comparator: comparePosition)
+        sort(intervals, stable: false, by: comparePosition)
         return intervals
     }
 
